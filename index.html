@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>長興國小戶外教育成果</title>
+    <meta
+      name="description"
+      content="基隆市長興國小戶外教育成果網站：從七堵鐵道節點出發，串聯鐵道、海港、礦業、捷運、海洋與跨縣市學習路線。"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="回到首頁">
+        <span class="brand-mark">長興</span>
+        <span>
+          <strong>長興國小戶外教育</strong>
+          <small>Rail, Harbor, City and Ocean Learning</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="主要導覽">
+        <a href="#vision">理念</a>
+        <a href="#map">路線地圖</a>
+        <a href="#routes">路線介紹</a>
+        <a href="#design">課程設計</a>
+        <a href="#gallery">成果照片</a>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <p class="eyebrow">基隆七堵出發的校本戶外教育</p>
+          <h1 id="hero-title">讓孩子從家鄉鐵道走向山海城市</h1>
+          <p>
+            長興國小以七堵鐵道節點為學習起點，帶領孩子走出教室，進入車站、港灣、礦區、城市運輸、海洋場館與歷史街區，把生活經驗轉化為觀察、探究、表達與公民行動。
+          </p>
+          <div class="hero-actions" aria-label="快速前往">
+            <a class="button primary" href="#map">查看路線地圖</a>
+            <a class="button secondary" href="#routes">閱讀各路線</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="vision" class="section vision-section" aria-labelledby="vision-title">
+        <div class="section-heading">
+          <p class="eyebrow">Outdoor Education Vision</p>
+          <h2 id="vision-title">戶外教育理念</h2>
+          <p>
+            以「走出校園、走進歷史、走向未來」為主軸，讓學生在真實場域中理解家鄉、連結產業、練習提問，並把學習成果回饋到社區。
+          </p>
+        </div>
+        <div class="principles">
+          <article>
+            <span>01</span>
+            <h3>尋根家鄉鐵道</h3>
+            <p>從長興國小與七堵車站的日常連結出發，認識鐵道如何形塑城市生活、產業流動與地方記憶。</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>跨域深度走讀</h3>
+            <p>串聯礦業、港口、捷運、海洋與歷史街區，讓學生在比較不同場域時建立時間感與系統思考。</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>任務導向探究</h3>
+            <p>透過學習單、導覽任務、觀察紀錄與訪談，訓練學生蒐集資料、整理重點與合作解決問題。</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>公民行動實踐</h3>
+            <p>鼓勵孩子提出導覽設計、空間改造或友善環境提案，從認識地方進一步參與地方。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section outcome-band" aria-label="學習成果摘要">
+        <div>
+          <strong>6+</strong>
+          <span>主題路線</span>
+        </div>
+        <div>
+          <strong>3</strong>
+          <span>核心軸線：鐵道、海港、海洋</span>
+        </div>
+        <div>
+          <strong>1</strong>
+          <span>從長興出發的地方課程地圖</span>
+        </div>
+      </section>
+
+      <section id="map" class="section map-section" aria-labelledby="map-title">
+        <div class="section-heading">
+          <p class="eyebrow">Route Map</p>
+          <h2 id="map-title">所有路線地圖</h2>
+          <p>
+            點選地圖標記或下方路線，可以快速切換到對應分頁。路線座標為展示用，可依正式成果資料再微調站點。
+          </p>
+        </div>
+        <div class="map-layout">
+          <div id="route-map" class="route-map" role="img" aria-label="長興國小戶外教育路線地圖"></div>
+          <aside class="route-list" aria-label="路線清單">
+            <h3>路線索引</h3>
+            <div id="route-buttons"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="routes" class="section routes-section" aria-labelledby="routes-title">
+        <div class="section-heading">
+          <p class="eyebrow">Learning Routes</p>
+          <h2 id="routes-title">每一條路線介紹</h2>
+          <p>每個分頁整理主題、學習場域、學生任務與可連結的成果文件。</p>
+        </div>
+        <div class="tabs" role="tablist" aria-label="路線分頁" id="route-tabs"></div>
+        <div id="route-panel" class="route-panel"></div>
+      </section>
+
+      <section id="design" class="section design-section" aria-labelledby="design-title">
+        <div class="section-heading">
+          <p class="eyebrow">Course Design Toolkit</p>
+          <h2 id="design-title">戶外教育課程設計</h2>
+          <p>
+            提供老師規劃戶外教育路線時可直接使用的架構，包含路線設計、經費估算、指標檢核與風險管理，也可銜接 Gemini Gem 進行共備。
+          </p>
+        </div>
+
+        <div class="design-layout">
+          <div class="design-framework">
+            <article>
+              <span>01</span>
+              <h3>路線設計規劃</h3>
+              <ul>
+                <li>確認年級、課程主題、起訖時間與交通方式。</li>
+                <li>設定出發前、行程中、回到校園三階段任務。</li>
+                <li>標示核心站點、學習問題、學生產出與評量方式。</li>
+              </ul>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>經費規劃</h3>
+              <ul>
+                <li>分列交通、門票、餐食、材料、保險與行政雜支。</li>
+                <li>區分學生自付、學校支應、補助款與可共用資源。</li>
+                <li>保留備用金，處理票價調整、天候備案或臨時支出。</li>
+              </ul>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>指標檢核</h3>
+              <ul>
+                <li>對應有意義的學習、健康的身心、尊重與關懷、友善環境。</li>
+                <li>檢視學生是否能觀察、記錄、反思、合作與提出行動。</li>
+                <li>以學習單、照片、作品、導覽稿或提案作為佐證。</li>
+              </ul>
+            </article>
+            <article>
+              <span>04</span>
+              <h3>風險規劃</h3>
+              <ul>
+                <li>完成場地勘查、健康調查、家長同意與保險確認。</li>
+                <li>建立點名、通訊、醫療、交通與天候備案流程。</li>
+                <li>活動後進行復原檢核與檢討，回饋下一次課程設計。</li>
+              </ul>
+            </article>
+          </div>
+
+          <aside class="gem-panel" aria-labelledby="gem-title">
+            <div>
+              <p class="eyebrow">Gemini Gem Collaboration</p>
+              <h3 id="gem-title">Gemini Gem 共備助理</h3>
+              <p>
+                可將下方資料整理成提示詞，貼到已建立的 Gemini Gem，協助老師快速產生戶外教育路線草案、經費表、指標檢核與風險規劃。
+              </p>
+            </div>
+            <div class="planner-form">
+              <label>
+                年級與人數
+                <input id="planner-grade" type="text" value="五年級，學生36人，教師4人" />
+              </label>
+              <label>
+                路線主題
+                <input id="planner-topic" type="text" value="北台灣鐵道大探索" />
+              </label>
+              <label>
+                主要場域
+                <input id="planner-sites" type="text" value="長興國小、七堵車站、台北車站、猴硐、基隆港、海科館" />
+              </label>
+              <label>
+                經費重點
+                <input id="planner-budget" type="text" value="交通、門票、保險、餐食、材料、備用金" />
+              </label>
+              <label>
+                風險重點
+                <input id="planner-risk" type="text" value="交通轉乘、走失、天候、熱傷害、場館安全、緊急通訊" />
+              </label>
+            </div>
+            <textarea id="gem-prompt" readonly aria-label="Gemini Gem 規劃提示詞"></textarea>
+            <div class="gem-actions">
+              <button id="copy-gem-prompt" type="button">複製規劃提示詞</button>
+              <a id="open-gem-link" href="#" target="_blank" rel="noopener" aria-disabled="true">設定 Gem 連結後開啟</a>
+            </div>
+            <p id="copy-status" class="copy-status" aria-live="polite"></p>
+          </aside>
+        </div>
+
+        <div class="budget-risk-grid">
+          <article class="planning-table-card">
+            <h3>經費規劃表建議欄位</h3>
+            <div class="planning-table" role="table" aria-label="經費規劃表建議欄位">
+              <div role="row">
+                <strong role="columnheader">項目</strong>
+                <strong role="columnheader">估算方式</strong>
+                <strong role="columnheader">佐證</strong>
+              </div>
+              <div role="row"><span>交通</span><span>票價或車資 × 人數</span><span>票價截圖、報價單</span></div>
+              <div role="row"><span>場館</span><span>門票、導覽或體驗費</span><span>場館收費標準</span></div>
+              <div role="row"><span>餐食</span><span>單價 × 人數</span><span>菜單、收據</span></div>
+              <div role="row"><span>材料</span><span>實作材料與備品</span><span>採購清單</span></div>
+              <div role="row"><span>安全</span><span>保險、醫療與備用金</span><span>保單、急救物資清單</span></div>
+            </div>
+          </article>
+          <article class="planning-table-card">
+            <h3>風險規劃檢核</h3>
+            <div class="risk-checks">
+              <span>場地勘查</span>
+              <span>交通動線</span>
+              <span>健康調查</span>
+              <span>保險與同意書</span>
+              <span>天候備案</span>
+              <span>點名機制</span>
+              <span>緊急通訊</span>
+              <span>復原回饋</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="gallery" class="section gallery-section" aria-labelledby="gallery-title">
+        <div class="section-heading">
+          <p class="eyebrow">Photo Gallery</p>
+          <h2 id="gallery-title">成果照片</h2>
+          <p>以現有照片建立成果牆，呈現學生走讀、參訪與實作的學習現場。</p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="wide">
+            <img src="成果照片/遊基隆港.jpg" alt="學生在基隆車站前合影" />
+            <figcaption>基隆港與車站走讀</figcaption>
+          </figure>
+          <figure>
+            <img src="成果照片/猴硐遊1.jpg" alt="猴硐走讀活動照片" />
+            <figcaption>猴硐礦業與鐵道踏查</figcaption>
+          </figure>
+          <figure>
+            <img src="成果照片/猴硐遊 3.jpg" alt="學生在猴硐場域觀察" />
+            <figcaption>從場域觀察建立問題意識</figcaption>
+          </figure>
+          <figure>
+            <img src="成果照片/遊基隆港2.jpg" alt="基隆港戶外教育活動照片" />
+            <figcaption>港灣文化與城市發展</figcaption>
+          </figure>
+          <figure>
+            <img src="成果照片/邏輯編程機器人1.jpg" alt="學生進行邏輯編程機器人活動" />
+            <figcaption>STEAM 實作與科技素養</figcaption>
+          </figure>
+          <figure>
+            <img src="成果照片/361167_0.jpg" alt="戶外教育成果活動照片" />
+            <figcaption>學習歷程紀錄</figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>基隆市長興國小戶外教育成果網站</p>
+      <p>內容可依正式成果報告、學生作品與活動照片持續擴充。</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
