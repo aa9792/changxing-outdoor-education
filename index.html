@@ -241,20 +241,76 @@
 
       <section id="lesson-builder" class="section lesson-builder-section" aria-labelledby="lesson-builder-title">
         <div class="section-heading">
-          <p class="eyebrow">Lesson Data Builder</p>
+          <p class="eyebrow">Visual Lesson Builder</p>
           <h2 id="lesson-builder-title">新增教案</h2>
           <p>
-            老師填寫路線資料後，系統會自動整理成可複製的 <code>script.js</code> 資料格式；左側片段貼到 <code>routes</code> 陣列，右側片段貼到 <code>routeTemplates</code> 物件。
+            改成分步驟的教案規劃流程。老師先用熟悉的課程語言完成路線、任務、三階段活動與指標檢核，最後再產生可複製的 <code>script.js</code> 資料格式。
           </p>
         </div>
 
         <div class="lesson-builder-layout">
+          <aside class="lesson-preview-panel" aria-labelledby="lesson-preview-title">
+            <div class="builder-card sticky-output">
+              <p class="eyebrow">Live Preview</p>
+              <h3 id="lesson-preview-title">新路線名稱</h3>
+              <p id="lesson-preview-summary">以學校出發，串連地方場域，讓學生透過觀察、訪談與任務實作理解家鄉特色。</p>
+              <div class="preview-meta">
+                <span id="lesson-preview-theme">家鄉走讀與場域探究</span>
+                <span id="lesson-preview-grade">中高年級</span>
+              </div>
+              <div class="preview-route">
+                <strong>路線流程</strong>
+                <div id="lesson-preview-stops" class="preview-stops"></div>
+              </div>
+              <div class="preview-stats" aria-label="教案資料摘要">
+                <div>
+                  <strong id="lesson-preview-stop-count">4</strong>
+                  <span>站點</span>
+                </div>
+                <div>
+                  <strong id="lesson-preview-task-count">3</strong>
+                  <span>任務</span>
+                </div>
+                <div>
+                  <strong id="lesson-preview-check-count">3</strong>
+                  <span>檢核</span>
+                </div>
+              </div>
+              <p class="builder-hint">左側每填一步，這裡會即時整理成老師看得懂的路線摘要。</p>
+            </div>
+          </aside>
+
           <form class="lesson-form" aria-label="新增教案表單">
-            <div class="builder-card">
-              <h3>基本資料</h3>
+            <div class="lesson-step-tabs" role="tablist" aria-label="新增教案填寫步驟">
+              <button class="active" type="button" role="tab" aria-selected="true" data-builder-step="basics">
+                <span>1</span>基本資料
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-builder-step="route">
+                <span>2</span>路線任務
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-builder-step="stages">
+                <span>3</span>課程流程
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-builder-step="checklist">
+                <span>4</span>指標檢核
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-builder-step="output">
+                <span>5</span>產生資料
+              </button>
+            </div>
+
+            <div class="builder-card builder-step-panel active" data-builder-panel="basics">
+              <div class="panel-title-row">
+                <div>
+                  <p class="eyebrow">Step 1</p>
+                  <h3>先建立路線名片</h3>
+                </div>
+                <span>讓老師先知道這是哪一條課程路線</span>
+              </div>
               <div class="lesson-form-grid">
                 <label>
                   路線 ID
+                  <small>英數即可，例如 harbor-walk</small>
                   <input id="new-route-id" type="text" value="new-route" />
                 </label>
                 <label>
@@ -290,13 +346,23 @@
                 路線摘要
                 <textarea id="new-route-summary" rows="3">以學校出發，串連地方場域，讓學生透過觀察、訪談與任務實作理解家鄉特色。</textarea>
               </label>
+              <div class="lesson-panel-actions">
+                <button type="button" class="button primary" data-step-next="route">下一步：路線任務</button>
+              </div>
             </div>
 
-            <div class="builder-card">
-              <h3>路線與任務</h3>
+            <div class="builder-card builder-step-panel" data-builder-panel="route">
+              <div class="panel-title-row">
+                <div>
+                  <p class="eyebrow">Step 2</p>
+                  <h3>用站點排出路線</h3>
+                </div>
+                <span>一行一個項目，右側會自動變成流程卡</span>
+              </div>
               <div class="lesson-form-grid">
                 <label>
                   站點，一行一個
+                  <small>依照實際行程順序填寫</small>
                   <textarea id="new-route-stops" rows="6">長興國小
 七堵車站
 地方場域
@@ -304,30 +370,41 @@
                 </label>
                 <label>
                   學習任務，一行一個
+                  <small>寫學生要完成的觀察、紀錄或產出</small>
                   <textarea id="new-route-tasks" rows="6">完成場域觀察紀錄
 提出一個探究問題
 小組整理路線學習重點</textarea>
                 </label>
               </div>
+              <div class="lesson-panel-actions">
+                <button type="button" class="button secondary" data-step-next="basics">回到基本資料</button>
+                <button type="button" class="button primary" data-step-next="stages">下一步：課程流程</button>
+              </div>
             </div>
 
-            <div class="builder-card">
-              <h3>三階段課程模板</h3>
-              <div class="lesson-form-grid three-stage-grid">
-                <label>
-                  出發前，一行一個
+            <div class="builder-card builder-step-panel" data-builder-panel="stages">
+              <div class="panel-title-row">
+                <div>
+                  <p class="eyebrow">Step 3</p>
+                  <h3>把課程拆成三階段</h3>
+                </div>
+                <span>出發前、行程中、回到校園，各自填寫幾個清楚任務</span>
+              </div>
+              <div class="stage-card-grid">
+                <label class="stage-card">
+                  <span>出發前</span>
                   <textarea id="new-route-before" rows="5">閱讀路線背景資料
 討論觀察重點與安全提醒
 分組設定探究任務</textarea>
                 </label>
-                <label>
-                  行程中，一行一個
+                <label class="stage-card">
+                  <span>行程中</span>
                   <textarea id="new-route-during" rows="5">依站點完成觀察紀錄
 拍攝或速寫重要線索
 訪問或整理現場資訊</textarea>
                 </label>
-                <label>
-                  回到校園，一行一個
+                <label class="stage-card">
+                  <span>回到校園</span>
                   <textarea id="new-route-after" rows="5">整理小組發現
 完成成果海報或簡報
 回饋路線安全與學習收穫</textarea>
@@ -339,87 +416,58 @@
 小組簡報
 成果照片與反思短文</textarea>
               </label>
+              <div class="lesson-panel-actions">
+                <button type="button" class="button secondary" data-step-next="route">回到路線任務</button>
+                <button type="button" class="button primary" data-step-next="checklist">下一步：指標檢核</button>
+              </div>
             </div>
 
-            <div class="builder-card">
-              <h3>指標檢核結果</h3>
+            <div class="builder-card builder-step-panel" data-builder-panel="checklist">
+              <div class="panel-title-row">
+                <div>
+                  <p class="eyebrow">Step 4</p>
+                  <h3>完成指標檢核</h3>
+                </div>
+                <span>只填最能代表這條路線的三個檢核重點</span>
+              </div>
               <label>
                 檢核摘要
                 <textarea id="new-route-checklist-summary" rows="3">本路線能連結戶外教育與地方場域學習，並引導學生進行觀察、紀錄、合作與反思。</textarea>
               </label>
               <div class="checklist-builder-grid" aria-label="指標檢核項目">
-                <label>
-                  主題一
-                  <input id="check-topic-1" type="text" value="戶外教育" />
-                </label>
-                <label>
-                  指標一
-                  <input id="check-indicator-1" type="text" value="場域觀察與體驗學習" />
-                </label>
-                <label>
-                  結果一
-                  <select id="check-result-1">
-                    <option value="優">優</option>
-                    <option value="良" selected>良</option>
-                    <option value="可">可</option>
-                  </select>
-                </label>
-                <label>
-                  佐證一
-                  <input id="check-evidence-1" type="text" value="學生能完成觀察紀錄並分享場域發現。" />
-                </label>
-
-                <label>
-                  主題二
-                  <input id="check-topic-2" type="text" value="海洋教育" />
-                </label>
-                <label>
-                  指標二
-                  <input id="check-indicator-2" type="text" value="環境關懷與永續行動" />
-                </label>
-                <label>
-                  結果二
-                  <select id="check-result-2">
-                    <option value="優">優</option>
-                    <option value="良" selected>良</option>
-                    <option value="可">可</option>
-                  </select>
-                </label>
-                <label>
-                  佐證二
-                  <input id="check-evidence-2" type="text" value="能連結地方環境議題並提出可行行動。" />
-                </label>
-
-                <label>
-                  主題三
-                  <input id="check-topic-3" type="text" value="跨域學習" />
-                </label>
-                <label>
-                  指標三
-                  <input id="check-indicator-3" type="text" value="資料整理與表達分享" />
-                </label>
-                <label>
-                  結果三
-                  <select id="check-result-3">
-                    <option value="優">優</option>
-                    <option value="良" selected>良</option>
-                    <option value="可">可</option>
-                  </select>
-                </label>
-                <label>
-                  佐證三
-                  <input id="check-evidence-3" type="text" value="小組能將路線資料整理成成果作品。" />
-                </label>
+                <fieldset class="check-builder-card">
+                  <legend>檢核 1</legend>
+                  <label>主題<input id="check-topic-1" type="text" value="戶外教育" /></label>
+                  <label>指標<input id="check-indicator-1" type="text" value="場域觀察與體驗學習" /></label>
+                  <label>結果<select id="check-result-1"><option value="優">優</option><option value="良" selected>良</option><option value="可">可</option></select></label>
+                  <label>佐證<input id="check-evidence-1" type="text" value="學生能完成觀察紀錄並分享場域發現。" /></label>
+                </fieldset>
+                <fieldset class="check-builder-card">
+                  <legend>檢核 2</legend>
+                  <label>主題<input id="check-topic-2" type="text" value="海洋教育" /></label>
+                  <label>指標<input id="check-indicator-2" type="text" value="環境關懷與永續行動" /></label>
+                  <label>結果<select id="check-result-2"><option value="優">優</option><option value="良" selected>良</option><option value="可">可</option></select></label>
+                  <label>佐證<input id="check-evidence-2" type="text" value="能連結地方環境議題並提出可行行動。" /></label>
+                </fieldset>
+                <fieldset class="check-builder-card">
+                  <legend>檢核 3</legend>
+                  <label>主題<input id="check-topic-3" type="text" value="跨域學習" /></label>
+                  <label>指標<input id="check-indicator-3" type="text" value="資料整理與表達分享" /></label>
+                  <label>結果<select id="check-result-3"><option value="優">優</option><option value="良" selected>良</option><option value="可">可</option></select></label>
+                  <label>佐證<input id="check-evidence-3" type="text" value="小組能將路線資料整理成成果作品。" /></label>
+                </fieldset>
+              </div>
+              <div class="lesson-panel-actions">
+                <button type="button" class="button secondary" data-step-next="stages">回到課程流程</button>
+                <button type="button" class="button primary" data-step-next="output">下一步：產生資料</button>
               </div>
             </div>
-          </form>
 
-          <aside class="lesson-output-panel" aria-labelledby="lesson-output-title">
-            <div class="builder-card sticky-output">
+            <div class="builder-card builder-step-panel lesson-output-panel" data-builder-panel="output" aria-labelledby="lesson-output-title">
               <div>
                 <p class="eyebrow">Generated Script</p>
                 <h3 id="lesson-output-title">可複製的路線資料</h3>
-                <p>修改左側欄位後會即時更新。若要新增到網站，請把兩段資料分別貼入 <code>script.js</code> 的對應位置。</p>
+                <p>確認左側預覽無誤後，複製兩段資料貼入 <code>script.js</code>。第一段放進 <code>routes</code> 陣列，第二段放進 <code>routeTemplates</code> 物件。</p>
               </div>
               <div class="code-output-block">
                 <div class="code-title-row">
@@ -437,8 +485,11 @@
               </div>
               <button id="generate-lesson-code" class="button primary" type="button">重新整理格式</button>
               <p id="lesson-copy-status" class="copy-status" aria-live="polite"></p>
+              <div class="lesson-panel-actions">
+                <button type="button" class="button secondary" data-step-next="checklist">回到指標檢核</button>
+              </div>
             </div>
-          </aside>
+          </form>
         </div>
       </section>
 

@@ -544,6 +544,53 @@ function updateLessonCode() {
   templateOutput.value = buildTemplateDataSnippet();
 }
 
+function setText(selector, value) {
+  const target = document.querySelector(selector);
+  if (target) target.textContent = value;
+}
+
+function updateLessonPreview() {
+  const stops = lessonLines("new-route-stops");
+  const tasks = lessonLines("new-route-tasks");
+  const checks = lessonChecklistResults();
+  const stopList = stops.length ? stops : ["長興國小", "地方場域", "回到校園"];
+
+  setText("#lesson-preview-title", lessonValue("new-route-title") || "新路線名稱");
+  setText("#lesson-preview-summary", lessonValue("new-route-summary") || "請填入路線摘要。");
+  setText("#lesson-preview-theme", lessonValue("new-route-theme") || "家鄉走讀與場域探究");
+  setText("#lesson-preview-grade", lessonValue("new-route-grade") || "中高年級");
+  setText("#lesson-preview-stop-count", String(stopList.length));
+  setText("#lesson-preview-task-count", String(tasks.length));
+  setText("#lesson-preview-check-count", String(checks.length));
+
+  const stopContainer = document.querySelector("#lesson-preview-stops");
+  if (stopContainer) {
+    stopContainer.innerHTML = "";
+    stopList.forEach((stop, index) => {
+      const chip = document.createElement("span");
+      chip.textContent = `${index + 1}. ${stop}`;
+      stopContainer.appendChild(chip);
+    });
+  }
+}
+
+function setBuilderStep(step) {
+  const builder = document.querySelector("#lesson-builder");
+  if (!builder) return;
+
+  builder.querySelectorAll("[data-builder-step]").forEach((button) => {
+    const active = button.dataset.builderStep === step;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", active ? "true" : "false");
+  });
+
+  builder.querySelectorAll("[data-builder-panel]").forEach((panel) => {
+    panel.classList.toggle("active", panel.dataset.builderPanel === step);
+  });
+
+  builder.querySelector(`[data-builder-panel="${step}"]`)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
 async function copyLessonCode(sourceSelector, label) {
   const source = document.querySelector(sourceSelector);
   const status = document.querySelector("#lesson-copy-status");
@@ -564,8 +611,19 @@ function initLessonBuilder() {
   if (!builder) return;
 
   builder.querySelectorAll("input, textarea, select").forEach((field) => {
-    field.addEventListener("input", updateLessonCode);
-    field.addEventListener("change", updateLessonCode);
+    const updateBuilder = () => {
+      updateLessonCode();
+      updateLessonPreview();
+    };
+    field.addEventListener("input", updateBuilder);
+    field.addEventListener("change", updateBuilder);
+  });
+
+  builder.querySelectorAll("[data-builder-step]").forEach((button) => {
+    button.addEventListener("click", () => setBuilderStep(button.dataset.builderStep));
+  });
+  builder.querySelectorAll("[data-step-next]").forEach((button) => {
+    button.addEventListener("click", () => setBuilderStep(button.dataset.stepNext));
   });
 
   document.querySelector("#generate-lesson-code")?.addEventListener("click", updateLessonCode);
@@ -575,6 +633,8 @@ function initLessonBuilder() {
   );
 
   updateLessonCode();
+  updateLessonPreview();
+  setBuilderStep("basics");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
