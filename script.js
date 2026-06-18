@@ -467,9 +467,120 @@ function initGemPlanner() {
   });
 }
 
+function lessonValue(id) {
+  return document.querySelector(`#${id}`)?.value.trim() || "";
+}
+
+function lessonLines(id) {
+  return lessonValue(id)
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function lessonNumber(id, fallback) {
+  const value = Number(lessonValue(id));
+  return Number.isFinite(value) ? value : fallback;
+}
+
+function lessonChecklistResults() {
+  return [1, 2, 3]
+    .map((index) => ({
+      topic: lessonValue(`check-topic-${index}`),
+      indicator: lessonValue(`check-indicator-${index}`),
+      result: lessonValue(`check-result-${index}`) || "良",
+      evidence: lessonValue(`check-evidence-${index}`),
+    }))
+    .filter((item) => item.topic || item.indicator || item.evidence);
+}
+
+function normalizedRouteId() {
+  const rawId = lessonValue("new-route-id") || lessonValue("new-route-title") || "new-route";
+  return rawId
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-_]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "") || "new-route";
+}
+
+function buildRouteDataSnippet() {
+  const routeData = {
+    id: normalizedRouteId(),
+    title: lessonValue("new-route-title") || "新路線名稱",
+    theme: lessonValue("new-route-theme") || "家鄉走讀與場域探究",
+    grade: lessonValue("new-route-grade") || "中高年級",
+    image: lessonValue("new-route-image") || "成果照片/照片檔名.jpg",
+    document: lessonValue("new-route-document") || "路線資料/教案檔名.pdf",
+    color: "#2f6f73",
+    summary: lessonValue("new-route-summary") || "請填入路線摘要。",
+    stops: lessonLines("new-route-stops"),
+    tasks: lessonLines("new-route-tasks"),
+    coords: [[lessonNumber("new-route-lat", 25.094), lessonNumber("new-route-lng", 121.713)]],
+  };
+
+  return `${JSON.stringify(routeData, null, 2)},`;
+}
+
+function buildTemplateDataSnippet() {
+  const templateData = {
+    before: lessonLines("new-route-before"),
+    during: lessonLines("new-route-during"),
+    after: lessonLines("new-route-after"),
+    outcomes: lessonLines("new-route-outcomes"),
+    checklistSummary: lessonValue("new-route-checklist-summary") || "請填入指標檢核摘要。",
+    checklistResults: lessonChecklistResults(),
+  };
+
+  return `${JSON.stringify(normalizedRouteId())}: ${JSON.stringify(templateData, null, 2)},`;
+}
+
+function updateLessonCode() {
+  const routeOutput = document.querySelector("#route-code-output");
+  const templateOutput = document.querySelector("#template-code-output");
+  if (!routeOutput || !templateOutput) return;
+
+  routeOutput.value = buildRouteDataSnippet();
+  templateOutput.value = buildTemplateDataSnippet();
+}
+
+async function copyLessonCode(sourceSelector, label) {
+  const source = document.querySelector(sourceSelector);
+  const status = document.querySelector("#lesson-copy-status");
+  if (!source) return;
+
+  source.select();
+  try {
+    await navigator.clipboard.writeText(source.value);
+    if (status) status.textContent = `${label}已複製，可以貼到 script.js。`;
+  } catch {
+    document.execCommand("copy");
+    if (status) status.textContent = `${label}已選取，若未自動複製可按 Ctrl+C。`;
+  }
+}
+
+function initLessonBuilder() {
+  const builder = document.querySelector("#lesson-builder");
+  if (!builder) return;
+
+  builder.querySelectorAll("input, textarea, select").forEach((field) => {
+    field.addEventListener("input", updateLessonCode);
+    field.addEventListener("change", updateLessonCode);
+  });
+
+  document.querySelector("#generate-lesson-code")?.addEventListener("click", updateLessonCode);
+  document.querySelector("#copy-route-code")?.addEventListener("click", () => copyLessonCode("#route-code-output", "routes 陣列片段"));
+  document.querySelector("#copy-template-code")?.addEventListener("click", () =>
+    copyLessonCode("#template-code-output", "routeTemplates 物件片段")
+  );
+
+  updateLessonCode();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initRouteButtons();
   initMap();
   initGemPlanner();
+  initLessonBuilder();
   selectRoute(selectedRoute, false, false);
 });

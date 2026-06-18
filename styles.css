@@ -1024,6 +1024,152 @@ a {
   font-weight: 900;
 }
 
+.lesson-builder-section {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.68), rgba(248, 245, 237, 0.92)),
+    var(--paper);
+}
+
+.lesson-builder-section code {
+  padding: 1px 5px;
+  background: #eef5f1;
+  border: 1px solid #d8e4dd;
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
+.lesson-builder-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.lesson-form {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.builder-card {
+  min-width: 0;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(23, 32, 42, 0.08);
+}
+
+.builder-card h3 {
+  margin: 0 0 14px;
+  font-size: 1.2rem;
+}
+
+.builder-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.lesson-form-grid,
+.checklist-builder-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.three-stage-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.lesson-form label,
+.lesson-output-panel label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 900;
+}
+
+.lesson-form input,
+.lesson-form textarea,
+.lesson-form select,
+.code-output {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fbfaf5;
+  font: inherit;
+}
+
+.lesson-form input,
+.lesson-form select {
+  min-height: 42px;
+  padding: 8px 10px;
+}
+
+.lesson-form textarea,
+.code-output {
+  padding: 10px 12px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.lesson-form .builder-card > label,
+.lesson-form .lesson-form-grid + label,
+.lesson-form .three-stage-grid + label {
+  margin-top: 12px;
+}
+
+.lesson-output-panel {
+  min-width: 0;
+}
+
+.sticky-output {
+  display: grid;
+  gap: 16px;
+  position: sticky;
+  top: 96px;
+}
+
+.code-output-block {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.code-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.code-title-row button {
+  min-height: 36px;
+  padding: 7px 12px;
+  color: #fff;
+  background: var(--rail);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.code-output {
+  min-height: 220px;
+  white-space: pre;
+  overflow: auto;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.88rem;
+}
+
+.lesson-output-panel .button {
+  justify-self: stretch;
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1107,11 +1253,14 @@ a {
   .checklist-grid,
   .design-layout,
   .design-framework,
-  .budget-risk-grid {
+  .budget-risk-grid,
+  .lesson-builder-layout,
+  .three-stage-grid {
     grid-template-columns: 1fr;
   }
 
-  .gem-panel {
+  .gem-panel,
+  .sticky-output {
     position: static;
   }
 
@@ -1158,7 +1307,9 @@ a {
 
   .hero-actions,
   .tabs,
-  .gem-actions {
+  .gem-actions,
+  .lesson-form-grid,
+  .checklist-builder-grid {
     grid-template-columns: 1fr;
     display: grid;
   }
