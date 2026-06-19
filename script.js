@@ -124,7 +124,7 @@ const routes = [
     title: "海科館戶外教育",
     theme: "海洋生態與 STEAM",
     grade: "二年級",
-    image: "成果照片/361171_0.jpg",
+    image: "成果照片/海科館.jpg",
     document: "長興國小海科館戶外教育計畫.pdf",
     color: "#305f9f",
     summary:
