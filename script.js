@@ -4,7 +4,7 @@ const routes = [
     title: "鐵道尋蹤：我們的家鄉線",
     theme: "七堵在地走讀",
     grade: "校本鐵道課程",
-    image: "成果照片/361167_0.jpg",
+    image: "成果照片/我的家鄉線.mp4",
     document: "鐵道尋蹤我們的家鄉線：.pdf",
     color: "#2f6f73",
     summary:
