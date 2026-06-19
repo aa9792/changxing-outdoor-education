@@ -100,7 +100,7 @@ const routes = [
     title: "三峽與鐵道：穿越時空的運輸之旅",
     theme: "歷史街區與產業運輸",
     grade: "四年級",
-    image: "成果照片/361170_0.jpg",
+    image: "成果照片/三峽.jpg",
     document: "三峽與鐵道：穿越時空的運輸之旅.pdf",
     color: "#5f8f3f",
     summary:
