@@ -74,7 +74,7 @@ const routes = [
     title: "軌道領航員：智慧交通運作與多鐵樞紐見習之旅",
     theme: "智慧交通與多鐵樞紐",
     grade: "五、六年級",
-    image: "成果照片/361169_0.jpg",
+    image: "成果照片/捷運行控中心.jpg",
     document: "軌道領航員：智慧交通運作與多鐵樞紐見習之旅.docx",
     color: "#c98722",
     summary:
