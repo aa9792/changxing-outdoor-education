@@ -25,6 +25,7 @@
         <a href="#routes">路線介紹</a>
         <a href="#design">課程設計</a>
         <a href="#lesson-builder">新增教案</a>
+        <a href="#notice-generator">通知單</a>
         <a href="#gallery">成果照片</a>
       </nav>
     </header>
@@ -493,6 +494,85 @@
         </div>
       </section>
 
+      <section id="notice-generator" class="section notice-generator-section" aria-labelledby="notice-generator-title">
+        <div class="section-heading">
+          <p class="eyebrow">Parent Notice Generator</p>
+          <h2 id="notice-generator-title">戶外教育通知單產生器</h2>
+          <p>
+            老師可依班級與路線快速產生家長通知單。填妥出發時間、注意事項與攜帶物品後，右側會同步預覽，最後可用瀏覽器列印功能下載 PDF。
+          </p>
+        </div>
+
+        <div class="notice-generator-layout">
+          <form class="notice-form-card" aria-label="戶外教育通知單表單">
+            <div class="notice-form-header">
+              <div>
+                <p class="eyebrow">Notice Setup</p>
+                <h3>通知單內容</h3>
+              </div>
+              <span>填寫後即時預覽</span>
+            </div>
+
+            <div class="notice-field-grid">
+              <label>
+                班級
+                <select id="notice-class">
+                  <option value="一年級">一年級</option>
+                  <option value="二年級">二年級</option>
+                  <option value="三年級">三年級</option>
+                  <option value="四年級">四年級</option>
+                  <option value="五年級">五年級</option>
+                  <option value="六年級">六年級</option>
+                </select>
+              </label>
+
+              <label>
+                路線名稱
+                <select id="notice-route"></select>
+              </label>
+
+              <label>
+                出發時間
+                <input id="notice-departure" type="datetime-local" />
+              </label>
+
+              <label>
+                集合地點
+                <input id="notice-meeting" type="text" value="長興國小穿堂" />
+              </label>
+            </div>
+
+            <label>
+              注意事項
+              <textarea id="notice-notes" rows="6">請準時到校集合，並穿著學校運動服或適合戶外活動的服裝。
+活動過程請聽從老師與導覽人員指示，不單獨行動。
+若有身體不適、暈車或特殊照護需求，請事先告知導師。
+請於活動前一天確認天氣，並依需要攜帶雨具或防曬用品。</textarea>
+            </label>
+
+            <label>
+              攜帶物品
+              <textarea id="notice-items" rows="5">水壺
+健保卡
+鉛筆盒
+學習單或紀錄本
+雨具或遮陽帽
+個人藥品</textarea>
+            </label>
+
+            <div class="notice-actions">
+              <button id="refresh-notice-preview" class="button secondary" type="button">更新預覽</button>
+              <button id="download-notice-pdf" class="button primary" type="button">下載 PDF</button>
+            </div>
+            <p class="notice-print-hint">按下下載 PDF 後，請在列印視窗選擇「另存為 PDF」。</p>
+          </form>
+
+          <aside class="notice-preview-shell" aria-label="通知單預覽">
+            <div id="notice-preview" class="notice-preview-card"></div>
+          </aside>
+        </div>
+      </section>
+
       <section id="gallery" class="section gallery-section" aria-labelledby="gallery-title">
         <div class="section-heading">
           <p class="eyebrow">Photo Gallery</p>
@@ -533,6 +613,6 @@
       <p>內容可依正式成果報告、學生作品與活動照片持續擴充。</p>
     </footer>
 
-    <script src="script.js?v=20260619-4"></script>
+    <script src="script.js?v=20260619-5"></script>
   </body>
 </html>

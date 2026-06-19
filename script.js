@@ -252,7 +252,7 @@ const routeTemplates = {
 
 let selectedRoute = routes[0].id;
 let routeLayers = new Map();
-const ASSET_VERSION = "20260619-4";
+const ASSET_VERSION = "20260619-5";
 const GEMINI_GEM_URL = "https://gemini.google.com/gem/1iUpTQAtI5qmsaB3sjeQpnixcilM1IgFQ?usp=sharing";
 
 function versionedAsset(path) {
@@ -682,10 +682,147 @@ function initLessonBuilder() {
   setBuilderStep("basics");
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function noticeValue(id) {
+  return document.querySelector(`#${id}`)?.value.trim() || "";
+}
+
+function noticeLines(id) {
+  return noticeValue(id)
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
+function formatNoticeDate(value) {
+  if (!value) return "尚未設定";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  const weekday = ["日", "一", "二", "三", "四", "五", "六"][date.getDay()];
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+  return `${date.getFullYear()}年${month}月${day}日（${weekday}）${hour}:${minute}`;
+}
+
+function renderNoticeList(items, fallback) {
+  const list = items.length ? items : [fallback];
+  return list.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+}
+
+function updateNoticePreview() {
+  const preview = document.querySelector("#notice-preview");
+  if (!preview) return;
+
+  const route = routeById(noticeValue("notice-route") || routes[0].id);
+  const notes = noticeLines("notice-notes");
+  const items = noticeLines("notice-items");
+  const departure = formatNoticeDate(noticeValue("notice-departure"));
+  const meeting = noticeValue("notice-meeting") || "長興國小穿堂";
+  const className = noticeValue("notice-class") || "未選擇";
+  const routeTemplate = routeTemplates[route.id];
+  const stops = route.stops?.length ? route.stops.join(" → ") : "依教師規劃路線進行";
+
+  preview.innerHTML = `
+    <article class="notice-a4">
+      <header class="notice-title-block">
+        <p>長興國小戶外教育</p>
+        <h3>戶外教育活動通知單</h3>
+        <span>${escapeHtml(className)}｜${escapeHtml(route.title)}</span>
+      </header>
+
+      <section class="notice-greeting">
+        <p>親愛的家長您好：</p>
+        <p>本班將進行「${escapeHtml(route.title)}」戶外教育活動，透過實地踏查、觀察紀錄與任務學習，帶領孩子從生活場域理解家鄉、交通、港灣與海洋教育。</p>
+      </section>
+
+      <section class="notice-meta-grid">
+        <div>
+          <strong>班級</strong>
+          <span>${escapeHtml(className)}</span>
+        </div>
+        <div>
+          <strong>出發時間</strong>
+          <span>${escapeHtml(departure)}</span>
+        </div>
+        <div>
+          <strong>集合地點</strong>
+          <span>${escapeHtml(meeting)}</span>
+        </div>
+        <div>
+          <strong>路線主題</strong>
+          <span>${escapeHtml(route.theme || "戶外教育")}</span>
+        </div>
+      </section>
+
+      <section class="notice-section-block">
+        <h4>活動路線</h4>
+        <p>${escapeHtml(stops)}</p>
+      </section>
+
+      <section class="notice-section-block">
+        <h4>學習重點</h4>
+        <p>${escapeHtml(route.summary || routeTemplate?.overview || "依路線課程設計進行觀察、記錄與分享。")}</p>
+      </section>
+
+      <section class="notice-two-columns">
+        <div class="notice-section-block">
+          <h4>注意事項</h4>
+          <ol>${renderNoticeList(notes, "請依教師說明準時集合並注意安全。")}</ol>
+        </div>
+        <div class="notice-section-block">
+          <h4>攜帶物品</h4>
+          <ol>${renderNoticeList(items, "水壺、健保卡與個人物品。")}</ol>
+        </div>
+      </section>
+
+      <footer class="notice-signature">
+        <span>導師：________________</span>
+        <span>家長簽名：________________</span>
+      </footer>
+    </article>
+  `;
+}
+
+function initNoticeGenerator() {
+  const generator = document.querySelector("#notice-generator");
+  if (!generator) return;
+
+  const routeSelect = document.querySelector("#notice-route");
+  if (routeSelect) {
+    routeSelect.innerHTML = routes.map((route) => `<option value="${escapeHtml(route.id)}">${escapeHtml(route.title)}</option>`).join("");
+  }
+
+  generator.querySelectorAll("input, textarea, select").forEach((field) => {
+    field.addEventListener("input", updateNoticePreview);
+    field.addEventListener("change", updateNoticePreview);
+  });
+
+  document.querySelector("#refresh-notice-preview")?.addEventListener("click", updateNoticePreview);
+  document.querySelector("#download-notice-pdf")?.addEventListener("click", () => {
+    updateNoticePreview();
+    document.body.classList.add("printing-notice");
+    window.print();
+  });
+
+  window.addEventListener("afterprint", () => document.body.classList.remove("printing-notice"));
+  updateNoticePreview();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initRouteButtons();
   initMap();
   initGemPlanner();
   initLessonBuilder();
+  initNoticeGenerator();
   selectRoute(selectedRoute, false, false);
 });
