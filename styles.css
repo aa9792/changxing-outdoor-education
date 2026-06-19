@@ -674,11 +674,16 @@ a {
   align-items: stretch;
 }
 
-.route-template-hero img {
+.route-template-hero img,
+.route-template-hero video {
   width: 100%;
   height: 300px;
   object-fit: cover;
   border-radius: 8px;
+}
+
+.route-template-hero video {
+  background: #111;
 }
 
 .template-block,
@@ -1486,7 +1491,8 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .route-template-hero img {
+  .route-template-hero img,
+  .route-template-hero video {
     height: 260px;
   }
 
@@ -1553,7 +1559,8 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .route-template-hero img {
+  .route-template-hero img,
+  .route-template-hero video {
     height: 220px;
   }
 

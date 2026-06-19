@@ -252,11 +252,25 @@ const routeTemplates = {
 
 let selectedRoute = routes[0].id;
 let routeLayers = new Map();
-const ASSET_VERSION = "20260619-3";
+const ASSET_VERSION = "20260619-4";
 const GEMINI_GEM_URL = "https://gemini.google.com/gem/1iUpTQAtI5qmsaB3sjeQpnixcilM1IgFQ?usp=sharing";
 
 function versionedAsset(path) {
   return `${path}?v=${ASSET_VERSION}`;
+}
+
+function isVideoAsset(path) {
+  return /\.(mp4|webm|ogg)$/i.test(path);
+}
+
+function renderRouteMedia(route) {
+  const mediaSource = versionedAsset(route.image);
+  if (isVideoAsset(route.image)) {
+    const poster = route.poster ? ` poster="${versionedAsset(route.poster)}"` : "";
+    return `<video class="route-media" src="${mediaSource}" controls muted playsinline preload="metadata"${poster} aria-label="${route.title}成果影片"></video>`;
+  }
+
+  return `<img class="route-media" src="${mediaSource}" alt="${route.title}成果照片" />`;
 }
 
 function routeById(id) {
@@ -316,7 +330,7 @@ function renderRoutePanel(route) {
             <span>成果文件連結</span>
           </div>
         </div>
-        <img src="${versionedAsset(route.image)}" alt="${route.title}成果照片" />
+        ${renderRouteMedia(route)}
       </div>
 
       <section class="template-block">
@@ -541,7 +555,7 @@ function buildRouteDataSnippet() {
     title: lessonValue("new-route-title") || "新路線名稱",
     theme: lessonValue("new-route-theme") || "家鄉走讀與場域探究",
     grade: lessonValue("new-route-grade") || "中高年級",
-    image: lessonValue("new-route-image") || "成果照片/照片檔名.jpg",
+    image: lessonValue("new-route-image") || "成果照片/照片或影片檔名.jpg",
     document: lessonValue("new-route-document") || "路線資料/教案檔名.pdf",
     color: "#2f6f73",
     summary: lessonValue("new-route-summary") || "請填入路線摘要。",
