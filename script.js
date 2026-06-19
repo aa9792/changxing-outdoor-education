@@ -51,7 +51,7 @@ const routes = [
     title: "軌道傳承．海港共生",
     theme: "礦業、鐵道與港灣",
     grade: "優質路線",
-    image: "成果照片/遊基隆港2.jpg",
+    image: "成果照片/海港共生.mp4",
     document: "軌道傳承．海港共生：家鄉文化跨域深度走讀計畫.pdf",
     color: "#af563d",
     summary:
@@ -252,7 +252,7 @@ const routeTemplates = {
 
 let selectedRoute = routes[0].id;
 let routeLayers = new Map();
-const ASSET_VERSION = "20260619-6";
+const ASSET_VERSION = "20260619-7";
 const GEMINI_GEM_URL = "https://gemini.google.com/gem/1iUpTQAtI5qmsaB3sjeQpnixcilM1IgFQ?usp=sharing";
 
 function versionedAsset(path) {
