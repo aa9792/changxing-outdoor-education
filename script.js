@@ -252,7 +252,12 @@ const routeTemplates = {
 
 let selectedRoute = routes[0].id;
 let routeLayers = new Map();
+const ASSET_VERSION = "20260619-3";
 const GEMINI_GEM_URL = "https://gemini.google.com/gem/1iUpTQAtI5qmsaB3sjeQpnixcilM1IgFQ?usp=sharing";
+
+function versionedAsset(path) {
+  return `${path}?v=${ASSET_VERSION}`;
+}
 
 function routeById(id) {
   return routes.find((route) => route.id === id) || routes[0];
@@ -311,7 +316,7 @@ function renderRoutePanel(route) {
             <span>成果文件連結</span>
           </div>
         </div>
-        <img src="${route.image}" alt="${route.title}成果照片" />
+        <img src="${versionedAsset(route.image)}" alt="${route.title}成果照片" />
       </div>
 
       <section class="template-block">
@@ -419,7 +424,7 @@ function initMap() {
   const mapEl = document.querySelector("#route-map");
   mapEl.innerHTML = `
     <figure class="route-map-figure">
-      <img src="北台灣鐵道大探索.png" alt="北台灣鐵道大探索戶外教育地圖" />
+      <img src="${versionedAsset("北台灣鐵道大探索.png")}" alt="北台灣鐵道大探索戶外教育地圖" />
     </figure>
   `;
 }
