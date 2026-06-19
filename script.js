@@ -27,7 +27,7 @@ const routes = [
     title: "聽見海浪與鐵道的交響：三貂角極東點探險行",
     theme: "海浪、鐵道與極東點探究",
     grade: "中、高年級版本",
-    image: "成果照片/361168_0.jpg",
+    image: "成果照片/極東點探險.mp4",
     document: "聽見海浪與鐵道的交響：三貂角極東點探險行 (中、高年級版本).docx",
     color: "#126c9a",
     summary:
