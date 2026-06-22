@@ -145,6 +145,10 @@ const routes = [
   }
 ];
 
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
 const routeTemplates = {
   "home-rail": {
     before: ["閱讀七堵車站與校園周邊地圖。", "觀察老照片，討論家鄉地景的變與不變。"],
@@ -252,7 +256,7 @@ const routeTemplates = {
 
 let selectedRoute = routes[0].id;
 let routeLayers = new Map();
-const ASSET_VERSION = "20260619-9";
+const ASSET_VERSION = "20260622-1";
 const GEMINI_GEM_URL = "https://gemini.google.com/gem/1iUpTQAtI5qmsaB3sjeQpnixcilM1IgFQ?usp=sharing";
 
 function versionedAsset(path) {
@@ -619,7 +623,7 @@ function updateLessonPreview() {
   }
 }
 
-function setBuilderStep(step) {
+function setBuilderStep(step, shouldScroll = true) {
   const builder = document.querySelector("#lesson-builder");
   if (!builder) return;
 
@@ -633,7 +637,9 @@ function setBuilderStep(step) {
     panel.classList.toggle("active", panel.dataset.builderPanel === step);
   });
 
-  builder.querySelector(`[data-builder-panel="${step}"]`)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  if (shouldScroll) {
+    builder.querySelector(`[data-builder-panel="${step}"]`)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
 }
 
 async function copyLessonCode(sourceSelector, label) {
@@ -679,7 +685,7 @@ function initLessonBuilder() {
 
   updateLessonCode();
   updateLessonPreview();
-  setBuilderStep("basics");
+  setBuilderStep("basics", false);
 }
 
 function escapeHtml(value) {
@@ -825,4 +831,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initLessonBuilder();
   initNoticeGenerator();
   selectRoute(selectedRoute, false, false);
+  if (!window.location.hash) {
+    window.scrollTo(0, 0);
+  }
 });
