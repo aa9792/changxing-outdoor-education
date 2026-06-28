@@ -256,7 +256,7 @@ const routeTemplates = {
 
 let selectedRoute = routes[0].id;
 let routeLayers = new Map();
-const ASSET_VERSION = "20260628-1";
+const ASSET_VERSION = "20260628-2";
 const GEMINI_GEM_URL = "https://gemini.google.com/gem/1iUpTQAtI5qmsaB3sjeQpnixcilM1IgFQ?usp=sharing";
 
 function versionedAsset(path) {
@@ -442,7 +442,7 @@ function initMap() {
   const mapEl = document.querySelector("#route-map");
   mapEl.innerHTML = `
     <figure class="route-map-figure">
-      <img src="${versionedAsset("北台灣鐵道大探索.png")}" alt="北台灣鐵道大探索戶外教育地圖" />
+      <img src="${versionedAsset("northern-taiwan-rail-map.png")}" alt="北台灣鐵道大探索戶外教育地圖" />
     </figure>
   `;
 }
