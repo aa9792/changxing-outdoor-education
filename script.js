@@ -256,7 +256,7 @@ const routeTemplates = {
 
 let selectedRoute = routes[0].id;
 let routeLayers = new Map();
-const ASSET_VERSION = "20260622-1";
+const ASSET_VERSION = "20260628-1";
 const GEMINI_GEM_URL = "https://gemini.google.com/gem/1iUpTQAtI5qmsaB3sjeQpnixcilM1IgFQ?usp=sharing";
 
 function versionedAsset(path) {
@@ -346,15 +346,15 @@ function renderRoutePanel(route) {
 
       <section class="template-grid" aria-label="課程三階段">
         <article>
-          <h4>出發前</h4>
+          <h4>課程實施前</h4>
           <ul>${template.before.map((item) => `<li>${item}</li>`).join("")}</ul>
         </article>
         <article>
-          <h4>行程中</h4>
+          <h4>課程實施中</h4>
           <ul>${template.during.map((item) => `<li>${item}</li>`).join("")}</ul>
         </article>
         <article>
-          <h4>回到校園</h4>
+          <h4>課程實施後</h4>
           <ul>${template.after.map((item) => `<li>${item}</li>`).join("")}</ul>
         </article>
       </section>
@@ -471,7 +471,7 @@ function buildGemPrompt() {
 
 請依下列格式輸出：
 1. 課程理念與學習目標
-2. 路線設計規劃：出發前、行程中、回到校園三階段
+2. 路線設計規劃：課程實施前、課程實施中、課程實施後三階段
 3. 行程時間表與站點學習任務
 4. 經費規劃表：項目、估算方式、單價、數量、總價、備註
 5. 國小階段戶外及海洋教育學習主題輔導指標檢核：學習主題、對應指標、檢核表現、佐證資料
@@ -602,7 +602,7 @@ function updateLessonPreview() {
   const stops = lessonLines("new-route-stops");
   const tasks = lessonLines("new-route-tasks");
   const checks = lessonChecklistResults();
-  const stopList = stops.length ? stops : ["長興國小", "地方場域", "回到校園"];
+  const stopList = stops.length ? stops : ["長興國小", "地方場域", "課程實施後"];
 
   setText("#lesson-preview-title", lessonValue("new-route-title") || "新路線名稱");
   setText("#lesson-preview-summary", lessonValue("new-route-summary") || "請填入路線摘要。");
