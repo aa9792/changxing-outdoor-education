@@ -254,9 +254,42 @@ const routeTemplates = {
   }
 };
 
+const routeRiskManagement = {
+  "home-rail": {
+    environment: ["車站周邊車流、人行穿越與月台邊界。", "戶外步行時的雨天濕滑、日曬與臨時施工動線。"],
+    equipment: ["識別背心、帽子、水壺與簡易急救包需事前確認。", "學生紀錄板、平板或相機需防摔並避免行走時操作。"],
+    human: ["低年級學生容易被車站聲響、人潮或商店吸引而分心。", "隊伍移動需固定前導、押隊與小組點名節奏。"]
+  },
+  "metro-tech": {
+    environment: ["海岸潮間帶、舊草嶺隧道與三貂角周邊需留意潮汐、風浪、落石與路面濕滑。", "單車或步行路段需避開車流交會、坡道與視線死角。"],
+    equipment: ["防滑鞋、雨具、防曬用品、飲水與行動電源需列入檢核。", "單車活動需檢查安全帽、煞車、車燈與反光配件。"],
+    human: ["學生可能因興奮、拍照或追趕同伴而忽略海岸邊界。", "須建立分組隊形、潮汐撤離時間、落隊回報與緊急集合點。"]
+  },
+  "rail-harbor": {
+    environment: ["礦區、港區與車站周邊可能有人車混流、階梯高低差與臨水邊界。", "港邊風勢、濕滑地面與大型車輛進出需列為高關注。"],
+    equipment: ["安全帽或導覽場域指定裝備需依場館規定確認。", "飲水、雨具、識別背心與緊急聯絡名冊需由教師分工攜帶。"],
+    human: ["跨區移動時容易因轉乘、人潮或拍照造成隊伍拉長。", "需明確規範拍照範圍、港區邊界、點名時機與學生如廁管理。"]
+  },
+  "multi-rail": {
+    environment: ["多鐵轉乘場域包含車站大廳、月台、手扶梯、機廠與機場動線，人流密度高。", "室內外場域切換時需注意溫差、雨天濕滑與集合點辨識。"],
+    equipment: ["悠遊卡或票券、學生名冊、手機通訊、識別背心與備用電源需事前檢核。", "參訪機廠或行控中心需遵守場域規定，不攜帶影響安全的物品。"],
+    human: ["轉乘節奏快，學生可能因月台標示、商店或廁所動線而脫隊。", "需安排小組長、前中後段教師、定點清點與走失應變口令。"]
+  },
+  sanxia: {
+    environment: ["老街人潮、車流交會、廟埕階梯與藍染場域濕滑地面需留意。", "戶外步行與室內手作轉換時需確認動線、集合點與避雨位置。"],
+    equipment: ["藍染材料、手作工具與食物體驗需確認使用方式與過敏提醒。", "圍裙、手套、濕紙巾、飲水與個人藥品需事前備妥。"],
+    human: ["學生可能因購物、人潮或手作材料而分心。", "需規範小組行動範圍、金錢使用、工具操作與清潔收拾責任。"]
+  },
+  marine: {
+    environment: ["步道、海岸林、場館樓梯與劇場座位需注意濕滑、跌倒與動線擁擠。", "若安排戶外觀察，需留意降雨、日曬、蚊蟲與海風。"],
+    equipment: ["水壺、帽子、雨具、防蚊用品與個人藥品需列入攜帶檢核。", "DIY 材料、剪刀或黏著工具需由教師統一發放與回收。"],
+    human: ["低年級學生容易在場館展區、兒童廳或劇場出入口分散。", "需固定小組教師、如廁陪同、場館規範提醒與定時點名。"]
+  }
+};
+
 let selectedRoute = routes[0].id;
 let routeLayers = new Map();
-const ASSET_VERSION = "20260628-2";
+const ASSET_VERSION = "20260628-3";
 const GEMINI_GEM_URL = "https://gemini.google.com/gem/1iUpTQAtI5qmsaB3sjeQpnixcilM1IgFQ?usp=sharing";
 
 function versionedAsset(path) {
@@ -279,6 +312,51 @@ function renderRouteMedia(route) {
 
 function routeById(id) {
   return routes.find((route) => route.id === id) || routes[0];
+}
+
+function renderRiskItems(items) {
+  return items.map((item) => `<li>${item}</li>`).join("");
+}
+
+function renderRiskCard(title, label, risks, controls) {
+  return `
+    <article class="risk-card">
+      <div>
+        <span>${label}</span>
+        <h5>${title}</h5>
+      </div>
+      <div>
+        <strong>風險因子</strong>
+        <ul>${renderRiskItems(risks)}</ul>
+      </div>
+      <div>
+        <strong>管理作法</strong>
+        <ul>${renderRiskItems(controls)}</ul>
+      </div>
+    </article>
+  `;
+}
+
+function renderRiskManagement(route) {
+  const risk = routeRiskManagement[route.id];
+  if (!risk) return "";
+
+  return `
+    <section class="risk-management" aria-label="風險管理檢視">
+      <div class="risk-heading">
+        <div>
+          <p class="eyebrow">Risk Management</p>
+          <h4>風險管理檢視</h4>
+        </div>
+        <p>依事故三大潛在成因檢視：環境、裝備與人為。當風險要素疊加時，危險會相乘而非相加，因此以事前辨識、現場控管與回報機制降低風險。</p>
+      </div>
+      <div class="risk-grid">
+        ${renderRiskCard("環境", "Environment", risk.environment, ["活動前確認天候、地形、水位、交通與場地開放狀態。", "規劃替代路線、集合點、避雨點與即時撤離標準。"])}
+        ${renderRiskCard("裝備", "Equipment", risk.equipment, ["建立出發前裝備檢核表，指定教師負責急救、通訊與票券。", "所有器材依場域規範使用，活動後清點回收並記錄缺漏。"])}
+        ${renderRiskCard("人為", "Human Factors", risk.human, ["進行安全宣導、分組編制、點名節奏與緊急口令演練。", "教師採前導、中段、押隊配置，隨時觀察學生疲勞、恐懼、分心與冒險行為。"])}
+      </div>
+    </section>
+  `;
 }
 
 function initRouteButtons() {
@@ -369,6 +447,8 @@ function renderRoutePanel(route) {
           <ul>${template.outcomes.map((item) => `<li>${item}</li>`).join("")}</ul>
         </article>
       </section>
+
+      ${renderRiskManagement(route)}
 
       <section class="checklist-review" aria-label="國小階段戶外及海洋教育學習主題輔導指標檢核表檢視結果">
         <div class="checklist-heading">

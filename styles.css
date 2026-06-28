@@ -730,6 +730,85 @@ a {
   font-weight: 800;
 }
 
+.risk-management {
+  padding: 20px;
+  background: #fbfaf5;
+  border: 1px solid #d8d2c3;
+  border-radius: 8px;
+}
+
+.risk-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(280px, 1fr);
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+.risk-heading h4,
+.risk-heading p {
+  margin: 0;
+}
+
+.risk-heading p:last-child {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.risk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.risk-card {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--rail);
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(23, 32, 42, 0.07);
+}
+
+.risk-card:nth-child(2) {
+  border-top-color: var(--gold);
+}
+
+.risk-card:nth-child(3) {
+  border-top-color: var(--brick);
+}
+
+.risk-card span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.risk-card h5 {
+  margin: 3px 0 0;
+  color: var(--rail);
+  font-size: 1.2rem;
+}
+
+.risk-card strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+
+.risk-card ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .checklist-review {
   padding: 20px;
   background: #f4f7f4;
@@ -1701,6 +1780,8 @@ a {
   .route-template-hero,
   .template-grid,
   .template-grid.two-col,
+  .risk-heading,
+  .risk-grid,
   .checklist-heading,
   .checklist-grid,
   .design-layout,
