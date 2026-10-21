@@ -522,7 +522,7 @@ function initMap() {
   const mapEl = document.querySelector("#route-map");
   mapEl.innerHTML = `
     <figure class="route-map-figure">
-      <img src="${versionedAsset("northern-taiwan-rail-map.png")}" alt="北台灣鐵道大探索戶外教育地圖" />
+      <img src="northern-taiwan-rail-map-20261021.png" alt="北台灣鐵道大探索戶外教育地圖" />
     </figure>
   `;
 }
