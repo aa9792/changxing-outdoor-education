@@ -30,7 +30,7 @@ function school(){return `<g transform="translate(575 453)" class="changxing-cam
  ${Array.from({length:11},(_,i)=>{let xx=-68+i*14,yy=-114-i*2.8;return `<path d="M${xx} ${yy+15}v-15q5-12 10-2v15Z" fill="#625f4b" stroke="#ab8356" stroke-width="2"/><path d="M${xx+5} ${yy-3}v17" stroke="#d3b888" stroke-width="1"/>`;}).join('')}
  <path d="M-73-85L97-119 104-109-67-75Z" fill="#767b67"/><path d="M-67-75L104-109v5L-67-70Z" fill="#9c9e7d"/>
  <path d="M-50-68L69-92v37L-50-31Z" fill="#cfb27e"/><path d="M-3-65L27-71v38l-30 6Z" fill="#596d5b"/><path d="M-44-47L-35-49v20l-9 2m94-39 9-2v20l-9 2" fill="#8a9b7d"/>
- <text x="15" y="-70" text-anchor="middle" transform="rotate(-11 15 -70)" font-size="8" font-weight="700" fill="#765736">基隆市七堵區長興國民小學</text>
+ <text x="15" y="-70" text-anchor="middle" transform="rotate(-11 15 -70)" font-size="11" font-weight="700" fill="#765736">基隆市長興國小</text>
  <path d="M-118-156v-25l29 18v25Z" fill="#dac28e"/><path d="M-118-181l29 18 13-4-29-17Z" fill="#a8a791"/>
  <path d="M78-168v-30l18-3 18 12v30l-18-12Z" fill="#ceb380"/><path d="M78-198l18-4 18 12-18 4Z" fill="#aaa58d"/>
  <path d="M-115-178L-65-188-30-166-80-155Z" fill="#4d6a72" stroke="#d1d9cb" stroke-width="2"/>
@@ -48,7 +48,7 @@ function school(){return `<g transform="translate(575 453)" class="changxing-cam
  <path d="M-59 46l-8-24 10-13 13 12 2 23Z" fill="#a2a28a"/><text x="-55" y="23" writing-mode="tb" font-size="5" fill="#955640">長興國小</text>
  <g transform="translate(-22 66) rotate(-12)"><rect x="-28" y="-13" width="55" height="22" rx="6" fill="#e2b84b" stroke="#a9873b"/><path d="M-20-10h31v10h-31Z" fill="#688c83"/><path d="M-10-10V0M0-10V0" stroke="#d7c782" stroke-width="2"/><path d="M17-10h7v13h-7Z" fill="#637f76"/><circle cx="-17" cy="10" r="5" fill="#495d56"/><circle cx="17" cy="10" r="5" fill="#495d56"/></g>
  <g transform="translate(57 52) rotate(-12)"><rect x="-20" y="-8" width="40" height="15" rx="6" fill="#b1bdb4"/><path d="M-10-9l7-7h12l8 7Z" fill="#d5dbcb"/><path d="M-2-14h10l5 5H-8Z" fill="#688d89"/><circle cx="-11" cy="8" r="4" fill="#4d6258"/><circle cx="12" cy="8" r="4" fill="#4d6258"/></g>
- ${[[-126,-53,22],[-49,-12,30],[31,-24,22],[110,-26,20],[126,-63,18]].map(([xx,yy,rr])=>`<g><ellipse cx="${xx}" cy="${yy+8}" rx="${rr}" ry="8" fill="#54765722"/><path d="M${xx} ${yy}v-32" stroke="#85774e" stroke-width="4"/><circle cx="${xx}" cy="${yy-41}" r="${rr}" fill="#5e8054"/><circle cx="${xx-8}" cy="${yy-48}" r="${rr*.65}" fill="#7e9b60"/></g>`).join('')}
+ ${[[-126,-53,22],[31,10,19],[110,-26,20],[126,-63,18]].map(([xx,yy,rr])=>`<g><ellipse cx="${xx}" cy="${yy+8}" rx="${rr}" ry="8" fill="#54765722"/><path d="M${xx} ${yy}v-32" stroke="#85774e" stroke-width="4"/><circle cx="${xx}" cy="${yy-41}" r="${rr}" fill="#5e8054"/><circle cx="${xx-8}" cy="${yy-48}" r="${rr*.65}" fill="#7e9b60"/></g>`).join('')}
  <g transform="translate(14 13) scale(.75)">${person('#e2bd55',true,'talk')}</g><g transform="translate(30 18) scale(.75)">${person('#6e9d96',true,'talk')}</g>
  </g>`;}
 
