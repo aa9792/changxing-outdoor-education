@@ -8,12 +8,14 @@
   const phrases=['👋 向大家揮手','🚆 一起搭海風號','🔎 我有新發現'];
   const roomParam=new URL(location.href).searchParams.get('room');
   const roomValue=/^[a-zA-Z0-9-]{1,16}$/.test(roomParam||'')?roomParam:'public';
-  $('#overview').insertAdjacentHTML('beforebegin',`<section class="live-panel" aria-label="即時同遊"><div class="live-heading"><h3>即時同遊 <span id="live-count">未加入</span></h3><button id="live-toggle">開啟同遊</button></div><p id="live-status" role="status">與同時在線的人相遇，看見彼此走動與搭車。</p><label class="live-room">同遊房間<input id="live-room" maxlength="16" pattern="[a-zA-Z0-9-]{1,16}" value="${roomValue}" aria-label="同遊房間代碼"><button id="live-copy">複製邀請</button></label><div id="live-people"></div><div class="live-greetings">${phrases.map((p,i)=>`<button data-greeting="${i}" disabled>${p}</button>`).join('')}</div><p id="live-message" aria-live="polite"></p><small>先建立角色，再開啟同遊。共用房間 public，或輸入相同英文／數字代碼；每房最多 8 人。分享暱稱、造型、位置與自行送出的留言，離線後角色移除。請勿使用真實姓名。連線服務：PeerJS；部分校園網路可能阻擋。</small></section>`);
+  $('#overview').insertAdjacentHTML('beforebegin',`<details class="live-panel" id="live-panel"><summary class="live-heading"><h3>即時同遊 <span id="live-count">未加入</span></h3><span class="live-fold"><span class="live-fold-closed">展開同遊 ＋</span><span class="live-fold-open">收合同遊 −</span><span id="live-unread" hidden></span></span></summary><div class="live-content"><div class="live-session"><button id="live-toggle">開啟同遊</button></div><p id="live-status" role="status">與同時在線的人相遇，看見彼此走動與搭車。</p><label class="live-room">同遊房間<input id="live-room" maxlength="16" pattern="[a-zA-Z0-9-]{1,16}" value="${roomValue}" aria-label="同遊房間代碼"><button id="live-copy">複製邀請</button></label><div id="live-people"></div><div class="live-greetings">${phrases.map((p,i)=>`<button data-greeting="${i}" disabled>${p}</button>`).join('')}</div><p id="live-message" aria-live="polite"></p><small>先建立角色，再開啟同遊。共用房間 public，或輸入相同英文／數字代碼；每房最多 8 人。分享暱稱、造型、位置與自行送出的留言，離線後角色移除。請勿使用真實姓名。連線服務：PeerJS；部分校園網路可能阻擋。</small></div></details>`);
   $('#live-message').insertAdjacentHTML('afterend',`<section class="live-chat" aria-labelledby="live-chat-title"><h4 id="live-chat-title">同遊留言</h4><p class="live-chat-note">房間在線期間暫存最近 50 則，不永久保存；新加入的人也能讀到。離開後清除本頁紀錄。請勿填寫個人聯絡資訊。</p><div id="live-chat-log" role="log" aria-label="同遊留言紀錄" aria-live="polite" aria-relevant="additions"></div><p id="live-chat-empty">加入同遊後，和旅人分享你的發現。</p><form id="live-chat-form"><label for="live-chat-input">想和大家說什麼？</label><textarea id="live-chat-input" maxlength="200" rows="2" placeholder="例如：我在七堵舊車站發現了木造窗框！" disabled></textarea><div class="live-chat-send"><span id="live-chat-length">0 / 200</span><button id="live-chat-submit" type="submit" disabled>送出留言</button></div><p id="live-chat-status" role="status"></p></form></section>`);
   const layer=document.createElementNS(ns,'g');layer.id='live-travellers';layer.setAttribute('aria-hidden','true');$('#viewport').append(layer);
   let active=false,peer=null,host=false,upstream=null,generation=0,retryTimer=null,poll=null,lastWave=0,room='';
   let ownId='',lastRoster=0,lastList='';const links=new Map(),states=new Map(),actors=new Map();
-  let chat=[],pending=null,pendingTimer=null,lastChat=0;
+  let chat=[],pending=null,pendingTimer=null,lastChat=0,unread=0;
+  function clearUnread(){unread=0;$('#live-unread').hidden=true;}
+  $('#live-panel').addEventListener('toggle',()=>{if($('#live-panel').open){clearUnread();const log=$('#live-chat-log');log.scrollTop=log.scrollHeight;}});
   const seenChat=new Set();
   function chatReady(){return active&&!!ownId&&(host||!!upstream?.open);}
   function updateChat(){const ready=chatReady();$('#live-chat-input').disabled=!ready;$('#live-chat-submit').disabled=!ready||!!pending;}
@@ -24,11 +26,12 @@
     if(pending?.id===raw.id){clearTimeout(pendingTimer);pending=null;$('#live-chat-input').value='';$('#live-chat-length').textContent='0 / 200';$('#live-chat-status').textContent='留言已送達房間。';updateChat();}
     if(seenChat.has(raw.id))return;seenChat.add(raw.id);
     const m={id:raw.id,name:raw.name.replace(/[\u0000-\u001f\u007f]/g,'').slice(0,12),text,time:raw.time};chat.push(m);
+    if(!$('#live-panel').open){unread++;$('#live-unread').textContent=unread+' 則新留言';$('#live-unread').hidden=false;}
     const log=$('#live-chat-log'),nearBottom=log.scrollHeight-log.scrollTop-log.clientHeight<60,row=document.createElement('article'),head=document.createElement('div'),name=document.createElement('strong'),time=document.createElement('time'),body=document.createElement('p');
     name.textContent=m.name;time.dateTime=new Date(m.time).toISOString();time.textContent=new Date(m.time).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});body.textContent=m.text;head.append(name,time);row.append(head,body);log.append(row);$('#live-chat-empty').hidden=true;
     while(chat.length>50){seenChat.delete(chat.shift().id);log.firstElementChild?.remove();}if(nearBottom)log.scrollTop=log.scrollHeight;
   }
-  function clearChat(){chat=[];seenChat.clear();pending=null;clearTimeout(pendingTimer);$('#live-chat-log').replaceChildren();$('#live-chat-empty').hidden=false;$('#live-chat-input').value='';$('#live-chat-length').textContent='0 / 200';$('#live-chat-status').textContent='';updateChat();}
+  function clearChat(){clearUnread();chat=[];seenChat.clear();pending=null;clearTimeout(pendingTimer);$('#live-chat-log').replaceChildren();$('#live-chat-empty').hidden=false;$('#live-chat-input').value='';$('#live-chat-length').textContent='0 / 200';$('#live-chat-status').textContent='';updateChat();}
   function relayChat(id,text,messageId){
     const person=states.get(id),body=cleanText(text);if(!person||!body||typeof messageId!=='string'||!/^[a-zA-Z0-9-]{1,60}$/.test(messageId))return;
     const entry={id:messageId,name:person.state.look.name,text:body,time:Date.now()};addChat(entry);for(const c of links.values())send(c,{type:'chat',entry});
