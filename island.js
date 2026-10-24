@@ -33,7 +33,7 @@ function building(r){let x=r.x,y=r.y;
  <path d="M-104-37L102-54" stroke="#544437" stroke-width="4"/>
  ${[-91,-47,3,52,92].map(v=>`<path d="M${v} ${-36-(v+91)*.08}v53" stroke="#886a4b" stroke-width="4"/>`).join('')}
  <path d="M-99 18L96 1" stroke="#b4a98e" stroke-width="4"/>
- <path d="M-53-57L49-66v18L-53-39Z" fill="#e3d5a0" stroke="#78694b" stroke-width="1"/><text x="-2" y="-46" transform="rotate(-5 -2 -46)" text-anchor="middle" font-size="13" font-weight="700" letter-spacing="6" fill="#333d63">七堵車站</text>
+ <path d="M-53-57L49-66v18L-53-39Z" fill="#e3d5a0" stroke="#78694b" stroke-width="1"/><text x="-2" y="-46" transform="rotate(-5 -2 -46)" text-anchor="middle" font-size="12" font-weight="700" letter-spacing="3" fill="#333d63">七堵舊車站</text>
  <path d="M-112 11v21m27-23v21m-27-12 27-2m-27 10 27-2" stroke="#8b9786" stroke-width="1.5"/><path d="M-113 11l29-2" stroke="#d9dec8" stroke-width="2"/>
  <g transform="translate(-100 22)" fill="none" stroke="#c1c6ab" stroke-width="1.5"><circle cx="-5" cy="-3" r="4"/><circle cx="7" cy="-4" r="4"/><path d="M-12-8l2-10h12v9h11v6H-14v-5Z"/></g>
  <path d="M-19 8l35-3 8 5-35 3Z" fill="#aab29c"/>
