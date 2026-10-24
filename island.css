@@ -20,3 +20,5 @@
 .connections .island-train path{stroke-linecap:butt}.station-platform{pointer-events:none}
 
 #viewport{transition:transform .75s cubic-bezier(.22,.7,.2,1)}.scene:active #viewport{transition:none}
+
+.activity-update{margin:25px 0;padding:20px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.activity-update .eyebrow{margin-bottom:8px}.activity-update h3{margin:8px 0 12px}.activity-update p{font-size:12px;line-height:1.9;color:#6d7c6c}.activity-gallery{display:grid;gap:15px}.activity-gallery figure{margin:0}.activity-gallery a{position:relative;display:block}.activity-gallery img{width:100%;height:auto;max-height:240px;object-fit:cover;border-radius:8px;display:block}.activity-gallery a span{position:absolute;bottom:8px;right:8px;font-size:10px;color:white;background:#23433ed9;padding:6px 9px;border-radius:5px}.activity-gallery figcaption{font-size:10px;margin-top:7px;color:#71806c}.activity-update>small{display:block;margin-top:16px;font-size:10px;line-height:1.8;color:#7d8575}
