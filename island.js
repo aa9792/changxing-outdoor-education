@@ -133,7 +133,35 @@ function building(r){let x=r.x,y=r.y;
  </g>`;
  if(r.type==='lighthouse')return `<ellipse cx="${x}" cy="${y}" rx="50" ry="22" fill="#b1c7ac"/><path d="M${x-22} ${y-8}l8-116h28l9 116Z" fill="#ffefd1"/><path d="M${x-17} ${y-57}h35l3 23h-40Z" fill="#d58563"/><path d="M${x-17} ${y-123}v-23h35v23Z" fill="#9fbdad"/><path d="M${x-23} ${y-146}l23-15 23 15Z" fill="#bd745a"/><path d="M${x-24} ${y-122}h48" stroke="#647e70" stroke-width="4"/><circle cx="${x}" cy="${y-135}" r="7" fill="#fff5ae"/><path d="M${x-40} ${y+13}l18-12M${x+24} ${y+15}l16-7" stroke="#8eac95" stroke-width="6"/>`;
  if(r.type==='village')return `${box(x-33,y,75,43,42,'#e4c59b','#aa624c')}${box(x+35,y-27,75,43,51,'#eee0b7','#b97754')}<path d="M${x-46} ${y-26}v18m16-9v-18m55-17v-19m20 9v18" stroke="#789c94" stroke-width="9"/><path d="M${x-28} ${y+14}l68-30" stroke="#b8b198" stroke-width="8"/><path d="M${x-67} ${y-7}l-20 12M${x+60} ${y-20}l23 7" stroke="#769d75" stroke-width="10"/>`;
- if(r.type==='hub')return `${box(x-23,y-8,110,56,65,'#cfd6c4','#78998f')}${box(x+57,y-32,55,40,109,'#dce0c9','#88a99a')}<path d="M${x+42} ${y-129}v80m15-89v83m-94 7v31m22-39v33m23-42v30" stroke="#82a69e" stroke-width="7"/><path d="M${x-87} ${y+14}l110-48 48 25-110 48Z" fill="#e4d6ad"/><path d="M${x-64} ${y+14}l103-45" stroke="#9d9f8a" stroke-width="4"/><g class="floaty"><path d="M${x-60} ${y-2}l70-31 25 11-70 32Z" fill="#faf0ce"/><path d="M${x-53} ${y-5}l56-25 11 5-56 26Z" fill="#819e96"/><path d="M${x-63} ${y-2}v14l28 12v-14Z" fill="#cf8f63"/></g>`;
+ if(r.type==='hub')return `<g transform="translate(${x} ${y})" class="taipei-transport-hub">
+ <path d="M-128 0L61-39 132 8-58 51Z" fill="#c2cbb7"/>
+ <path d="M-114 4L57-31 111 4-61 43Z" fill="#d6c9ad"/>
+ <path d="M-98-83L71-117V-32L-98 2Z" fill="#bba881"/><path d="M71-117l37 24v84L71-32Z" fill="#9b9677"/>
+ <path d="M-93-69L69-102v58L-93-11Z" fill="#57665a"/>
+ ${Array.from({length:16},(_,i)=>`<path d="M${-88+i*10} ${-73-i*2.02}v65" stroke="#d2c4a0" stroke-width="3"/>`).join('')}
+ <path d="M-97-28L72-62v12L-97-16Z" fill="#d2c09b"/><path d="M-97-57L72-91v7L-97-50Z" fill="#9d9776"/>
+ <path d="M78-105v68m10-61v68m10-61v68" stroke="#c0b896" stroke-width="3"/>
+ <path d="M-114-91L75-130 121-100-68-59Z" fill="#985c4b"/>
+ <path d="M-86-127L45-153 75-130-114-91Z" fill="#d59077"/>
+ <path d="M-86-127L45-153 88-123-42-96Z" fill="#c57c65"/>
+ <path d="M-86-127L-114-91-68-59-42-96Z" fill="#b96d58"/>
+ <path d="M45-153L88-123 121-100 75-130Z" fill="#af6b57"/>
+ <path d="M-114-91L-68-59 121-100" stroke="#f0d9ba" stroke-width="3" fill="none"/>
+ <path d="M-86-127L45-153 88-123" stroke="#f5dfbf" stroke-width="2" fill="none"/>
+ <path d="M-26-12L19-21V-2L-26 7Z" fill="#d6caa7"/><path d="M-20-10l33-7v15l-33 7Z" fill="#73928a"/>
+ <text x="-4" y="-23" transform="rotate(-11 -4 -23)" text-anchor="middle" font-size="9" font-weight="700" fill="#f1e5c6">臺北車站</text>
+ <path d="M-37 9L27-4 40 3-24 17Z" fill="#e4d9bb"/><path d="M-24 17L40 3v4L-24 21Z" fill="#a7aa90"/><path d="M-24 21L40 7l10 5-65 14Z" fill="#d9d0b3"/>
+ <path d="M-95 18L-49 9-32 19-79 29Z" fill="#b2ad90"/><path d="M-89 18L-52 11-42 18-79 25Z" fill="#9fb295"/>
+ <path d="M51 5L87-3 103 7 66 15Z" fill="#aab496"/><path d="M-77 34L-41 27-30 34-66 41Z" fill="#acb59a"/>
+ <path d="M-115 30L84-11 128 15-71 58Z" fill="none" stroke="#81988d" stroke-width="13"/>
+ <path d="M-114 30L84-11 128 15-71 58" fill="none" stroke="#e6d9a0" stroke-width="1.4" stroke-dasharray="8 6"/>
+ <path d="M-99 24l11-2m-8 5 11-2m-8 5 11-2m64 14 11-2m-8 5 11-2m-8 5 11-2" stroke="#f1eed8" stroke-width="2"/>
+ ${[[-95,5],[-65,29],[82,-4],[112,13]].map(([xx,yy])=>`<path d="M${xx} ${yy}v-20" stroke="#718c7b" stroke-width="2"/><circle cx="${xx}" cy="${yy-21}" r="3" fill="#e4dfb4"/>`).join('')}
+ ${[[-72,17],[77,4],[-53,33]].map(([xx,yy])=>`<path d="M${xx} ${yy}v-19" stroke="#877e55" stroke-width="2"/><circle cx="${xx}" cy="${yy-25}" r="10" fill="#6d8e5e"/><circle cx="${xx-4}" cy="${yy-29}" r="6" fill="#92aa74"/>`).join('')}
+ <g><animateMotion path="M-59 48L50 26" dur="11s" begin="-3s" repeatCount="indefinite" keyPoints="0;1;1;0" keyTimes="0;.42;.56;1" calcMode="linear"/><g transform="rotate(-12)"><rect x="-19" y="-7" width="38" height="14" rx="4" fill="#ecdbaf" stroke="#748f7d"/><path d="M-16-4h27v6h-27Z" fill="#759e99"/><path d="M-8-4v6m8-6v6" stroke="#d5d9bb"/><path d="M-17 4h33" stroke="#bd7458" stroke-width="3"/><circle cx="-11" cy="8" r="3" fill="#4b6357"/><circle cx="12" cy="8" r="3" fill="#4b6357"/></g></g>
+ <g><animateMotion path="M89-3L115 14" dur="8s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"/><g transform="rotate(30)"><rect x="-11" y="-5" width="22" height="10" rx="3" fill="#dcb650"/><path d="M-6-6h11v5H-6Z" fill="#779b90"/><circle cx="-6" cy="5" r="2.5" fill="#506859"/><circle cx="7" cy="5" r="2.5" fill="#506859"/></g></g>
+ <g><animateMotion path="M-38 20L11 10" dur="8s" begin="-2s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"/><g transform="scale(.65)">${person('#d9b758',true,'walk')}</g></g>
+ </g>`;
  return `<g transform="translate(${x} ${y})" class="harbor-station-port">
  <defs><clipPath id="harbor-glass"><path d="M-109-91Q-61-117-12-86L-25-5Q-63 12-97-11Z"/></clipPath></defs>
  <path d="M-126 8L43-27 132 13-39 48Z" fill="#c1c7b4"/><path d="M-116 10L21-19 44-8-94 24Z" fill="#d9ddcc"/>
