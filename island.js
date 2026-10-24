@@ -19,22 +19,38 @@ function box(x,y,w,d,h,c='#e9d6a0',roof='#a65c43'){
  return poly(`${x-w/2},${y-h-d/2} ${x},${y-h} ${x},${y} ${x-w/2},${y-d/2}`,c)+poly(`${x},${y-h} ${x+w/2},${y-h-d/2} ${x+w/2},${y-d/2} ${x},${y}`,'#c5bf94')+poly(`${x-w/2},${y-h-d/2} ${x},${y-h-d} ${x+w/2},${y-h-d/2} ${x},${y-h}`,roof);
 }
 function tree(x,y,s=1){return `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cy="5" rx="13" ry="6" fill="#527e6230"/><path d="M0 0V-26" stroke="#8a7960" stroke-width="4"/><path d="M0-65L-18-29H-11L-24-12H24L11-29H18Z" fill="#497b65"/><path d="M0-65V-12H24L11-29H18Z" fill="#608b6b"/></g>`;}
-function school(){return `<g transform="translate(575 453)">
- <path d="M-108-2L30-31 91 1-48 35Z" fill="#d9d1b3"/>
- ${box(22,-33,115,48,37,'#d4c395','#9a8063')}
- <path d="M8-61v15m16-19v14m16-18v14m16-17v14" stroke="#7b9680" stroke-width="7"/>
- <path d="M-53-38L-3-43v42l-50 5Z" fill="#b99b70" stroke="#8f795a" stroke-width="2"/>
- <path d="M-55-44L-5-49 8-41-42-35Z" fill="#d3b98a"/><path d="M-48-34L-8-38v18l-40 4Z" fill="#526f64"/><path d="M-34-35v19" stroke="#cab891" stroke-width="2"/><path d="M-54-16L-3-21v7l-51 5Z" fill="#985c4b"/>
- <path d="M-58-27L-6-32 0-23-53-18Z" fill="#a86452"/>
- <path d="M12-35L20-36V8l-8 2ZM76-41l8 3V3l-8 3Z" fill="#8c8064"/>
- <path d="M22-12L75-17V3L22 8Z" fill="#d2d4ba" stroke="#5e7463" stroke-width="2"/>
- ${[28,36,44,52,60,68].map(v=>`<path d="M${v} -12v18" stroke="#677967" stroke-width="2"/>`).join('')}
- <path d="M-103-8l7-30 22-9 19 24-3 29-38 7Z" fill="#a7aa95" stroke="#8b937c" stroke-width="1.5"/><text x="-79" y="-27" writing-mode="tb" font-size="10" font-weight="700" fill="#9e5941">長興國小</text>
- <path d="M-104 7q13-18 28-5m-27 8q24-8 40-4" stroke="#678859" stroke-width="7" fill="none"/>
- <path d="M-89-45v-57m91 38v-50m87 69v-63" stroke="#7a7b56" stroke-width="5"/>
- <g fill="#60805b"><circle cx="-89" cy="-101" r="27"/><circle cx="-65" cy="-96" r="23"/><circle cx="-107" cy="-85" r="21"/><circle cx="2" cy="-113" r="28"/><circle cx="29" cy="-108" r="19"/><circle cx="87" cy="-109" r="25"/></g>
- <g fill="#83a36b"><circle cx="-91" cy="-111" r="18"/><circle cx="-67" cy="-101" r="15"/><circle cx="-5" cy="-124" r="19"/><circle cx="88" cy="-118" r="17"/></g>
- <text x="-2" y="29" text-anchor="middle" font-size="12" font-weight="700" fill="#3f6555">長興國小</text></g>`;}
+function school(){return `<g transform="translate(575 453)" class="changxing-campus">
+ <path d="M-137-17L49-54 139 17-46 65Z" fill="#b7b6a1"/>
+ <path d="M-84 4L44-24 95 8-29 41Z" fill="#b98460"/><path d="M-72 7L43-18M-55 18L62-9M-37 30L78 0" stroke="#c99e77" stroke-width="1"/>
+ <path d="M-81-133L95-168V-61L-81-26Z" fill="#dec796" stroke="#a88d63" stroke-width="1.5"/>
+ <path d="M-120-159L-81-133V-26L-120-53Z" fill="#b99e70"/>
+ <path d="M-120-159L57-193 95-168-81-133Z" fill="#a9ad9e" stroke="#d4bc8d" stroke-width="3"/>
+ <path d="M-120-159v-7L57-200 95-175v7L57-193Z" fill="#d8bf8c"/>
+ <path d="M-83-137L95-172v7L-83-130Z" fill="#e9d5a5"/>
+ ${Array.from({length:11},(_,i)=>{let xx=-68+i*14,yy=-114-i*2.8;return `<path d="M${xx} ${yy+15}v-15q5-12 10-2v15Z" fill="#625f4b" stroke="#ab8356" stroke-width="2"/><path d="M${xx+5} ${yy-3}v17" stroke="#d3b888" stroke-width="1"/>`;}).join('')}
+ <path d="M-73-85L97-119 104-109-67-75Z" fill="#767b67"/><path d="M-67-75L104-109v5L-67-70Z" fill="#9c9e7d"/>
+ <path d="M-50-68L69-92v37L-50-31Z" fill="#cfb27e"/><path d="M-3-65L27-71v38l-30 6Z" fill="#596d5b"/><path d="M-44-47L-35-49v20l-9 2m94-39 9-2v20l-9 2" fill="#8a9b7d"/>
+ <text x="15" y="-70" text-anchor="middle" transform="rotate(-11 15 -70)" font-size="8" font-weight="700" fill="#765736">基隆市七堵區長興國民小學</text>
+ <path d="M-118-156v-25l29 18v25Z" fill="#dac28e"/><path d="M-118-181l29 18 13-4-29-17Z" fill="#a8a791"/>
+ <path d="M78-168v-30l18-3 18 12v30l-18-12Z" fill="#ceb380"/><path d="M78-198l18-4 18 12-18 4Z" fill="#aaa58d"/>
+ <path d="M-115-178L-65-188-30-166-80-155Z" fill="#4d6a72" stroke="#d1d9cb" stroke-width="2"/>
+ ${[0,1,2,3].map(i=>`<path d="M${-106+i*12}-180l35 23" stroke="#a9bec0" stroke-width="1"/>`).join('')}
+ <path d="M-103-168l50-10m-39 18 50-10" stroke="#a9bec0" stroke-width="1"/>
+ <path d="M-110-57Q-100-73-86-64L-42 7-66 18Z" fill="#4d8270" stroke="#a3ba9b" stroke-width="2"/>
+ <path d="M-102-55L-57 16m-44-60 24-5m-17 17 24-5m-17 17 24-5m-16 17 24-5" stroke="#a3ba9b" stroke-width="1.5"/>
+ <path d="M-104-54v17m62 44v17" stroke="#83947a" stroke-width="2"/>
+ ${box(-99,43,66,36,39,'#cbb584','#a7a78c')}
+ <path d="M-127 12l52-10 12 9-52 10Z" fill="#d5b57e"/><path d="M-123 24l43-9v15l-43 9Z" fill="#739b87"/><path d="M-107 21v15m15-18v15" stroke="#d3d5ac" stroke-width="2"/>
+ <path d="M-125 34l44-9 8 8-45 10Z" fill="#78a08a"/>
+ <path d="M-50 29l8-2v33l-8 2m95-53 8-2v33l-8 2" stroke="#8c8166" stroke-width="7"/>
+ <path d="M-35 40L39 23v19L-35 60Z" fill="#9ba893" stroke="#586f61" stroke-width="2"/>
+ ${Array.from({length:10},(_,i)=>`<path d="M${-31+i*7} ${39-i*1.6}v19" stroke="#586f61" stroke-width="1.5"/>`).join('')}
+ <path d="M-59 46l-8-24 10-13 13 12 2 23Z" fill="#a2a28a"/><text x="-55" y="23" writing-mode="tb" font-size="5" fill="#955640">長興國小</text>
+ <g transform="translate(-22 66) rotate(-12)"><rect x="-28" y="-13" width="55" height="22" rx="6" fill="#e2b84b" stroke="#a9873b"/><path d="M-20-10h31v10h-31Z" fill="#688c83"/><path d="M-10-10V0M0-10V0" stroke="#d7c782" stroke-width="2"/><path d="M17-10h7v13h-7Z" fill="#637f76"/><circle cx="-17" cy="10" r="5" fill="#495d56"/><circle cx="17" cy="10" r="5" fill="#495d56"/></g>
+ <g transform="translate(57 52) rotate(-12)"><rect x="-20" y="-8" width="40" height="15" rx="6" fill="#b1bdb4"/><path d="M-10-9l7-7h12l8 7Z" fill="#d5dbcb"/><path d="M-2-14h10l5 5H-8Z" fill="#688d89"/><circle cx="-11" cy="8" r="4" fill="#4d6258"/><circle cx="12" cy="8" r="4" fill="#4d6258"/></g>
+ ${[[-126,-53,22],[-49,-12,30],[31,-24,22],[110,-26,20],[126,-63,18]].map(([xx,yy,rr])=>`<g><ellipse cx="${xx}" cy="${yy+8}" rx="${rr}" ry="8" fill="#54765722"/><path d="M${xx} ${yy}v-32" stroke="#85774e" stroke-width="4"/><circle cx="${xx}" cy="${yy-41}" r="${rr}" fill="#5e8054"/><circle cx="${xx-8}" cy="${yy-48}" r="${rr*.65}" fill="#7e9b60"/></g>`).join('')}
+ <g transform="translate(14 13) scale(.75)">${person('#e2bd55',true,'talk')}</g><g transform="translate(30 18) scale(.75)">${person('#6e9d96',true,'talk')}</g>
+ </g>`;}
 
 function building(r){let x=r.x,y=r.y;
  if(r.type==='community')return `<g transform="translate(${x} ${y})" class="heritage-station">
@@ -87,10 +103,10 @@ function railway(trainsOnly=false){
 function platform(r){return `<g class="station-platform" aria-hidden="true" transform="translate(${r.x-30} ${r.y+40})"><rect x="-22" y="-7" width="44" height="10" rx="3" fill="#f5e4be" stroke="#c1ac7d"/><path d="M-19-5h38" stroke="#d49557" stroke-width="2"/><path d="M-14-8v-13m28 13v-13" stroke="#6e8a79" stroke-width="2"/><path d="M-24-21h48l-5-6h-38Z" fill="#638e80"/><rect x="-9" y="-19" width="18" height="8" rx="2" fill="#fff4da"/><text y="-12" text-anchor="middle" font-size="6" fill="#496c5e">${r.no} 站</text></g>`;}
 function draw(){
  const waves=Array.from({length:30},(_,i)=>{let x=55+(i*113)%1090,y=290+(i*91)%520;return `<path class="water-line" d="M${x} ${y}q10 5 20 0m10 0q8 4 17 0" stroke="#eff9e8" fill="none" opacity=".5" stroke-width="2" style="animation-delay:${i/4}s"/>`;}).join('');
- const central=`${islandGround(635,479)}<g transform="translate(585 472) scale(.4) translate(-575 -453)">${school()}</g><g transform="translate(695 474) scale(.47) translate(-300 -620)">${building({x:300,y:620,type:'station'})}</g><path d="M619 474L650 486" stroke="#e6dbb6" stroke-width="8" stroke-dasharray="3 3"/><text x="695" y="490" text-anchor="middle" font-size="10" fill="#386052" font-weight="700">台鐵七堵站</text>${tree(524,476,.48)}<g class="school-tag"><rect x="542" y="506" width="186" height="25" rx="12" fill="#fffaf0"/><text x="635" y="523" text-anchor="middle" font-size="11" font-weight="700" fill="#386052">長興國小 × 七堵車站・出發點</text></g>`;
+ const central=`${islandGround(635,479)}<g transform="translate(581 471) scale(.53) translate(-575 -453)">${school()}</g><g transform="translate(715 476) scale(.42) translate(-300 -620)">${building({x:300,y:620,type:'station'})}</g><path d="M619 474L650 486" stroke="#e6dbb6" stroke-width="8" stroke-dasharray="3 3"/><text x="715" y="493" text-anchor="middle" font-size="10" fill="#386052" font-weight="700">台鐵七堵站</text>${tree(524,476,.48)}<g class="school-tag"><rect x="542" y="536" width="186" height="25" rx="12" fill="#fffaf0"/><text x="635" y="553" text-anchor="middle" font-size="11" font-weight="700" fill="#386052">長興國小 × 七堵車站・出發點</text></g>`;
  const nodes=routes.slice().sort((a,b)=>a.y-b.y).map((r,i)=>`<g class="node" data-node="${r.id}" tabindex="0" role="button" aria-label="探索${r.name}：${r.title}" aria-pressed="false">${islandGround(r.x,r.y,r.zone==='ocean'?'coast':r.zone==='city'?'culture':'green')}<g transform="translate(${r.x} ${r.y}) scale(.83) translate(${-r.x} ${-r.y})">${building(r)}</g>${tree(r.x-103,r.y-28,.65)}${tree(r.x+111,r.y-15,.55)}${people(r.x,r.y,i)}${platform(r)}${nameplate(r)}</g>`).join('');
  $('#island').innerHTML=`${waves}<g id="viewport">${railway()}<g data-school="true" role="button" tabindex="0" aria-label="放大長興國小與七堵車站" style="cursor:pointer">${central}</g>${nodes}${railway(true)}<g class="boat"><path d="M837 705l68 1-17 16-44-3Z" fill="#f5ecd3"/><path d="M851 692h32v16h-32Z" fill="#d9d9bc"/><path d="M861 684h6v9h-6Z" fill="#d28a61"/><path d="M835 730q18 6 38 0" stroke="#e7f4df" stroke-width="2" fill="none"/></g><g transform="translate(117 685)"><path d="M0 0l28 17L0 9l-28 8Z" fill="#5e8a7b"/><text x="0" y="-12" text-anchor="middle" fill="#65877a" font-size="12">N</text></g></g>`;
- const schoolNode=$('[data-school]');schoolNode.addEventListener('click',()=>focusIsland({x:635,y:479}));schoolNode.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();focusIsland({x:635,y:479});}});
+ const schoolNode=$('[data-school]');schoolNode.addEventListener('click',()=>focusSchool());schoolNode.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();focusSchool();}});
  document.querySelectorAll('[data-node]').forEach(node=>{node.addEventListener('click',()=>openRoute(node.dataset.node));node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openRoute(node.dataset.node);}});});
 }
 
@@ -112,7 +128,7 @@ const activityRecords={
 };
 function activitySection(id){const a=activityRecords[id];return `<section class="activity-update" aria-label="路線活動紀錄"><p class="eyebrow">ISLAND JOURNAL · 島嶼記事</p><h3>${a.title}</h3><p>${a.text}</p><div class="activity-gallery">${a.photos.map(([file,caption])=>`<figure><a href="assets/island/${file}" target="_blank" rel="noopener" aria-label="開啟原圖：${caption}"><img src="assets/island/${file}" alt="${caption}" loading="lazy" width="600" height="400"/><span>查看原圖 ↗</span></a><figcaption>${caption}</figcaption></figure>`).join('')}</div><small>以上為資料夾現有成果；活動日期未註記，尚無法判定最近一次辦理時間。照片可點開查看。</small></section>`;}
 function openRoute(id,updateHash=true){
- const r=routes.find(x=>x.id===id);if(!r)return;active=id;visited.add(id);try{localStorage.setItem('changxing-island-read',JSON.stringify([...visited]));}catch{}updateRead();
+ const r=routes.find(x=>x.id===id);if(!r)return;$('#ocean').classList.remove('school-focus');active=id;visited.add(id);try{localStorage.setItem('changxing-island-read',JSON.stringify([...visited]));}catch{}updateRead();
  const template=ISLAND_DATA.templates[id];const train=ISLAND_DATA.train[id];
  $('#overview').hidden=true;$('#detail').hidden=false;focusIsland(r);
  $('#detail').innerHTML=`<div class="detail-header"><button class="back" id="back">← 回到所有路線</button></div><figure class="detail-photo"><img src="assets/island/${r.photo}" alt="長興國小${r.name}相關戶外教育活動" width="600" height="400"><figcaption>長興國小既有課程照片</figcaption></figure><div class="detail-content"><p class="eyebrow">EXPLORE / ${r.no}</p><h2 tabindex="-1">${esc(r.name)}</h2><p class="detail-summary">${esc(r.summary)}</p><p class="route-location">場域範圍　${esc(r.location)}<br>課程標示　${esc(r.grade)}</p><div class="stops">${r.stops.map(esc).join('　／　')}</div>${activitySection(id)}<h3>孩子帶著什麼任務出發？</h3><ul>${r.tasks.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h3>TRAIN，每一次探究的五個站</h3>${train.map(([title,body])=>`<div class="train-stop"><b aria-hidden="true">${title[0]}</b><div><strong>${esc(title.slice(2))}</strong><p>${esc(body)}</p></div></div>`).join('')}<details><summary>行前、現場與課後怎麼學？</summary><h3>行前準備</h3><ul>${template.before.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h3>場域學習</h3><ul>${template.during.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h3>課後整理</h3><ul>${template.after.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></details><details><summary>這條路線留下哪些學習成果？</summary><ul>${template.outcomes.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><p class="detail-summary">以上為課程設定的成果形式，實際學習表現須搭配學生作品與教師觀察檢視。</p></details><a class="primary" href="curriculum.html?route=${encodeURIComponent(id)}#routes">閱讀完整教案與風險規劃 ↗</a><a class="secondary-link" href="curriculum.html#lesson-builder">帶進自己的教案設計</a><div class="return-row"><button id="back-bottom">← 繼續探索其他場域</button></div></div>`;
@@ -122,7 +138,8 @@ function openRoute(id,updateHash=true){
  if(updateHash)history.replaceState(null,'','#'+id);
 }
 function back(){active=null;resetView();$('#detail').hidden=true;$('#overview').hidden=false;document.querySelectorAll('[data-node]').forEach(n=>{n.classList.remove('is-active');n.setAttribute('aria-pressed','false');});history.replaceState(null,'',location.pathname+location.search);renderList();$('.panel').scrollTop=0;$('#search').focus({preventScroll:true});}
-function resetView(){zoom=1;pan={x:0,y:0};transform();}
+function focusSchool(){ $('#ocean').classList.add('school-focus');focusIsland({x:635,y:479});}
+function resetView(){ $('#ocean').classList.remove('school-focus');zoom=1;pan={x:0,y:0};transform();}
 function focusIsland(r){zoom=2.35;pan={x:620-zoom*r.x-(1-zoom)*620,y:520-zoom*(r.y-15)-(1-zoom)*480};transform();}
 function transform(){ $('#viewport').setAttribute('transform',`translate(${pan.x+(1-zoom)*620} ${pan.y+(1-zoom)*480}) scale(${zoom})`); }
 function setZoom(v){zoom=Math.max(.75,Math.min(3,v));transform();}
