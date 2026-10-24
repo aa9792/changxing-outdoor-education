@@ -15,26 +15,27 @@
     'metro-tech':{name:'極東海岸島',owner:'三貂角燈塔守望員',color:'#4b9290',icon:'M-10 22L-6-13H6L10 22ZM-10-13V-23H10V-13ZM-13-24H13M-3-29H3M-17-18L-27-24M17-18L27-24M-27 25H27',intro:'燈塔照亮航路，海浪留下地景線索。到極東海岸，練習觀察，也練習敬畏自然。',questions:[q('島上的白色燈塔是哪一座？',['三貂角燈塔','七堵燈塔','臺北燈塔'],0,'看看白色塔身與島上的三貂角燈塔標示。'),q('燈塔亮燈，主要能幫助誰？',['讓火車加速','為海上船隻提供辨識與航行指引','讓海浪停止'],1,'夜晚的光束是海上航行的重要辨識線索。'),q('準備進行海岸觀察時，最合適的做法是？',['浪大也靠近岸邊拍照','獨自走進陌生潮間帶','確認天候與潮汐，遵從帶隊安排'],2,'海岸條件會變化，要依天候、潮汐與現場判斷調整。')]},
     'risk-management':{name:'風險管理島',owner:'戶外安全守護員',color:'#6e9363',icon:'M0-28L22-18V0Q20 17 0 28Q-20 17-22 0V-18ZM-11-1L-3 8 13-10',intro:'安全不是出發前勾完就結束，而是整趟旅程持續觀察、互相照顧與調整。',questions:[q('活動通知單與同意回條的主要用途是什麼？',['只是為了裝飾','讓家長了解行程與注意事項，並回覆確認','可以取代所有安全準備'],1,'通知與回條是學校和家庭溝通行程及準備的重要工具。'),q('活動中身體不舒服或需要幫忙時，應該怎麼做？',['立刻告訴帶隊老師','偷偷離隊回家','忍住，不讓任何人知道'],0,'及早告知老師，才能得到協助與適當照顧。'),q('天候或現場環境變得不安全，應如何處理？',['照原計畫硬做完','讓學生自己決定往哪走','由帶隊人員評估，調整、暫停或取消活動'],2,'安全計畫需要依現場狀況調整，必要時暫停或取消。')]}
   };
-  const ids=Object.keys(book);let visits={},stamps={},storageOK=true,quizIsland=null,lastView='',newStamp='';
+  const ids=Object.keys(book);let visits={},stamps={},storageOK=true,quizIsland=null,lastView='',newStamp='',achievement=null;
   try{const data=JSON.parse(localStorage.getItem(key)||'null');if(data?.version===1)for(const id of ids){if(Number.isFinite(data.visits?.[id])&&data.visits[id]>0)visits[id]=data.visits[id];if(Number.isFinite(data.stamps?.[id])&&data.stamps[id]>0&&visits[id])stamps[id]=data.stamps[id];}}catch{}
   function save(){try{localStorage.setItem(key,JSON.stringify({version:1,visits,stamps}));storageOK=true;}catch{storageOK=false;}}
   const date=t=>new Date(t).toLocaleDateString('zh-TW',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'});
   const seal=(id,earned)=>{const b=book[id];return `<svg viewBox="-45 -45 90 90" aria-hidden="true" class="passport-seal ${earned?'earned':''}" style="--stamp:${b.color}"><circle r="40"/><circle r="35"/><path d="${b.icon}"/><text y="33" text-anchor="middle">${earned?'探 索 認 證':'等 待 蓋 章'}</text></svg>`;};
   $('.traveller-actions').insertAdjacentHTML('beforeend','<button id="traveller-passport">我的護照 0 / 8</button>');
   ($('.live-panel')||$('#overview')).insertAdjacentHTML('beforebegin','<button class="passport-entry" id="open-passport"><span>✦ 戶外教育護照</span><strong id="passport-mini-count">0 / 8 枚章</strong><small id="passport-mini-status">建立角色，展開你的集章旅程。</small></button>');
-  document.body.insertAdjacentHTML('beforeend',`<dialog id="island-passport" aria-labelledby="passport-title"><button class="dialog-close" id="passport-close" aria-label="關閉戶外教育護照">×</button><header class="passport-cover"><p class="eyebrow">MY OUTDOOR LEARNING PASSPORT</p><h2 id="passport-title">戶外教育護照</h2><p id="passport-owner"></p><div class="passport-progress"><span id="passport-count"></span><progress id="passport-progress" max="8" value="0" aria-label="護照集章進度"></progress></div></header><p class="passport-instruction">搭海風號登島 → 找島主回答三題 → 全部答對，蓋下專屬的章。</p><section id="passport-current" aria-label="目前小島的集章任務"></section><p id="passport-feedback" role="status" aria-live="polite"></p><div class="passport-grid" id="passport-stamps"></div><p id="passport-storage" class="passport-footnote"></p></dialog><dialog id="island-quiz" aria-labelledby="island-quiz-title"><button class="dialog-close" id="quiz-close" aria-label="關閉島主問答">×</button><div class="island-host"><svg id="quiz-host" viewBox="-35 -67 70 76" aria-hidden="true"></svg><div><p class="eyebrow">ISLAND KEEPER · 島主的三個問題</p><h2 id="island-quiz-title"></h2><p id="quiz-intro"></p></div></div><form id="island-quiz-form"><div id="island-questions"></div><p id="quiz-feedback" role="status" aria-live="polite"></p><div class="quiz-actions"><button class="primary" type="submit">回答完成，請島主檢查</button><button type="button" id="quiz-back">先回護照看看</button></div></form></dialog>`);
+  document.body.insertAdjacentHTML('beforeend',`<dialog id="island-passport" aria-labelledby="passport-title"><button class="dialog-close" id="passport-close" aria-label="關閉戶外教育護照">×</button><header class="passport-cover"><p class="eyebrow">MY OUTDOOR LEARNING PASSPORT</p><h2 id="passport-title">戶外教育護照</h2><p id="passport-owner"></p><div class="passport-progress"><span id="passport-count"></span><progress id="passport-progress" max="8" value="0" aria-label="護照集章進度"></progress></div></header><p class="passport-instruction">搭車登島 → 走近巡遊的島主，自動回答三題 → 集滿八章戴皇冠。</p><section id="passport-current" aria-label="目前小島的集章任務"></section><p id="passport-feedback" role="status" aria-live="polite"></p><div class="passport-grid" id="passport-stamps"></div><p id="passport-storage" class="passport-footnote"></p></dialog><dialog id="island-quiz" aria-labelledby="island-quiz-title"><button class="dialog-close" id="quiz-close" aria-label="關閉島主問答">×</button><div class="island-host"><svg id="quiz-host" viewBox="-35 -67 70 76" aria-hidden="true"></svg><div><p class="eyebrow">ISLAND KEEPER · 島主的三個問題</p><h2 id="island-quiz-title"></h2><p id="quiz-intro"></p></div></div><form id="island-quiz-form"><div id="island-questions"></div><p id="quiz-feedback" role="status" aria-live="polite"></p><div class="quiz-actions"><button class="primary" type="submit">回答完成，請島主檢查</button><button type="button" id="quiz-back">先回護照看看</button></div></form></dialog>`);
   function update(){
     const s=api.snapshot(),count=Object.keys(stamps).length;
+    if(achievement!==(count===8)){achievement=count===8;window.dispatchEvent(new CustomEvent('passport:achievement',{detail:{complete:achievement}}));}
     if(s.enabled&&!s.riding&&book[s.island]&&!visits[s.island]){visits[s.island]=Date.now();save();}
     const signature=JSON.stringify([s.enabled,s.look.name,s.island,s.riding,count,storageOK]);if(signature===lastView)return;lastView=signature;
     $('#traveller-passport').textContent=`我的護照 ${count} / 8`;
     $('#passport-mini-count').textContent=`${count} / 8 枚章`;
-    $('#passport-mini-status').textContent=!s.enabled?'建立角色，展開你的集章旅程。':s.riding?'海風號行進中，抵達後就能找島主。':stamps[s.island]?'本島已蓋章，繼續前往下一島吧！':`已抵達${book[s.island]?.name||'小島'}，找島主挑戰三題。`;
+    $('#passport-mini-status').textContent=!s.enabled?'建立角色，展開你的集章旅程。':count===8?'👑 八關全通過！探索皇冠已戴在人物頭上。':s.riding?'海風號行進中，抵達後就能找島主。':stamps[s.island]?'本島已蓋章，繼續前往下一島吧！':`在${book[s.island]?.name||'小島'}走近「？島主」，自動開始三題挑戰。`;
     if($('#island-passport').open)renderPassport();
   }
   function renderPassport(){
     const s=api.snapshot(),count=Object.keys(stamps).length,b=book[s.island];
-    $('#passport-owner').textContent=(s.enabled?s.look.name:'尚未建立角色')+' 的線上登島紀錄';$('#passport-count').textContent=count===8?'八島集章完成！山海探索家，下一趟旅程再見。':`已收集 ${count} / 8 枚島嶼印章`;
+    $('#passport-owner').textContent=(s.enabled?s.look.name:'尚未建立角色')+' 的線上登島紀錄';$('#passport-count').textContent=count===8?'👑 八關全通過，已獲得山海探索皇冠！':`已收集 ${count} / 8 枚島嶼印章`;
     $('#passport-progress').value=count;
     $('#passport-stamps').innerHTML=ids.map(id=>`<article class="passport-page ${stamps[id]?'is-stamped':''} ${newStamp===id?'just-stamped':''}">${seal(id,!!stamps[id])}<h3>${book[id].name}</h3><p>${stamps[id]?'已蓋章 · '+date(stamps[id]):visits[id]?'已登島 · 等待挑戰':'尚未登島'}</p></article>`).join('');
     const area=$('#passport-current');area.replaceChildren();
@@ -47,7 +48,9 @@
   }
   function openPassport(){update();renderPassport();$('#island-passport').showModal();}
   function openQuiz(id){
-    const s=api.snapshot();if(!s.enabled||s.riding||s.island!==id||!visits[id]||stamps[id])return;
+    const s=api.snapshot();if(!s.enabled||s.riding||s.boarding||s.island!==id||!visits[id]||stamps[id])return;
+    lock={island:id,x:s.x,y:s.y};
+    window.dispatchEvent(new Event('traveller:stop-walking'));
     quizIsland=id;const b=book[id];$('#island-passport').close();$('#island-quiz-title').textContent=b.owner;$('#quiz-intro').textContent=b.intro;
     $('#quiz-host').innerHTML=api.figure({name:b.owner,skin:'#e6bc94',hair:'#4e493d',style:'short',shirt:'#6ca69b',hat:'explorer',bag:false});
     $('#island-questions').innerHTML=b.questions.map((item,i)=>`<fieldset class="island-question"><legend><span>第 ${i+1} 題</span>${esc(item.text)}</legend>${item.options.map((text,n)=>`<label><input type="radio" name="q${i}" value="${n}" required><span>${esc(text)}</span></label>`).join('')}<p class="question-feedback" id="question-feedback-${i}"></p></fieldset>`).join('');
@@ -66,6 +69,33 @@
   $('#passport-close').addEventListener('click',()=>$('#island-passport').close());
   $('#quiz-close').addEventListener('click',()=>$('#island-quiz').close());
   $('#quiz-back').addEventListener('click',()=>{$('#island-quiz').close();openPassport();});
+  // Keepers use the same pedestrian path as the traveller; never the sea or rail.
+  const ns='http://www.w3.org/2000/svg',keeperLayer=document.createElementNS(ns,'g'),walkPath=$('#traveller-walk-path'),length=walkPath.getTotalLength(),keepers=new Map();
+  keeperLayer.id='island-keepers';keeperLayer.setAttribute('aria-hidden','true');$('#viewport').append(keeperLayer);
+  ids.forEach((id,index)=>{
+    const island=api.islands.find(i=>i.id===id),el=document.createElementNS(ns,'g');el.classList.add('island-keeper','is-walking');el.dataset.keeper=id;
+    el.innerHTML=api.figure({name:'島主 · '+book[id].owner,skin:'#e6bc94',hair:'#4e493d',style:index%3===0?'long':'short',shirt:book[id].color,hat:id==='sanxia'?'none':'explorer',bag:false},true)+'<g class="keeper-question"><circle cx="20" cy="-47" r="10" fill="#fff5d1" stroke="#9a7244"/><text x="20" y="-43" text-anchor="middle" font-size="13" font-weight="700" fill="#825e35">?</text></g>';
+    keeperLayer.append(el);keepers.set(id,{el,island,at:155+index*7,direction:index%2===0?1:-1,x:0,y:0});
+  });
+  let lastFrame=null,lock=null,lastIsland='',arrivalAt=0;
+  function patrol(now){
+    const dt=lastFrame===null?0:Math.min(.05,(now-lastFrame)/1000);lastFrame=now;
+    const s=api.snapshot(),modal=!!document.querySelector('dialog[open]'),paused=$('#ocean').classList.contains('paused')||document.hidden||modal,reduced=$('#ocean').classList.contains('reduced-motion');
+    if(s.island!==lastIsland){lastIsland=s.island;arrivalAt=now;lock=null;}
+    if(lock&&(s.island!==lock.island||Math.hypot(s.x-lock.x,s.y-lock.y)>42))lock=null;
+    for(const [id,k]of keepers){
+      if(!paused&&!reduced){k.at+=k.direction*13*dt;if(k.at>=length-10){k.at=length-10;k.direction=-1;}if(k.at<=35){k.at=35;k.direction=1;}}
+      const p=walkPath.getPointAtLength(k.at);k.x=k.island.x+p.x;k.y=k.island.y+p.y;k.el.setAttribute('transform',`translate(${k.x} ${k.y})`);
+      k.el.classList.toggle('is-walking',!paused&&!reduced);k.el.classList.toggle('keeper-cleared',!!stamps[id]);
+      const question=k.el.querySelector('.keeper-question text');question.textContent=stamps[id]?'✓':'?';
+    }
+    const k=keepers.get(s.island);
+    if(k&&!paused&&s.enabled&&!s.riding&&!s.boarding&&s.walking&&!stamps[s.island]&&!lock&&now-arrivalAt>1200&&Math.hypot(s.x-k.x,s.y-k.y)<20){
+      lock={island:s.island,x:s.x,y:s.y};update();openQuiz(s.island);
+    }
+    requestAnimationFrame(patrol);
+  }
   update();setInterval(update,500);
+  requestAnimationFrame(patrol);
 })();
 

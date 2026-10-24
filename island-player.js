@@ -13,7 +13,7 @@
   const islands = [{id:'school',name:'長興國小・七堵站',x:635,y:479},...nodes];
   const order = ['home-rail','sanxia','marine','metro-tech','rail-harbor','risk-management','multi-rail','school'];
   const getIsland = id => islands.find(x => x.id === id) || islands[0];
-  let look = {...defaults}, current = 'school', enabled = false, draft = {...defaults};
+  let look = {...defaults}, current = 'school', enabled = false, draft = {...defaults}, crowned = false;
   let walkAt = 115, walkGoal = 115, ride = null, queuedDestination = null, keys = new Set(), last = null;
   try {
     const saved = JSON.parse(localStorage.getItem('changxing-traveller') || 'null');
@@ -32,7 +32,7 @@
   function save() { try {localStorage.setItem('changxing-traveller',JSON.stringify({look,island:current}));} catch {} }
   function figure(a,tag=false) {
     const hair = a.style === 'long' ? '<path d="M-9-35Q-12-52 0-52Q12-52 9-33L12-22-10-22Z" fill="'+a.hair+'"/>' : a.style === 'curly' ? [-6,0,6].map(x=>`<circle cx="${x}" cy="-48" r="5.5" fill="${a.hair}"/>`).join('') : `<path d="M-9-40Q-10-53 0-53Q10-53 9-40L4-46-8-42Z" fill="${a.hair}"/>`;
-    return `<ellipse cy="3" rx="13" ry="5" fill="#315e5533"/><ellipse class="traveller-ring" cy="3" rx="16" ry="7" fill="none" stroke="#f4d878" stroke-width="2"/>${a.bag?'<rect x="-13" y="-31" width="9" height="18" rx="4" fill="#5c8687"/>':''}<g class="my-leg left"><path d="M-4-9L-6 1" stroke="#4f6968" stroke-width="5" stroke-linecap="round"/></g><g class="my-leg right"><path d="M4-9L6 1" stroke="#4f6968" stroke-width="5" stroke-linecap="round"/></g><path d="M-7-32Q0-36 7-32L10-11H-10Z" fill="${a.shirt}"/><path d="M-5-30v17m10-17v17" stroke="#efe6c5" stroke-width="1.3"/><path d="M-8-29L-13-17M8-29L13-17" stroke="${a.skin}" stroke-width="4" stroke-linecap="round"/>${hair}<circle cy="-41" r="9" fill="${a.skin}"/><path d="M-8-44Q-8-51 0-50Q7-50 8-45L2-47-8-43Z" fill="${a.hair}"/><circle cx="-3" cy="-41" r="1" fill="#43574b"/><circle cx="3" cy="-41" r="1" fill="#43574b"/><path d="M-2-36q2 2 4 0" stroke="#9d6f55" fill="none"/>${a.hat==='explorer'?'<path d="M-10-48q0-13 10-13q10 0 10 13Z" fill="#d4b65c"/><path d="M-13-47H13" stroke="#b59b4b" stroke-width="3"/>':''}${tag?`<rect x="-44" y="-80" width="88" height="16" rx="8" fill="#fff9e8" stroke="#d6c994"/><text y="-69" text-anchor="middle" font-size="9" font-weight="700" fill="#3d6556">${esc(a.name)}</text>`:''}`;
+    return `<ellipse cy="3" rx="13" ry="5" fill="#315e5533"/><ellipse class="traveller-ring" cy="3" rx="16" ry="7" fill="none" stroke="#f4d878" stroke-width="2"/>${a.bag?'<rect x="-13" y="-31" width="9" height="18" rx="4" fill="#5c8687"/>':''}<g class="my-leg left"><path d="M-4-9L-6 1" stroke="#4f6968" stroke-width="5" stroke-linecap="round"/></g><g class="my-leg right"><path d="M4-9L6 1" stroke="#4f6968" stroke-width="5" stroke-linecap="round"/></g><path d="M-7-32Q0-36 7-32L10-11H-10Z" fill="${a.shirt}"/><path d="M-5-30v17m10-17v17" stroke="#efe6c5" stroke-width="1.3"/><path d="M-8-29L-13-17M8-29L13-17" stroke="${a.skin}" stroke-width="4" stroke-linecap="round"/>${hair}<circle cy="-41" r="9" fill="${a.skin}"/><path d="M-8-44Q-8-51 0-50Q7-50 8-45L2-47-8-43Z" fill="${a.hair}"/><circle cx="-3" cy="-41" r="1" fill="#43574b"/><circle cx="3" cy="-41" r="1" fill="#43574b"/><path d="M-2-36q2 2 4 0" stroke="#9d6f55" fill="none"/>${a.hat==='explorer'&&!a.crowned?'<path d="M-10-48q0-13 10-13q10 0 10 13Z" fill="#d4b65c"/><path d="M-13-47H13" stroke="#b59b4b" stroke-width="3"/>':''}${a.crowned?'<g class="champion-crown"><path d="M-11-54L-14-68-5-62 0-73 5-62 14-68 11-54Z" fill="#f5cf59" stroke="#a87a27" stroke-width="1.6"/><path d="M-11-56H11" stroke="#fff1a0" stroke-width="2"/><circle cy="-59" r="2.5" fill="#c7754d"/></g>':''}${tag?`<rect x="-44" y="${a.crowned?-103:-80}" width="88" height="16" rx="8" fill="#fff9e8" stroke="#d6c994"/><text y="${a.crowned?-92:-69}" text-anchor="middle" font-size="9" font-weight="700" fill="#3d6556">${esc(a.name)}</text>`:''}`;
   }
   const actor = document.createElementNS(ns,'g');
   actor.id = 'my-traveller'; actor.setAttribute('aria-hidden','true');
@@ -62,7 +62,7 @@
   function preview() {
     const f=new FormData(form);
     draft={name:$('#avatar-nickname').value.trim()||'小島旅人',skin:f.get('skin'),hair:f.get('hair'),style:f.get('style'),shirt:f.get('shirt'),hat:f.get('hat'),bag:f.has('bag')};
-    $('#avatar-preview-svg').innerHTML=figure(draft);
+    $('#avatar-preview-svg').innerHTML=figure({...draft,crowned});
     $('#avatar-preview-name').textContent=draft.name;
   }
   function openEditor() {
@@ -74,7 +74,7 @@
   }
   form.addEventListener('input',preview);
   form.addEventListener('change',preview);
-  form.addEventListener('submit',e=>{e.preventDefault();preview();look={...draft};enabled=true;actor.innerHTML=figure(look,true);editor.close();save();updateHUD();focusCurrent();message('點選這座島的地面行走，或搭海風號前往下一島。');});
+  form.addEventListener('submit',e=>{e.preventDefault();preview();look={...draft};enabled=true;actor.innerHTML=figure({...look,crowned},true);editor.close();save();updateHUD();focusCurrent();message('點選這座島的地面行走，或搭海風號前往下一島。');});
   $('#avatar-close').addEventListener('click',()=>editor.close());
   $('#create-traveller').addEventListener('click',openEditor);
   $('#traveller-edit').addEventListener('click',openEditor);
@@ -94,7 +94,7 @@
     $('#traveller-hud').hidden=!enabled;
     actor.style.display=enabled&&!ride?'':'none';
     path.style.display=enabled&&!ride?'':'none';
-    $('#traveller-name').textContent=look.name;
+    $('#traveller-name').textContent=look.name+(crowned?' 👑':'');
     $('#traveller-place').textContent='目前所在｜'+getIsland(current).name;
     $('#traveller-ride').disabled=!!ride||!!queuedDestination;
     $('#traveller-edit').disabled=!!ride||!!queuedDestination;
@@ -180,13 +180,15 @@
     if(enabled&&!ride){const i=getIsland(current),p=path.getPointAtLength(walkAt);actor.setAttribute('transform',`translate(${i.x+p.x} ${i.y+p.y})`);path.setAttribute('transform',`translate(${i.x} ${i.y})`);}
     requestAnimationFrame(frame);
   }
-  actor.innerHTML=figure(look,true);updateHUD();
+  window.addEventListener('passport:achievement',e=>{const next=e.detail?.complete===true;if(next===crowned)return;crowned=next;actor.innerHTML=figure({...look,crowned},true);updateHUD();});
+  window.addEventListener('traveller:stop-walking',()=>{if(!ride&&!queuedDestination){keys.clear();walkGoal=walkAt;actor.classList.remove('is-walking');}});
+  actor.innerHTML=figure({...look,crowned},true);updateHUD();
   message('點島上地面行走；搭海風號就能前往其他小島。');
   window.ChangxingTraveller = Object.freeze({
     snapshot() {
       const p=ride?circuit.getPointAtLength((ride.start+ride.travelled)%circuitLength):path.getPointAtLength(walkAt),i=getIsland(current);
       const q=ride?circuit.getPointAtLength((ride.start+ride.travelled+1)%circuitLength):p;
-      return {enabled,look:{...look},island:current,x:ride?p.x:i.x+p.x,y:ride?p.y:i.y+p.y,riding:!!ride,angle:ride?Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI:0,destination:ride?.destination||'',walking:actor.classList.contains('is-walking')};
+      return {enabled,crowned,boarding:!!queuedDestination,look:{...look},island:current,x:ride?p.x:i.x+p.x,y:ride?p.y:i.y+p.y,riding:!!ride,angle:ride?Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI:0,destination:ride?.destination||'',walking:actor.classList.contains('is-walking')};
     },
     figure, train:playerTrain.innerHTML.replace('>我<','>在線<'),
     islands:islands.map(i=>({...i}))

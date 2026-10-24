@@ -42,7 +42,7 @@
     const a=raw.look;if(!a||typeof a!=='object')return null;
     const look={name:String(a.name||'小島旅人').replace(/[\u0000-\u001f\u007f]/g,'').slice(0,12),style:['short','long','curly'].includes(a.style)?a.style:'short',hat:a.hat==='none'?'none':'explorer',bag:a.bag===true};
     for(const k of Object.keys(colors))look[k]=colors[k].includes(a[k])?a[k]:colors[k][0];
-    return {enabled:true,look,island:raw.island,x:raw.x,y:raw.y,riding:raw.riding===true,angle:Number.isFinite(raw.angle)?Math.max(-180,Math.min(180,raw.angle)):0,destination:islandIds.has(raw.destination)?raw.destination:'',walking:raw.walking===true};
+    return {enabled:true,crowned:raw.crowned===true,look,island:raw.island,x:raw.x,y:raw.y,riding:raw.riding===true,angle:Number.isFinite(raw.angle)?Math.max(-180,Math.min(180,raw.angle)):0,destination:islandIds.has(raw.destination)?raw.destination:'',walking:raw.walking===true};
   }
   function send(c,data){if(c?.open)try{c.send(data);}catch{}}
   function roster(){return [...states].map(([id,p])=>({id,state:p.state}));}
@@ -54,7 +54,7 @@
     for(const [id,{state:s}] of remote){
       let e=actors.get(id);
       if(!e){const actor=document.createElementNS(ns,'g'),train=document.createElementNS(ns,'g');actor.classList.add('live-traveller');train.classList.add('live-train');layer.append(actor);$('.rail-vehicles').append(train);train.innerHTML=api.train;e={actor,train,look:''};actors.set(id,e);}
-      const signature=JSON.stringify(s.look);if(signature!==e.look){e.actor.innerHTML=api.figure({...s.look,name:'● '+s.look.name},true);e.look=signature;}
+      const signature=JSON.stringify([s.look,s.crowned]);if(signature!==e.look){e.actor.innerHTML=api.figure({...s.look,crowned:s.crowned,name:'● '+s.look.name},true);e.look=signature;}
       e.actor.style.display=s.riding?'none':'';e.train.style.display=s.riding?'':'none';e.actor.classList.toggle('is-walking',s.walking);
       e.actor.setAttribute('transform',`translate(${s.x} ${s.y})`);e.train.setAttribute('transform',`translate(${s.x} ${s.y}) rotate(${s.angle})`);
       e.actor.dataset.island=s.island;
