@@ -21,7 +21,23 @@ function box(x,y,w,d,h,c='#e9d6a0',roof='#a65c43'){
 function tree(x,y,s=1){return `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cy="5" rx="13" ry="6" fill="#527e6230"/><path d="M0 0V-26" stroke="#8a7960" stroke-width="4"/><path d="M0-65L-18-29H-11L-24-12H24L11-29H18Z" fill="#497b65"/><path d="M0-65V-12H24L11-29H18Z" fill="#608b6b"/></g>`;}
 function school(){return `<g>${box(575,453,155,70,54,'#e4d6a6','#d98564')}${box(533,445,62,42,70,'#f5e8bd','#ca7354')}<path d="M518 385h28v35h-28z" fill="#d0dfd0"/><circle cx="532" cy="397" r="9" fill="#fffcdd"/><path d="M532 391v6l4 3" stroke="#6f8673" fill="none"/><path d="M553 423h13v20h-13zM579 409h13v16h-13zM603 398h13v16h-13z" fill="#6e9c96"/><path d="M625 386v-60" stroke="#8d8670" stroke-width="2"/><path d="M626 327l31 10-31 10" fill="#d68a5b"/><text x="565" y="465" font-size="12" fill="#3f6555" font-weight="700">長興國小</text></g>`;}
 function building(r){let x=r.x,y=r.y;
- if(r.type==='community')return `${box(x-25,y,86,47,32,'#eddeb4','#cf8262')}<path d="M${x+28} ${y+10}l53-23" stroke="#708b79" stroke-width="4"/><path d="M${x+26} ${y+4}l53-23m-49 29 49-23" stroke="#a4a489" stroke-width="2"/><text x="${x-48}" y="${y-22}" font-size="10" fill="#455d4a">鐵道社區</text>`;
+ if(r.type==='community')return `<g transform="translate(${x} ${y})" class="heritage-station">
+ <path d="M-111 9L65-7 111 17-66 39Z" fill="#bdb9a5"/>
+ <path d="M-77 27L58 15 73 22-63 36Z" fill="#e0d9bf"/><path d="M-63 36L73 22v5L-63 41Z" fill="#a5a28f"/><path d="M-63 41L73 27 85 33-51 47Z" fill="#d9d4c1"/><path d="M-51 47L85 33v4L-51 51Z" fill="#a5a28f"/>
+ <path d="M-87-48L70-61 70 0-87 14Z" fill="#76533c"/><path d="M70-61L98-46V12L70 0Z" fill="#654b39"/>
+ ${[-43,-36,-29,-22,-15,-8].map(v=>`<path d="M-85 ${v+2}L69 ${v-11}" stroke="#a0805c" stroke-width="1.3"/>`).join('')}
+ ${[-66,-28,11,47].map(v=>`<path d="M${v} -37l24-2v31l-24 2Z" fill="#4c5747" stroke="#b29871" stroke-width="2"/><path d="M${v+8} -37v31m8-32v31m-16-19 24-2m-24 12 24-2" stroke="#b29871" stroke-width="1.3"/>`).join('')}
+ <path d="M-89-46L72-60 98-46 79-40-91-26-111-37Z" fill="#4d5148"/><path d="M-91-78L68-91 101-51-111-33Z" fill="#797b69" stroke="#4f564b" stroke-width="2"/>
+ ${Array.from({length:18},(_,i)=>`<path d="M${-86+i*8.6} ${-78-i*.7}l-17 40" stroke="#a8a78d" stroke-width="1"/>`).join('')}
+ <path d="M-99-66L79-81M-104-53L88-67M-110-39L99-53" stroke="#555e50" stroke-width="1.5"/><path d="M-95-79L69-92" stroke="#c0b99d" stroke-width="3"/>
+ <path d="M-104-37L102-54" stroke="#544437" stroke-width="4"/>
+ ${[-91,-47,3,52,92].map(v=>`<path d="M${v} ${-36-(v+91)*.08}v53" stroke="#886a4b" stroke-width="4"/>`).join('')}
+ <path d="M-99 18L96 1" stroke="#b4a98e" stroke-width="4"/>
+ <path d="M-53-57L49-66v18L-53-39Z" fill="#e3d5a0" stroke="#78694b" stroke-width="1"/><text x="-2" y="-46" transform="rotate(-5 -2 -46)" text-anchor="middle" font-size="13" font-weight="700" letter-spacing="6" fill="#333d63">七堵車站</text>
+ <path d="M-112 11v21m27-23v21m-27-12 27-2m-27 10 27-2" stroke="#8b9786" stroke-width="1.5"/><path d="M-113 11l29-2" stroke="#d9dec8" stroke-width="2"/>
+ <g transform="translate(-100 22)" fill="none" stroke="#c1c6ab" stroke-width="1.5"><circle cx="-5" cy="-3" r="4"/><circle cx="7" cy="-4" r="4"/><path d="M-12-8l2-10h12v9h11v6H-14v-5Z"/></g>
+ <path d="M-19 8l35-3 8 5-35 3Z" fill="#aab29c"/>
+ <text x="-3" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#455d4a">鐵道園區</text></g>`;
  if(r.type==='station')return `${box(x,y,150,65,35,'#eddeb4','#cf8262')}<path d="M${x-60} ${y-63}l60-28 60 28-60 27Z" fill="#995c48"/><path d="M${x-26} ${y-39}h46v19h-46Z" fill="#f7f3da"/><text x="${x-18}" y="${y-26}" font-size="12" fill="#455d4a">七 堵</text><path d="M${x-55} ${y-31}v20m27-6v-18m72-2v16" stroke="#6a9c92" stroke-width="11"/>`;
  if(r.type==='museum')return `${box(x,y,150,70,21,'#dbe1cf','#c4d5c9')}<path d="M${x-60} ${y-53}C${x-55} ${y-136} ${x+46} ${y-143} ${x+65} ${y-73}L${x+65} ${y-48}Q${x} ${y-21} ${x-60} ${y-53}" fill="#8ab2b3"/><path d="M${x-60} ${y-53}Q${x+4} ${y-96} ${x+65} ${y-73}M${x-23} ${y-117}Q${x+6} ${y-76} ${x+3} ${y-37}M${x+15} ${y-119}Q${x+30} ${y-82} ${x+31} ${y-43}" fill="none" stroke="#e1eee0" stroke-width="3"/><path d="M${x-55} ${y-55}Q${x-45} ${y-118} ${x} ${y-121}" fill="none" stroke="#c3dedd" stroke-width="5"/>`;
  if(r.type==='lighthouse')return `<ellipse cx="${x}" cy="${y}" rx="50" ry="22" fill="#b1c7ac"/><path d="M${x-22} ${y-8}l8-116h28l9 116Z" fill="#ffefd1"/><path d="M${x-17} ${y-57}h35l3 23h-40Z" fill="#d58563"/><path d="M${x-17} ${y-123}v-23h35v23Z" fill="#9fbdad"/><path d="M${x-23} ${y-146}l23-15 23 15Z" fill="#bd745a"/><path d="M${x-24} ${y-122}h48" stroke="#647e70" stroke-width="4"/><circle cx="${x}" cy="${y-135}" r="7" fill="#fff5ae"/><path d="M${x-40} ${y+13}l18-12M${x+24} ${y+15}l16-7" stroke="#8eac95" stroke-width="6"/>`;
