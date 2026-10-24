@@ -134,7 +134,35 @@ function building(r){let x=r.x,y=r.y;
  if(r.type==='lighthouse')return `<ellipse cx="${x}" cy="${y}" rx="50" ry="22" fill="#b1c7ac"/><path d="M${x-22} ${y-8}l8-116h28l9 116Z" fill="#ffefd1"/><path d="M${x-17} ${y-57}h35l3 23h-40Z" fill="#d58563"/><path d="M${x-17} ${y-123}v-23h35v23Z" fill="#9fbdad"/><path d="M${x-23} ${y-146}l23-15 23 15Z" fill="#bd745a"/><path d="M${x-24} ${y-122}h48" stroke="#647e70" stroke-width="4"/><circle cx="${x}" cy="${y-135}" r="7" fill="#fff5ae"/><path d="M${x-40} ${y+13}l18-12M${x+24} ${y+15}l16-7" stroke="#8eac95" stroke-width="6"/>`;
  if(r.type==='village')return `${box(x-33,y,75,43,42,'#e4c59b','#aa624c')}${box(x+35,y-27,75,43,51,'#eee0b7','#b97754')}<path d="M${x-46} ${y-26}v18m16-9v-18m55-17v-19m20 9v18" stroke="#789c94" stroke-width="9"/><path d="M${x-28} ${y+14}l68-30" stroke="#b8b198" stroke-width="8"/><path d="M${x-67} ${y-7}l-20 12M${x+60} ${y-20}l23 7" stroke="#769d75" stroke-width="10"/>`;
  if(r.type==='hub')return `${box(x-23,y-8,110,56,65,'#cfd6c4','#78998f')}${box(x+57,y-32,55,40,109,'#dce0c9','#88a99a')}<path d="M${x+42} ${y-129}v80m15-89v83m-94 7v31m22-39v33m23-42v30" stroke="#82a69e" stroke-width="7"/><path d="M${x-87} ${y+14}l110-48 48 25-110 48Z" fill="#e4d6ad"/><path d="M${x-64} ${y+14}l103-45" stroke="#9d9f8a" stroke-width="4"/><g class="floaty"><path d="M${x-60} ${y-2}l70-31 25 11-70 32Z" fill="#faf0ce"/><path d="M${x-53} ${y-5}l56-25 11 5-56 26Z" fill="#819e96"/><path d="M${x-63} ${y-2}v14l28 12v-14Z" fill="#cf8f63"/></g>`;
- return `${box(x-32,y-15,93,55,40,'#edcea0','#b77859')}<path d="M${x-70} ${y-68}v-85h91v11h-81v74m12-55 48 26m-48-39 31 17" stroke="#be9f63" stroke-width="6" fill="none"/><path d="M${x+21} ${y-139}v63" stroke="#6d8a78" stroke-width="2"/>${box(x+45,y+1,66,35,24,'#9abfb4','#78aaa3')}${box(x+77,y-18,60,32,20,'#dcad72','#d2bf8c')}<path d="M${x-82} ${y+10}l155-5 25 26-163 9Z" fill="#c2b491"/><path d="M${x-28} ${y+55}l86-1-13 24-64 4Z" fill="#f1e3bf"/><path d="M${x-12} ${y+46}h35v16h-35Z" fill="#88b1a5"/>`;
+ return `<g transform="translate(${x} ${y})" class="harbor-station-port">
+ <defs><clipPath id="harbor-glass"><path d="M-109-91Q-61-117-12-86L-25-5Q-63 12-97-11Z"/></clipPath></defs>
+ <path d="M-126 8L43-27 132 13-39 48Z" fill="#c1c7b4"/><path d="M-116 10L21-19 44-8-94 24Z" fill="#d9ddcc"/>
+ <path d="M-14-83L34-66V-7L-25-5Z" fill="#bdc7bc"/><path d="M-5-64l37 13v31L-12-34Z" fill="#759d9b"/><path d="M3-62v31m11-27v30m11-26v30" stroke="#d0d9c9" stroke-width="2"/>
+ <path d="M-109-91Q-61-117-12-86L-25-5Q-63 12-97-11Z" fill="#526f6b" stroke="#c3cec0" stroke-width="2"/>
+ <g clip-path="url(#harbor-glass)" stroke="#b5cbbd" stroke-width="1.2">
+ ${Array.from({length:10},(_,i)=>`<path d="M${-160+i*19}-119l78 145M${-160+i*19}-119l-70 145"/>`).join('')}
+ <path d="M-117-66Q-63-84-8-63M-110-30Q-62-48-17-27" fill="none" stroke="#87a99b"/>
+ </g>
+ <path d="M-116-100Q-79-152-28-122Q-8-117 3-98L-12-83Q-66-115-108-84Z" fill="#9fa99c" stroke="#6d8177" stroke-width="2"/>
+ <path d="M-115-100Q-74-135-22-109L-9-95Q-65-118-108-92Z" fill="#d2d7c9"/>
+ <path d="M-106-91Q-65-113-15-89" stroke="#e0e4d5" stroke-width="2" fill="none"/>
+ <path d="M-95-99l21-21 29 12m-27-12 5 22m22-11 18 20" stroke="#566f65" stroke-width="2" fill="none"/>
+ <path d="M-72-16l20-4v25l-20 4Z" fill="#8eb5aa" stroke="#e2e7d7" stroke-width="1.5"/><path d="M-62-18V7" stroke="#dce4d4" stroke-width="1.5"/>
+ <text x="-57" y="-29" text-anchor="middle" font-size="9" font-weight="700" fill="#f4f0d6">基隆車站</text>
+ <path d="M-13-24L34-10 51-2-3-17Z" fill="#9bbeb1" stroke="#d6e1cf"/><path d="M0-16V7m17-17v22m16-17v22" stroke="#829b8c" stroke-width="2"/>
+ <path d="M-100 30L38 2 49 9-88 38Z" fill="#869b90"/><path d="M-94 35L42 7" stroke="#e7d99f" stroke-width="1.5" stroke-dasharray="10 7"/>
+ <path d="M22-3L123 3 120 26 23 19Z" fill="#9caa97"/><path d="M25 0L122 6" stroke="#e2d5ab" stroke-width="3"/>
+ ${[[43,-43,'#738f99'],[68,-38,'#a86a54'],[95,-34,'#91a188'],[58,-20,'#b29861'],[84,-16,'#6d9797']].map(([xx,yy,col])=>`${box(xx,yy,29,15,15,col,col)}<path d="M${xx-10} ${yy-17}v9m5-11v9m5-11v9m5-11v9" stroke="#d1d1af" stroke-width=".8"/>`).join('')}
+ ${[[39,-88,'#638f9c'],[85,-75,'#b36952']].map(([xx,yy,col])=>`<g><path d="M${xx-16} ${yy+83}v-112h46v7h-39v105m-7-89 40 20m-40-29 40 20m-34 78 25-78m-28-16 35-10" stroke="${col}" stroke-width="4" fill="none"/><path d="M${xx+29} ${yy-22}v75" stroke="#58786e" stroke-width="1"/><g><animateTransform attributeName="transform" type="translate" values="0 0;0 10;0 0" dur="8s" repeatCount="indefinite"/><path d="M${xx+25} ${yy+52}v7h9v-7" stroke="${col}" stroke-width="2" fill="none"/></g></g>`).join('')}
+ <path d="M-4 33Q57 19 126 36L118 56Q46 65-8 46Z" fill="#79a9a4" opacity=".65"/>
+ <g class="cargo-ship"><animateTransform attributeName="transform" type="translate" values="0 0;2 -2;0 0" dur="7s" repeatCount="indefinite"/>
+ <path d="M4 31L109 31 97 48 18 48Z" fill="#405c58"/><path d="M17 45h80" stroke="#a96b51" stroke-width="3"/>
+ <path d="M16 17h16v17H16Z" fill="#eee6c9"/><path d="M12 14h22v5H12Z" fill="#e6e7d1"/><path d="M20 10h7v6h-7Z" fill="#dbdfc9"/><path d="M18 21h11" stroke="#799d95" stroke-width="3"/>
+ <path d="M38 20h20v12H38Z" fill="#a77457"/><path d="M59 18h20v14H59Z" fill="#759b98"/><path d="M80 22h20v10H80Z" fill="#b5a16b"/><path d="M43 12h20v8H43Z" fill="#829788"/><path d="M65 10h20v8H65Z" fill="#b46e55"/>
+ <path d="M-1 51q22 5 42 0m35 3q20 3 37-2" stroke="#e3eee0" stroke-width="2" fill="none"/></g>
+ <path d="M-119 11v-24m0 0h8" stroke="#6d897a" stroke-width="2"/>
+ <g transform="translate(-100 22) scale(.65)">${person('#d5b557',true,'observe')}</g>
+ </g>`;
 }
 function nameplate(r){let x=r.x-83,y=r.y+55;return `<g class="nameplate"><path d="M${r.x} ${y}v-18" stroke="#7b8b71" stroke-width="2"/><rect class="plate" x="${x}" y="${y}" width="166" height="49" rx="20"/><text class="node-number" x="${x+13}" y="${y+24}">${r.no}</text><text x="${x+43}" y="${y+23}">${r.name}</text><text class="node-sub" x="${x+43}" y="${y+39}">${r.location.split('，')[0].slice(0,10)}</text></g>`;}
 function islandGround(x,y,kind='green'){
