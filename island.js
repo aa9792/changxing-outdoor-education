@@ -54,8 +54,40 @@ function school(){return `<g transform="translate(575 453)" class="changxing-cam
  </g>`;}
 
 function building(r){let x=r.x,y=r.y;
- if(r.type==='safety')return `<g transform="translate(${x} ${y})"><path d="M-112 8L49-25 112 12-48 46Z" fill="#d2d7bb"/>${box(-17,-4,150,68,61,'#d9dfc4','#769e90')}<path d="M-85-60L-11-92 62-61-12-28Z" fill="#5c8c7c"/><path d="M-59-17v-27m21 17v-27m62 5v25" stroke="#81a9a0" stroke-width="10"/><path d="M-12-25h19V5h-19Z" fill="#6a9187"/><path d="M-26-56v-21l15-6 15 6v21q-15 18-30 0Z" fill="#f0dfab"/><path d="M-20-65l7 7 12-15" fill="none" stroke="#5d8879" stroke-width="4"/><text x="-12" y="-30" text-anchor="middle" font-size="10" font-weight="700" fill="#355d52">安全資源站</text><path d="M65-8v-48m35 40v-48" stroke="#83967b" stroke-width="3"/><path d="M59-62l48-9v42l-48 9Z" fill="#fff5d8" stroke="#7c9986" stroke-width="2"/><path d="M67-52l30-6m-30 16 26-5m-26 15 22-4" stroke="#a9b795" stroke-width="3"/><path d="M-85 25L27 4" stroke="#eee6c7" stroke-width="10"/><g transform="translate(50 24)">${person('#d5b858',true,'observe')}</g></g>`;
-
+ if(r.type==='safety')return `<g transform="translate(${x} ${y})" class="risk-wood-office">
+ <path d="M-125 1L56-37 131 10-51 51Z" fill="#d0d5ba"/>
+ <path d="M-119 27Q-52 13 6 42L-12 53Q-73 27-126 39Z" fill="#b97660"/><path d="M-121 32Q-60 19-1 46m-119-8q53-9 108 14" stroke="#eee5c9" stroke-width="1.3" fill="none"/>
+ <path d="M-66 12L87-18 119 3-35 36Z" fill="#d5d3bd"/>
+ <path d="M-54-85L92-113V-8L-54 21Z" fill="#c2965f" stroke="#936e46" stroke-width="1.3"/>
+ <path d="M92-113l30 21V13L92-8Z" fill="#a87947"/>
+ <path d="M-54-85L13-140 92-113Z" fill="#d4ac70" stroke="#9e7649" stroke-width="2"/>
+ <path d="M-42-87L13-131 78-111Z" fill="#8fafa2" stroke="#936e46" stroke-width="2"/>
+ <path d="M-11-111v19m30-38v33m29-25v20" stroke="#a67b49" stroke-width="3"/>
+ <path d="M-66-84L13-146 51-153 132-120 95-108 13-140-58-79Z" fill="#5e6d65" stroke="#3d544c" stroke-width="2"/>
+ <path d="M-64-78L13-135 95-102v-9L13-144-64-87Z" fill="#c58e51"/>
+ <path d="M-45-63L83-89V-9L-45 17Z" fill="#86aaa0" class="night-window"/>
+ <path d="M99-94l16 11V3L99-8Z" fill="#7d9e93" class="night-window"/>
+ <path d="M-38-4L78-27v14L-38 10Z" fill="#a1bba0" opacity=".7"/>
+ <path d="M-13-15L30-24v4L-13-11Z" fill="#b18c55"/><path d="M-10-11V6m35-24V0" stroke="#8d7147" stroke-width="2"/>
+ <path d="M-3 3v-14l9-2V1m13-2v-14l9-2v14" stroke="#a67e46" stroke-width="2.5" fill="none"/>
+ <path d="M47-64l28-6v45l-28 6Z" fill="#a28250"/><path d="M49-50l24-5m-24 19 24-5" stroke="#deb47c" stroke-width="2"/>
+ <path d="M52-60h8v8h-8Z" fill="#c28a4b"/><path d="M64-64h7v9h-7Z" fill="#bc7952"/><path d="M51-44h9v8h-9Z" fill="#e0b459"/><path d="M64-46h7v9h-7Z" fill="#73958b"/>
+ <path d="M-49-66V20m38-94V12m46-95V2m51-95V-8m18-88V2" stroke="#b58b53" stroke-width="4"/>
+ <path d="M-49-42L86-69m-135 36L86-60" stroke="#bb985e" stroke-width="2"/>
+ <path d="M-48-78L87-105v27L-48-51Z" fill="#ddb77e" stroke="#bc915b" stroke-width="1.2"/>
+ <text x="18" y="-84" transform="rotate(-11 18 -84)" text-anchor="middle" font-size="9" font-weight="700" fill="#4b5a43">戶外風險管理辦公室</text><text x="18" y="-73" transform="rotate(-11 18 -73)" text-anchor="middle" font-size="5.5" fill="#5b6a4e">基隆市戶外教育中心</text>
+ ${[[-51,16],[88,-10],[116,8]].map(([xx,yy])=>`<path d="M${xx-7} ${yy-19}l14-3v28l-14 3Z" fill="#a1a99a" stroke="#818e7e"/><path d="M${xx-5} ${yy-16}l5-1 2 6-5 2Zm5 10 6-1 1 6-6 1m-9-2 4-1 1 6-4 1" fill="#d2ccb0"/>`).join('')}
+ <path d="M-9 20L78 2 89 8 1 27Z" fill="#e5dfc9"/><path d="M1 27L89 8v4L1 31Z" fill="#a5b09b"/><path d="M1 31L89 12l8 5-89 19Z" fill="#d4d3bc"/>
+ <path d="M-73 24L-11 11l11 7-63 14Z" fill="#c2cab1"/><path d="M-72 23V6l60-12v17m-60 3 60-12" fill="none" stroke="#a0b7a5" stroke-width="1.8"/>
+ <path d="M-110 17v-54m40 46v-54" stroke="#9b7e4b" stroke-width="3"/><path d="M-117-38l49-10 9 7-50 10Z" fill="#596f60"/>
+ <path d="M-106-32l33-7v36l-33 7Z" fill="#dcdaba" stroke="#a48b53" stroke-width="2"/>
+ <path d="M-103-24l5 5 6-10 5 3 7-8m-23 22 8-5 4 7 9-8" fill="none" stroke="#86a47c" stroke-width="2"/><path d="M-100-28q17 12 20 18" stroke="#81a5a3" stroke-width="1.5" fill="none"/>
+ <path d="M-62 10V-103" stroke="#687d67" stroke-width="3"/><path d="M-73-83h22v18h-22Z" fill="#72928a" stroke="#b0c4ae"/><path d="M-72-77l19-3m-19 7 19-3" stroke="#bdd4bf" stroke-width="1"/>
+ <g transform="translate(-62 -104)"><animateTransform attributeName="transform" type="rotate" values="0;360" dur="4s" repeatCount="indefinite" additive="sum"/><path d="M-12 0H12M0-10V10" stroke="#667d68" stroke-width="2"/><circle cx="-12" r="3" fill="#59715d"/><circle cx="12" r="3" fill="#59715d"/><circle cy="-10" r="3" fill="#59715d"/></g>
+ <path d="M-69-62l15-3 5 13-15 3Z" fill="#507d8d" stroke="#d6dfc7"/><path d="M-65-63l4 12m3-13 4 12" stroke="#a2c6c2" stroke-width=".8"/>
+ ${[[-96,26],[-29,21],[106,15]].map(([xx,yy])=>`<path d="M${xx-7} ${yy-8}h14l-2 12h-10Z" fill="#b29468"/><path d="M${xx} ${yy-8}q-14-15-11-22q11 2 11 18q0-18 10-23q4 13-10 23Z" fill="#71945f"/>`).join('')}
+ <g transform="translate(42 27) scale(.7)">${person('#d6b45b',true,'observe')}</g>
+ </g>`;
  if(r.type==='community')return `<g transform="translate(${x} ${y})" class="heritage-station">
  <path d="M-111 9L65-7 111 17-66 39Z" fill="#bdb9a5"/>
  <path d="M-77 27L58 15 73 22-63 36Z" fill="#e0d9bf"/><path d="M-63 36L73 22v5L-63 41Z" fill="#a5a28f"/><path d="M-63 41L73 27 85 33-51 47Z" fill="#d9d4c1"/><path d="M-51 47L85 33v4L-51 51Z" fill="#a5a28f"/>
@@ -289,7 +321,7 @@ function illuminateWindows(){
 function draw(){
  const waves=Array.from({length:30},(_,i)=>{let x=55+(i*113)%1090,y=290+(i*91)%520;return `<path class="water-line" d="M${x} ${y}q10 5 20 0m10 0q8 4 17 0" stroke="#eff9e8" fill="none" opacity=".5" stroke-width="2" style="animation-delay:${i/4}s"/>`;}).join('');
  const central=`${islandGround(635,479)}<g transform="translate(581 471) scale(.53) translate(-575 -453)">${school()}</g><g transform="translate(714 476) scale(.49) translate(-300 -620)">${building({x:300,y:620,type:'station'})}</g><path d="M619 474L650 486" stroke="#e6dbb6" stroke-width="8" stroke-dasharray="3 3"/><text x="715" y="493" text-anchor="middle" font-size="10" fill="#386052" font-weight="700">台鐵七堵站</text>${tree(524,476,.48)}${nightFacilities(635,479)}<g class="school-tag"><rect x="542" y="536" width="186" height="25" rx="12" fill="#fffaf0"/><text x="635" y="553" text-anchor="middle" font-size="11" font-weight="700" fill="#386052">長興國小 × 七堵車站・出發點</text></g>`;
- const nodes=routes.slice().sort((a,b)=>a.y-b.y).map((r,i)=>`<g class="node" data-node="${r.id}" tabindex="0" role="button" aria-label="探索${r.name}：${r.title}" aria-pressed="false">${islandGround(r.x,r.y,r.zone==='ocean'?'coast':r.zone==='city'?'culture':'green')}<g transform="translate(${r.x} ${r.y}) scale(.83) translate(${-r.x} ${-r.y})">${building(r)}</g>${tree(r.x-103,r.y-28,.65)}${r.type==='lighthouse'?'':tree(r.x+111,r.y-15,.55)}${nightFacilities(r.x,r.y)}${people(r.x,r.y,i)}${platform(r)}${nameplate(r)}</g>`).join('');
+ const nodes=routes.slice().sort((a,b)=>a.y-b.y).map((r,i)=>`<g class="node" data-node="${r.id}" tabindex="0" role="button" aria-label="探索${r.name}：${r.title}" aria-pressed="false">${islandGround(r.x,r.y,r.zone==='ocean'?'coast':r.zone==='city'?'culture':'green')}<g transform="translate(${r.x} ${r.y}) scale(.83) translate(${-r.x} ${-r.y})">${building(r)}</g>${r.type==='safety'?'':tree(r.x-103,r.y-28,.65)}${['lighthouse','safety'].includes(r.type)?'':tree(r.x+111,r.y-15,.55)}${nightFacilities(r.x,r.y)}${people(r.x,r.y,i)}${platform(r)}${nameplate(r)}</g>`).join('');
  $('#island').innerHTML=`<defs><radialGradient id="lamp-halo"><stop stop-color="#ffe8a0" stop-opacity=".7"/><stop offset="1" stop-color="#ffdf85" stop-opacity="0"/></radialGradient><radialGradient id="ground-halo"><stop stop-color="#ffdf8a" stop-opacity=".38"/><stop offset="1" stop-color="#ffdf8a" stop-opacity="0"/></radialGradient><linearGradient id="beacon-beam" gradientUnits="userSpaceOnUse" x1="-36" y1="-137" x2="205" y2="-140"><stop stop-color="#fff4b6" stop-opacity=".72"/><stop offset="1" stop-color="#fff4b6" stop-opacity="0"/></linearGradient></defs>${waves}<g id="viewport">${railway()}${railway(true)}<g data-school="true" role="button" tabindex="0" aria-label="放大長興國小與七堵車站" style="cursor:pointer">${central}</g>${nodes}<g class="night-only guided-vessel" aria-hidden="true"><g><animateMotion path="M1100 177Q1140 200 1170 177" dur="17s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"/><ellipse cy="15" rx="32" ry="8" fill="#a3c5af" opacity=".14"/><path d="M-28 4H28L17 17H-17Z" fill="#a7c6bb"/><path d="M-13-9h22V5h-22Z" fill="#d1ddc8"/><path d="M-9-6H5v6H-9Z" fill="#ffe3a0"/><path d="M0-9v-13" stroke="#a9c1ad" stroke-width="2"/><circle cy="-23" r="2" fill="#fff2bc"/><circle cx="-22" cy="4" r="2" fill="#d68b6b"/><circle cx="22" cy="4" r="2" fill="#9ed6ba"/><path d="M-23 23q23 6 46 0" stroke="#cadbd0" stroke-width="2" opacity=".5" fill="none"/></g></g><g class="boat"><path d="M837 705l68 1-17 16-44-3Z" fill="#f5ecd3"/><path d="M851 692h32v16h-32Z" fill="#d9d9bc"/><path d="M861 684h6v9h-6Z" fill="#d28a61"/><path d="M835 730q18 6 38 0" stroke="#e7f4df" stroke-width="2" fill="none"/></g><g transform="translate(117 685)"><path d="M0 0l28 17L0 9l-28 8Z" fill="#5e8a7b"/><text x="0" y="-12" text-anchor="middle" fill="#65877a" font-size="12">N</text></g></g>`;
  const schoolNode=$('[data-school]');schoolNode.addEventListener('click',()=>focusSchool());schoolNode.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();focusSchool();}});
  illuminateWindows();
