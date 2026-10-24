@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#b9dfdb"><meta name="description" content="長興國小戶外教育島：從七堵鐵道出發，點選島嶼探索港灣、海洋、產業與智慧交通課程。"><title>長興戶外教育島｜循軌探行</title><link rel="stylesheet" href="island.css?v=20261024-1"><script src="island-data.js?v=20261024-1" defer></script><script src="island.js?v=20261024-1" defer></script></head>
+<body>
+<a class="skip" href="#explore">跳至課程清單</a>
+<div class="shell">
+ <main class="ocean" id="ocean" aria-label="戶外教育島嶼探索區">
+  <header class="masthead"><a class="wordmark" href="index.html" aria-label="長興戶外教育島首頁"><span class="brand-stamp">長興</span><span>戶外教育島<small>CHANGXING LEARNING ISLAND</small></span></a><button class="round help" id="help" aria-label="探索說明">?</button></header>
+  <div class="intro"><p class="eyebrow">循軌探行 · 基隆七堵出發</p><h1>一座島，<br>連起孩子的山海課堂。</h1><p>點選場域，探索孩子的山海課堂。</p></div>
+  <div class="scene" id="scene"><svg id="island" viewBox="0 0 1200 850" role="group" aria-label="六條戶外教育路線的互動示意島嶼"></svg></div>
+  <div class="map-controls" aria-label="地圖控制"><button id="zoom-in" aria-label="放大島嶼">＋</button><button id="zoom-out" aria-label="縮小島嶼">－</button><button id="reset" aria-label="回到全島總覽">全島</button><button id="connections" aria-pressed="true">學習連線</button><button id="motion" aria-pressed="false">暫停動態</button></div>
+  <div class="light-control" aria-label="島嶼光線"><button data-light="day" aria-pressed="true">☀ 白天</button><button data-light="dusk" aria-pressed="false">◒ 黃昏</button><button data-light="night" aria-pressed="false">☾ 夜晚</button></div>
+  <footer class="map-caption"><span><i></i> <b id="read-count">0 / 6</b> 路線已閱讀</span><span>學習場域示意 · 非實際地理比例</span></footer>
+ </main>
+ <aside class="panel" id="explore" aria-label="課程探索清單">
+  <div id="overview">
+   <div class="panel-heading"><p class="eyebrow">THE LEARNING ATLAS</p><h2>把家鄉，<br>讀成自己的故事。</h2><p>6 條路線，沿途都是學習。<br>選擇一條路，看看孩子如何提問與發現。</p></div>
+   <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜尋路線、場域或學習任務" aria-label="搜尋路線、場域或學習任務"></label>
+   <div class="filters" aria-label="路線主題"><button data-filter="all" aria-pressed="true">所有路線</button><button data-filter="local" aria-pressed="false">家鄉走讀</button><button data-filter="ocean" aria-pressed="false">海洋探索</button><button data-filter="city" aria-pressed="false">跨區學習</button></div>
+   <p class="result-count" id="result-count" aria-live="polite"></p><div class="route-index" id="route-index"></div>
+   <section class="method-note"><p class="eyebrow">TRACKS × TRAIN</p><h3>六年的課程軌道，<br>每一次探究的五個站。</h3><p>從生活場域到多鐵樞紐，逐年加深。每條路線都用提問、觀察、分析、互動與行動，留下自己的學習。</p><a href="curriculum.html#train-method">認識校本課程與 TRAIN 教學法 <span>↗</span></a></section>
+  </div>
+  <article id="detail" hidden></article>
+  <footer class="panel-footer"><a href="curriculum.html">完整課程與教學工具 ↗</a><p>基隆市長興國民小學<br>從七堵出發，向山海學習。</p><small>島嶼位置為課程關係示意；跨縣市場域另於路線中標示。</small></footer>
+ </aside>
+</div>
+<dialog id="guide"><button class="dialog-close" id="close-guide" aria-label="關閉探索說明">×</button><p class="eyebrow">WELCOME ABOARD</p><h2>歡迎登上長興的學習島。</h2><p>點選島上的場域，或右側課程清單，看看每條路線的故事、照片與探究任務。</p><ol><li>用主題或關鍵字，找一條感興趣的路線。</li><li>拖曳空白海面、按 ＋／－，調整你的視角。</li><li>切換光線，或跟著 TRAIN 五站了解課程。</li></ol><p class="guide-note">「已閱讀」只記錄這台裝置探索過的路線，不代表學生完成活動或通過評量。</p><button id="start" class="primary">開始探索 →</button></dialog>
+</body></html>
