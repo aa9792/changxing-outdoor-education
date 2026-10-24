@@ -237,13 +237,15 @@ function building(r){let x=r.x,y=r.y;
  <path d="M-100 30L38 2 49 9-88 38Z" fill="#869b90"/><path d="M-94 35L42 7" stroke="#e7d99f" stroke-width="1.5" stroke-dasharray="10 7"/>
  <path d="M22-3L123 3 120 26 23 19Z" fill="#9caa97"/><path d="M25 0L122 6" stroke="#e2d5ab" stroke-width="3"/>
  ${[[43,-43,'#738f99'],[68,-38,'#a86a54'],[95,-34,'#91a188'],[58,-20,'#b29861'],[84,-16,'#6d9797']].map(([xx,yy,col])=>`${box(xx,yy,29,15,15,col,col)}<path d="M${xx-10} ${yy-17}v9m5-11v9m5-11v9m5-11v9" stroke="#d1d1af" stroke-width=".8"/>`).join('')}
- ${[[39,-88,'#638f9c'],[85,-75,'#b36952']].map(([xx,yy,col])=>`<g><path d="M${xx-16} ${yy+83}v-112h46v7h-39v105m-7-89 40 20m-40-29 40 20m-34 78 25-78m-28-16 35-10" stroke="${col}" stroke-width="4" fill="none"/><path d="M${xx+29} ${yy-22}v75" stroke="#58786e" stroke-width="1"/><g><animateTransform attributeName="transform" type="translate" values="0 0;0 10;0 0" dur="8s" repeatCount="indefinite"/><path d="M${xx+25} ${yy+52}v7h9v-7" stroke="${col}" stroke-width="2" fill="none"/></g></g>`).join('')}
+ ${[[39,-88,'#638f9c'],[85,-75,'#b36952']].map(([xx,yy,col])=>`<g><path d="M${xx-16} ${yy+83}v-112h46v7h-39v105m-7-89 40 20m-40-29 40 20m-34 78 25-78m-28-16 35-10" stroke="${col}" stroke-width="4" fill="none"/></g>`).join('')}
  <path d="M-4 33Q57 19 126 36L118 56Q46 65-8 46Z" fill="#79a9a4" opacity=".65"/>
- <g class="cargo-ship"><animateTransform attributeName="transform" type="translate" values="0 0;2 -2;0 0" dur="7s" repeatCount="indefinite"/>
+ <g class="cargo-ship" id="loading-ship">
  <path d="M4 31L109 31 97 48 18 48Z" fill="#405c58"/><path d="M17 45h80" stroke="#a96b51" stroke-width="3"/>
  <path d="M16 17h16v17H16Z" fill="#eee6c9"/><path d="M12 14h22v5H12Z" fill="#e6e7d1"/><path d="M20 10h7v6h-7Z" fill="#dbdfc9"/><path d="M18 21h11" stroke="#799d95" stroke-width="3"/>
- <path d="M38 20h20v12H38Z" fill="#a77457"/><path d="M59 18h20v14H59Z" fill="#759b98"/><path d="M80 22h20v10H80Z" fill="#b5a16b"/><path d="M43 12h20v8H43Z" fill="#829788"/><path d="M65 10h20v8H65Z" fill="#b46e55"/>
+ ${[[41,20,'#a77457'],[62,20,'#759b98'],[83,20,'#b5a16b'],[62,8,'#b46e55']].map(([xx,yy,col],i)=>`<g class="loaded-container" data-cargo="${i}" opacity="0"><rect x="${xx}" y="${yy}" width="19" height="12" fill="${col}" stroke="#e2d1a5" stroke-width=".5"/><path d="M${xx+4} ${yy+2}v8m5-8v8m5-8v8" stroke="#dfd5b3" stroke-width=".7"/></g>`).join('')}
  <path d="M-1 51q22 5 42 0m35 3q20 3 37-2" stroke="#e3eee0" stroke-width="2" fill="none"/></g>
+ ${[0,1].map(i=>`<g class="loading-rig" data-rig="${i}"><rect class="trolley" x="${i?91:64}" y="${i?-100:-113}" width="8" height="6" fill="#d6ba79"/><line class="hoist-cable" x1="${i?95:68}" y1="${i?-97:-110}" x2="${i?95:68}" y2="-65" stroke="#426b64" stroke-width="1"/><g class="spreader" transform="translate(${i?95:68} -65)"><path d="M-10 0H10m-9 0v4m18-4v4" fill="none" stroke="#e0b453" stroke-width="2"/></g><g class="carried-container" opacity="0"><rect x="-9.5" width="19" height="12" fill="${i?'#b46e55':'#759b98'}" stroke="#dfd5b3" stroke-width=".7"/><path d="M-5 2v8m5-8v8m5-8v8" stroke="#e5d9b6" stroke-width=".7"/></g></g>`).join('')}
+ <text id="port-status" x="45" y="-145" text-anchor="middle" font-size="6" font-weight="700" fill="#456c61">靠泊待裝 · 0 / 4 櫃</text>
  <path d="M-119 11v-24m0 0h8" stroke="#6d897a" stroke-width="2"/>
  <g transform="translate(-100 22) scale(.65)">${person('#d5b557',true,'observe')}</g>
  </g>`;
@@ -281,6 +283,37 @@ function draw(){
  document.querySelectorAll('[data-node]').forEach(node=>{node.addEventListener('click',()=>openRoute(node.dataset.node));node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openRoute(node.dataset.node);}});});
 }
 
+let portClock=0,portLast=null;
+function animatePort(now){
+ const running=active==='rail-harbor'&&zoom>=1.6&&!$('#ocean').classList.contains('paused')&&!$('#ocean').classList.contains('reduced-motion');
+ if(running&&portLast!==null)portClock+=Math.min((now-portLast)/1000,.1);
+ portLast=now;
+ const t=portClock%43,loading=t<28,step=Math.min(3,Math.floor(t/7)),p=t%7;
+ const slots=[[50.5,20],[71.5,20],[92.5,20],[71.5,8]];
+ const deposited=loading?step+(p>=5.1?1:0):t<38?4:0;
+ document.querySelectorAll('.loaded-container').forEach((el,i)=>el.setAttribute('opacity',i<deposited?'1':'0'));
+ const ship=$('#loading-ship');let sx=0,sy=0,opacity=1;
+ if(t>=30&&t<38){const k=(t-30)/8;sx=230*k;sy=-40*k;opacity=1-Math.max(0,(k-.7)/.3);}
+ if(t>=38){const k=(t-38)/5;sx=-170*(1-k);sy=30*(1-k);opacity=Math.min(1,k*3);}
+ ship.setAttribute('transform',`translate(${sx} ${sy})`);ship.setAttribute('opacity',opacity);
+ document.querySelectorAll('.loading-rig').forEach((rig,i)=>{
+ const sourceX=i?95:68,top=i?-97:-110;let xx=sourceX,yy=-65,carrying=false;
+ if(loading&&i===step%2){const [destX,destY]=slots[step];
+ if(p<1.2)yy=-65+33*p/1.2;
+ else if(p<2){yy=-32-42*(p-1.2)/.8;carrying=true;}
+ else if(p<3.7){xx=sourceX+(destX-sourceX)*(p-2)/1.7;yy=-74;carrying=true;}
+ else if(p<5.1){xx=destX;yy=-74+(destY+74)*(p-3.7)/1.4;carrying=true;}
+ else if(p<6.2){xx=destX;yy=destY+(-74-destY)*(p-5.1)/1.1;}
+ else {xx=destX+(sourceX-destX)*(p-6.2)/.8;yy=-74;}
+ }
+ const cable=rig.querySelector('.hoist-cable');cable.setAttribute('x1',xx);cable.setAttribute('x2',xx);cable.setAttribute('y2',yy);
+ rig.querySelector('.trolley').setAttribute('x',xx-4);
+ rig.querySelector('.spreader').setAttribute('transform',`translate(${xx} ${yy})`);
+ const cargo=rig.querySelector('.carried-container');cargo.setAttribute('transform',`translate(${xx} ${yy})`);cargo.setAttribute('opacity',carrying?'1':'0');
+ });
+ $('#port-status').textContent=t<28?`裝船中 · ${Math.min(deposited,4)} / 4 櫃`:t<30?'裝載完成 · 準備離港':t<38?'滿載離港 →':'空船進港 · 下一輪裝載';
+ requestAnimationFrame(animatePort);
+}
 function updateRead(){ $('#read-count').textContent=`${visited.size} / ${routes.length}`; }
 function renderList(){
  const shown=routes.filter(r=>(filter==='all'||r.zone===filter)&&(`${r.name} ${r.title} ${r.location} ${r.summary} ${r.tasks.join(' ')}`.toLowerCase().includes(query)));
@@ -302,7 +335,7 @@ function openRoute(id,updateHash=true){
  const r=routes.find(x=>x.id===id);if(!r)return;$('#ocean').classList.remove('school-focus');active=id;visited.add(id);try{localStorage.setItem('changxing-island-read',JSON.stringify([...visited]));}catch{}updateRead();
  const template=ISLAND_DATA.templates[id];const train=ISLAND_DATA.train[id];
  $('#overview').hidden=true;$('#detail').hidden=false;focusIsland(r);
- $('#detail').innerHTML=`<div class="detail-header"><button class="back" id="back">← 回到所有路線</button></div><figure class="detail-photo"><img src="assets/island/${r.photo}" alt="長興國小${r.name}相關戶外教育活動" width="600" height="400"><figcaption>長興國小既有課程照片</figcaption></figure><div class="detail-content"><p class="eyebrow">EXPLORE / ${r.no}</p><h2 tabindex="-1">${esc(r.name)}</h2><p class="detail-summary">${esc(r.summary)}</p><p class="route-location">場域範圍　${esc(r.location)}<br>課程標示　${esc(r.grade)}</p><div class="stops">${r.stops.map(esc).join('　／　')}</div>${activitySection(id)}<h3>孩子帶著什麼任務出發？</h3><ul>${r.tasks.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h3>TRAIN，每一次探究的五個站</h3>${train.map(([title,body])=>`<div class="train-stop"><b aria-hidden="true">${title[0]}</b><div><strong>${esc(title.slice(2))}</strong><p>${esc(body)}</p></div></div>`).join('')}<details><summary>行前、現場與課後怎麼學？</summary><h3>行前準備</h3><ul>${template.before.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h3>場域學習</h3><ul>${template.during.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h3>課後整理</h3><ul>${template.after.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></details><details><summary>這條路線留下哪些學習成果？</summary><ul>${template.outcomes.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><p class="detail-summary">以上為課程設定的成果形式，實際學習表現須搭配學生作品與教師觀察檢視。</p></details><a class="primary" href="curriculum.html?route=${encodeURIComponent(id)}#routes">閱讀完整教案與風險規劃 ↗</a><a class="secondary-link" href="curriculum.html#lesson-builder">帶進自己的教案設計</a><div class="return-row"><button id="back-bottom">← 繼續探索其他場域</button></div></div>`;
+ $('#detail').innerHTML=`<div class="detail-header"><button class="back" id="back">← 回到所有路線</button></div><figure class="detail-photo"><img src="assets/island/${r.photo}" alt="長興國小${r.name}相關戶外教育活動" width="600" height="400"><figcaption>長興國小既有課程照片</figcaption></figure><div class="detail-content"><p class="eyebrow">EXPLORE / ${r.no}</p><h2 tabindex="-1">${esc(r.name)}</h2><p class="detail-summary">${esc(r.summary)}</p><p class="route-location">場域範圍　${esc(r.location)}<br>課程標示　${esc(r.grade)}</p><div class="stops">${r.stops.map(esc).join('　／　')}</div>${id==='rail-harbor'?'<p class="port-explainer">碼頭動態示意：吊起貨櫃 → 移至船上 → 裝滿 4 櫃離港 → 空船進港。拉近時播放，可用「暫停動態」控制。</p>':''}${activitySection(id)}<h3>孩子帶著什麼任務出發？</h3><ul>${r.tasks.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h3>TRAIN，每一次探究的五個站</h3>${train.map(([title,body])=>`<div class="train-stop"><b aria-hidden="true">${title[0]}</b><div><strong>${esc(title.slice(2))}</strong><p>${esc(body)}</p></div></div>`).join('')}<details><summary>行前、現場與課後怎麼學？</summary><h3>行前準備</h3><ul>${template.before.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h3>場域學習</h3><ul>${template.during.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><h3>課後整理</h3><ul>${template.after.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></details><details><summary>這條路線留下哪些學習成果？</summary><ul>${template.outcomes.map(t=>`<li>${esc(t)}</li>`).join('')}</ul><p class="detail-summary">以上為課程設定的成果形式，實際學習表現須搭配學生作品與教師觀察檢視。</p></details><a class="primary" href="curriculum.html?route=${encodeURIComponent(id)}#routes">閱讀完整教案與風險規劃 ↗</a><a class="secondary-link" href="curriculum.html#lesson-builder">帶進自己的教案設計</a><div class="return-row"><button id="back-bottom">← 繼續探索其他場域</button></div></div>`;
  $('#back').addEventListener('click',back);$('#back-bottom').addEventListener('click',back);
  document.querySelectorAll('[data-node]').forEach(n=>{let selected=n.dataset.node===id;n.classList.toggle('is-active',selected);n.setAttribute('aria-pressed',String(selected));});
  $('.panel').scrollTop=0;$('#detail h2').focus({preventScroll:true});
@@ -315,7 +348,7 @@ function focusIsland(r){zoom=2.35;pan={x:620-zoom*r.x-(1-zoom)*620,y:520-zoom*(r
 function transform(){ $('#viewport').setAttribute('transform',`translate(${pan.x+(1-zoom)*620} ${pan.y+(1-zoom)*480}) scale(${zoom})`); }
 function setZoom(v){zoom=Math.max(.75,Math.min(3,v));transform();}
 function prefersReduced(){return matchMedia('(prefers-reduced-motion: reduce)').matches;}
-draw();renderList();
+draw();renderList();requestAnimationFrame(animatePort);
 $('#search').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();renderList();});
 document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderList();}));
 $('#zoom-in').addEventListener('click',()=>setZoom(zoom+.15));$('#zoom-out').addEventListener('click',()=>setZoom(zoom-.15));$('#reset').addEventListener('click',resetView);
