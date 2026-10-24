@@ -131,7 +131,40 @@ function building(r){let x=r.x,y=r.y;
  <path d="M-115 13v-25" stroke="#799587" stroke-width="2"/><path d="M-118-12h8" stroke="#e8e5bd" stroke-width="3"/>
  <g><animateMotion path="M-39 17L11 6" dur="9s" begin="-3s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"/><g transform="scale(.65)">${person('#d8b653',true,'walk')}</g></g>
  </g>`;
- if(r.type==='lighthouse')return `<ellipse cx="${x}" cy="${y}" rx="50" ry="22" fill="#b1c7ac"/><path d="M${x-22} ${y-8}l8-116h28l9 116Z" fill="#ffefd1"/><path d="M${x-17} ${y-57}h35l3 23h-40Z" fill="#d58563"/><path d="M${x-17} ${y-123}v-23h35v23Z" fill="#9fbdad"/><path d="M${x-23} ${y-146}l23-15 23 15Z" fill="#bd745a"/><path d="M${x-24} ${y-122}h48" stroke="#647e70" stroke-width="4"/><circle cx="${x}" cy="${y-135}" r="7" fill="#fff5ae"/><path d="M${x-40} ${y+13}l18-12M${x+24} ${y+15}l16-7" stroke="#8eac95" stroke-width="6"/>`;
+ if(r.type==='lighthouse')return `<g transform="translate(${x} ${y})" class="sandiaojiao-coast">
+ <path d="M-117 0Q-104-31-63-29L68-24 123 4 97 31-48 45Z" fill="#aac18e"/>
+ <path d="M-85 21Q-27 3 15 17T91 14" fill="none" stroke="#dfd7b5" stroke-width="11" stroke-linecap="round"/>
+ <path d="M-82-28L7-46 34-29-55-9Z" fill="#f0efdc"/><path d="M-82-28v32l88-18v-32Z" fill="#d7ddcc"/><path d="M6-46l28 17V4L6-14Z" fill="#bdcebe"/>
+ <path d="M-73-17l16-3V0l-16 3m37-28 16-3v20l-16 3" fill="#7e9890"/><path d="M13-30l11 6v18l-11-6Z" fill="#78938a"/>
+ <path d="M-57-112Q-36-123-15-112V-15Q-36-4-57-15Z" fill="#eeefdf" stroke="#c5d0c0" stroke-width="1.3"/>
+ <path d="M-29-115Q-21-115-15-112V-15q-7 4-14 5Z" fill="#d5decc"/>
+ <path d="M-41-47h8v14h-8Z" fill="#81998f"/>
+ <ellipse cx="-36" cy="-113" rx="30" ry="9" fill="#d4decc" stroke="#8da397" stroke-width="1.3"/>
+ <path d="M-65-112v-12q30-16 59 0v12M-65-118q30-16 59 0" fill="none" stroke="#7a9388" stroke-width="1.1"/>
+ ${[-60,-50,-39,-27,-16,-9].map(xx=>`<path d="M${xx}-116v-12" stroke="#7a9388" stroke-width="1"/>`).join('')}
+ <path d="M-53-149Q-36-158-19-149v30q-17 8-34 0Z" fill="#b7cbbc" stroke="#819b90" stroke-width="1.5"/>
+ <path d="M-45-152v33m10-35v37m10-35v33" stroke="#e1e7d4" stroke-width="1.5"/>
+ <ellipse cx="-36" cy="-149" rx="20" ry="6" fill="#768c80"/>
+ <path d="M-54-150Q-52-173-36-174Q-20-173-18-150Z" fill="#5b7065"/><path d="M-36-174v-9" stroke="#50675c" stroke-width="2"/><circle cx="-36" cy="-181" r="3" fill="#4c6257"/>
+ <path d="M-62-143q26-12 52 0" fill="none" stroke="#b0c2b0" stroke-width="3"/>
+ <path d="M-100 3Q-69 19-43 12" fill="none" stroke="#ecedd9" stroke-width="8"/><path d="M-100 3v18q27 14 55 8V12" fill="#d4ddc6" stroke="#b7c8b1" stroke-width="1"/>
+ <path d="M-102-8l16-3 7 5v39l-16 3-7-5Z" fill="#e9ead5" stroke="#becbb5"/>
+ <path d="M-101-8l16-3 7 5-16 3Z" fill="#f5f1df"/>
+ <rect x="-98" y="-2" width="15" height="8" rx="1" fill="#649892"/><text x="-90" y="4" font-size="5" text-anchor="middle" fill="#f1f1d8">38</text>
+ <text x="-91" y="10" writing-mode="tb" font-size="5" font-weight="700" fill="#516b5a">三貂角燈塔</text>
+ <path d="M-75 17l27-6v20l-27 6Z" fill="#69867a"/><path d="M-71 16v19m7-21v19m7-21v19m7-21v19" stroke="#b1c3ab" stroke-width="1.5"/>
+ <path d="M57 14V-91" stroke="#5a6752" stroke-width="5"/><circle cx="57" cy="-93" r="4" fill="#54614e"/>
+ <path d="M57-84L8-106-3-101 8-89 57-67Z" fill="#826949" stroke="#5e624c"/><text x="28" y="-86" transform="rotate(24 28 -86)" text-anchor="middle" font-size="6" fill="#eeebcf">舊草嶺隧道</text>
+ <path d="M57-66L119-89 130-83 120-73 57-50Z" fill="#8a7050" stroke="#5e624c"/><text x="91" y="-67" transform="rotate(-20 91 -67)" text-anchor="middle" font-size="6" fill="#eeebcf">舊草嶺環狀線</text>
+ <path d="M57-45L119-68 132-62 120-52 57-29Z" fill="#927651" stroke="#5e624c"/><text x="92" y="-46" transform="rotate(-20 92 -46)" text-anchor="middle" font-size="7" fill="#f1ebcf">馬崗漁村</text>
+ <text x="92" y="-39" transform="rotate(-20 92 -39)" text-anchor="middle" font-size="3.5" fill="#dcdac0">Magang Fishing Village</text>
+ ${[[93,23],[104,16],[-108,26],[74,7]].map(([xx,yy])=>`<path d="M${xx-7} ${yy}q2-16 7-20v20q2-19 9-22l-5 22" fill="#71965e" stroke="#809e69" stroke-width="1"/>`).join('')}
+ <path d="M104 31l11-5 9 6-4 7-14-1Z" fill="#8d9e89"/><path d="M-114 32l10-4 11 8-4 4-13-1Z" fill="#a6b099"/>
+ <g class="coast-cyclist"><animateMotion path="M-23 27Q12 17 58 27" dur="11s" begin="-4s" repeatCount="indefinite" keyPoints="0;1;1;0" keyTimes="0;.43;.55;1" calcMode="linear"/>
+ <circle cx="-9" cy="0" r="6" fill="none" stroke="#58766a" stroke-width="1.5"/><circle cx="10" cy="0" r="6" fill="none" stroke="#58766a" stroke-width="1.5"/><path d="M-9 0l7-10 5 10H-9m12 0 5-13m-10 3h9" fill="none" stroke="#b58555" stroke-width="1.5"/>
+ <path d="M-1-12l4-10 6 5" stroke="#d6b45d" stroke-width="4" fill="none"/><path d="M0-11l-3 6 6 4m2-18 4 7" stroke="#617e70" stroke-width="2" fill="none"/><circle cx="4" cy="-27" r="4" fill="#e0ba91"/><path d="M0-29q4-7 9 0Z" fill="#7fa5a1"/>
+ </g>
+ </g>`;
  if(r.type==='village')return `<g transform="translate(${x} ${y})" class="sanxia-old-street">
  <path d="M-124 3L48-31 127 12-46 49Z" fill="#bcbba4"/><path d="M-109 13L52-20 112 12-49 46Z" fill="#cfcbbb"/>
  ${Array.from({length:8},(_,i)=>`<path d="M${-105+i*20} ${14-i*4.1}l58 32" stroke="#a9b09d" stroke-width="1"/>`).join('')}
@@ -242,7 +275,7 @@ function platform(r){return `<g class="station-platform" aria-hidden="true" tran
 function draw(){
  const waves=Array.from({length:30},(_,i)=>{let x=55+(i*113)%1090,y=290+(i*91)%520;return `<path class="water-line" d="M${x} ${y}q10 5 20 0m10 0q8 4 17 0" stroke="#eff9e8" fill="none" opacity=".5" stroke-width="2" style="animation-delay:${i/4}s"/>`;}).join('');
  const central=`${islandGround(635,479)}<g transform="translate(581 471) scale(.53) translate(-575 -453)">${school()}</g><g transform="translate(714 476) scale(.49) translate(-300 -620)">${building({x:300,y:620,type:'station'})}</g><path d="M619 474L650 486" stroke="#e6dbb6" stroke-width="8" stroke-dasharray="3 3"/><text x="715" y="493" text-anchor="middle" font-size="10" fill="#386052" font-weight="700">台鐵七堵站</text>${tree(524,476,.48)}<g class="school-tag"><rect x="542" y="536" width="186" height="25" rx="12" fill="#fffaf0"/><text x="635" y="553" text-anchor="middle" font-size="11" font-weight="700" fill="#386052">長興國小 × 七堵車站・出發點</text></g>`;
- const nodes=routes.slice().sort((a,b)=>a.y-b.y).map((r,i)=>`<g class="node" data-node="${r.id}" tabindex="0" role="button" aria-label="探索${r.name}：${r.title}" aria-pressed="false">${islandGround(r.x,r.y,r.zone==='ocean'?'coast':r.zone==='city'?'culture':'green')}<g transform="translate(${r.x} ${r.y}) scale(.83) translate(${-r.x} ${-r.y})">${building(r)}</g>${tree(r.x-103,r.y-28,.65)}${tree(r.x+111,r.y-15,.55)}${people(r.x,r.y,i)}${platform(r)}${nameplate(r)}</g>`).join('');
+ const nodes=routes.slice().sort((a,b)=>a.y-b.y).map((r,i)=>`<g class="node" data-node="${r.id}" tabindex="0" role="button" aria-label="探索${r.name}：${r.title}" aria-pressed="false">${islandGround(r.x,r.y,r.zone==='ocean'?'coast':r.zone==='city'?'culture':'green')}<g transform="translate(${r.x} ${r.y}) scale(.83) translate(${-r.x} ${-r.y})">${building(r)}</g>${tree(r.x-103,r.y-28,.65)}${r.type==='lighthouse'?'':tree(r.x+111,r.y-15,.55)}${people(r.x,r.y,i)}${platform(r)}${nameplate(r)}</g>`).join('');
  $('#island').innerHTML=`${waves}<g id="viewport">${railway()}<g data-school="true" role="button" tabindex="0" aria-label="放大長興國小與七堵車站" style="cursor:pointer">${central}</g>${nodes}${railway(true)}<g class="boat"><path d="M837 705l68 1-17 16-44-3Z" fill="#f5ecd3"/><path d="M851 692h32v16h-32Z" fill="#d9d9bc"/><path d="M861 684h6v9h-6Z" fill="#d28a61"/><path d="M835 730q18 6 38 0" stroke="#e7f4df" stroke-width="2" fill="none"/></g><g transform="translate(117 685)"><path d="M0 0l28 17L0 9l-28 8Z" fill="#5e8a7b"/><text x="0" y="-12" text-anchor="middle" fill="#65877a" font-size="12">N</text></g></g>`;
  const schoolNode=$('[data-school]');schoolNode.addEventListener('click',()=>focusSchool());schoolNode.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();focusSchool();}});
  document.querySelectorAll('[data-node]').forEach(node=>{node.addEventListener('click',()=>openRoute(node.dataset.node));node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openRoute(node.dataset.node);}});});
