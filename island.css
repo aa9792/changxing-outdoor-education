@@ -18,3 +18,5 @@
 .connections .rail-outer{stroke:#506e67;stroke-width:10}
 .connections .rail-inner{stroke:#d6c6a3;stroke-width:6}
 .connections .island-train path{stroke-linecap:butt}.station-platform{pointer-events:none}
+
+#viewport{transition:transform .75s cubic-bezier(.22,.7,.2,1)}.scene:active #viewport{transition:none}
