@@ -44,3 +44,5 @@ body[data-light=night] [data-node="risk-management"] [stroke="#81a9a0"]{stroke:#
 @media(min-width:601px) and (max-height:800px){#role-entry{padding:26px 34px}.entry-brand{padding-bottom:14px;margin-bottom:17px}#role-entry h2{font-size:38px}.entry-lead{margin-bottom:19px}.role-grid button{padding:15px 20px}.role-symbol{font-size:18px;margin-bottom:6px}.role-grid b{margin-top:12px}.entry-note{margin-top:16px}}
 
 .detail-photo img[src*="marine-nmmst"]{height:auto;object-fit:contain}
+
+.detail-photo img[src*="home-qidu"],.activity-gallery img[src*="home-qidu"]{height:auto;max-height:none;object-fit:contain}

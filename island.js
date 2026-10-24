@@ -2,7 +2,7 @@
 (() => {
 'use strict';
 const metadata = {
- 'home-rail': {no:'01',name:'家鄉鐵道',sub:'七堵的日常，就是學習起點',zone:'local',location:'基隆七堵',photo:'home.jpg',x:300,y:620,type:'community'},
+ 'home-rail': {no:'01',name:'家鄉鐵道',sub:'七堵的日常，就是學習起點',zone:'local',location:'基隆七堵',photo:'home-qidu.png',x:300,y:620,type:'community'},
  marine: {no:'02',name:'海洋探索',sub:'用五官閱讀海岸與海科館',zone:'ocean',location:'基隆八斗子',photo:'marine-nmmst.png',x:665,y:300,type:'museum'},
  'rail-harbor': {no:'03',name:'港都與礦業',sub:'沿著鐵道，讀懂港城脈絡',zone:'local',location:'基隆港、七堵與新北猴硐',photo:'harbor.jpg',x:1000,y:595,type:'harbor'},
  sanxia: {no:'04',name:'產業文化',sub:'走進老街，認識手作與運輸',zone:'city',location:'新北三峽、鶯歌',photo:'culture.jpg',x:305,y:360,type:'village'},
@@ -399,7 +399,7 @@ function renderList(){
  document.querySelectorAll('[data-node]').forEach(n=>{let matches=shown.some(r=>r.id===n.dataset.node);n.classList.toggle('dimmed',!matches);n.setAttribute('tabindex',matches?'0':'-1');});updateRead();
 }
 const activityRecords={
- 'home-rail':{title:'家鄉鐵道｜從七堵出發',text:'現有資料收錄《我的家鄉線》影片；下方照片為猴硐鐵道相關場域影像，可連結家鄉鐵道與周邊地景的討論。',photos:[['home.jpg','猴硐鐵道場域影像']]},
+ 'home-rail':{title:'家鄉鐵道｜從七堵出發',text:'現有成果收錄師生在七堵舊車站前的合影，搭配《我的家鄉線》影片，連結家鄉鐵道、車站記憶與周邊地景的觀察。',photos:[['home-qidu.png','七堵舊車站師生合影']]},
  marine:{title:'海洋探索｜海科館學習足跡',text:'現有活動照片收錄師生在海科館大廳的合影，搭配本路線的步道觀察、展館探索與手作任務閱讀。',photos:[['marine-nmmst.png','海科館大廳師生活動合影']]},
  'rail-harbor':{title:'港都與礦業｜港灣與猴硐紀錄',text:'現有成果包含遊基隆港與猴硐活動照片，呈現這條路線的港灣及鐵道場域。',photos:[['harbor.jpg','遊基隆港活動照片'],['harbor-extra.jpg','遊基隆港另一個視角'],['home.jpg','猴硐活動照片']]},
  sanxia:{title:'產業文化｜三峽走讀紀錄',text:'現有成果收錄三峽活動照片，可與老街、地方產業及文化探索任務對照閱讀。',photos:[['culture.jpg','三峽活動照片']]},
