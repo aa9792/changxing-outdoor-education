@@ -97,7 +97,40 @@ function building(r){let x=r.x,y=r.y;
  <g class="campus-vehicle"><animateMotion path="M-55 10L15-3" dur="9s" begin="-4s" repeatCount="indefinite" keyPoints="0;1;1;0;0" keyTimes="0;.4;.5;.9;1" calcMode="linear"/><g transform="translate(73 30) rotate(-10)"><rect x="-15" y="-6" width="30" height="12" rx="4" fill="#dcb34f"/><path d="M-8-7l4-5h10l6 5Z" fill="#f2d57c"/><path d="M-3-10h8l4 4H-6Z" fill="#739695"/><circle cx="-9" cy="6" r="3" fill="#4f655b"/><circle cx="9" cy="6" r="3" fill="#4f655b"/></g></g>
  <g transform="translate(46 13) scale(.65)">${person('#6d9b99',false,'talk')}</g><g class="station-walker"><animateMotion path="M-62 21L-17 10" dur="8s" begin="-4s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"/><g transform="scale(.8)">${person('#d6b254',true,'walk')}</g></g>
  </g>`;
- if(r.type==='museum')return `${box(x,y,150,70,21,'#dbe1cf','#c4d5c9')}<path d="M${x-60} ${y-53}C${x-55} ${y-136} ${x+46} ${y-143} ${x+65} ${y-73}L${x+65} ${y-48}Q${x} ${y-21} ${x-60} ${y-53}" fill="#8ab2b3"/><path d="M${x-60} ${y-53}Q${x+4} ${y-96} ${x+65} ${y-73}M${x-23} ${y-117}Q${x+6} ${y-76} ${x+3} ${y-37}M${x+15} ${y-119}Q${x+30} ${y-82} ${x+31} ${y-43}" fill="none" stroke="#e1eee0" stroke-width="3"/><path d="M${x-55} ${y-55}Q${x-45} ${y-118} ${x} ${y-121}" fill="none" stroke="#c3dedd" stroke-width="5"/>`;
+ if(r.type==='museum')return `<g transform="translate(${x} ${y})" class="marine-museum">
+ <path d="M-119 2L49-34 125 7-43 46Z" fill="#c8cfbf"/>
+ <path d="M-111 8L48-26 111 9-49 43Z" fill="#dce1d2"/>
+ <path d="M58-107L111-117v113L58 7Z" fill="#526564"/><path d="M111-117L130-105V7L111-4Z" fill="#3d5655"/><path d="M58-107l54-11 18 13-53 11Z" fill="#6a7c77"/>
+ ${[0,1,2,3].map(i=>`<path d="M79 ${-91+i*23}l8-2v9l-8 2m16-13 8-2v9l-8 2" fill="#8ab1b3"/>`).join('')}
+ <path d="M63-103l10-2v72l-10 2Z" fill="#78ada6"/><path d="M64-95l8 8-8 8 8 8-8 8" stroke="#d1d4a1" stroke-width="3" fill="none"/>
+ <path d="M-31-116L63-135V-31L-31-11Z" fill="#83a7a6" stroke="#c0cfc3" stroke-width="2"/>
+ <path d="M-31-116l-17-12 94-20 17 13Z" fill="#d0d5c7"/>
+ ${Array.from({length:12},(_,i)=>`<path d="M${-28+i*8} ${-116-i*1.65}v101" stroke="#c9d7cb" stroke-width="1.3"/>`).join('')}
+ <path d="M-30-91L63-110m-93 43 93-19m-93 43 93-19" stroke="#d5ddce" stroke-width="3"/>
+ <path d="M-93-115L-31-128V-11L-93 2Z" fill="#d9dbcf" stroke="#a9b7ab" stroke-width="1.5"/>
+ <path d="M-109-128L-93-115V2l-16-13Z" fill="#b3bfb3"/><path d="M-109-128l62-13 16 13-62 13Z" fill="#e7e7db"/>
+ <path d="M-95-143L-35-156-35-130-95-117Z" fill="#6b9296" stroke="#bdc7ba" stroke-width="4"/>
+ <path d="M-108-150L-48-163-35-156-95-143Z" fill="#d3d8ca"/>
+ <path d="M-80-112v103m19-107v103" stroke="#c2c8b9" stroke-width="1"/><path d="M-91-88l58-12m-58 38 58-12m-58 38 58-12" stroke="#b9c2b5" stroke-width="1"/>
+ <path d="M-74-101l12-3v43l-12 3Z" fill="#80acb1"/><path d="M-68-102v43m-6-21 12-3" stroke="#d9e0d3" stroke-width="1"/>
+ <path d="M-30-126L-7-131V-37L-30-32Z" fill="#405a57"/>
+ ${Array.from({length:9},(_,i)=>`<path d="M-30 ${-118+i*10}l23-5" stroke="#8b9e8d" stroke-width="2"/>`).join('')}
+ <path d="M-24-126v91m9-93v91" stroke="#9eafa0" stroke-width="1.2"/>
+ <path d="M-108-42L-22-60 1-42-91-23Z" fill="#abb7ab"/><path d="M-108-42l17 19V7l-11-6Z" fill="#7c9187"/><path d="M-91-23L1-42V-11L-91 7Z" fill="#3f6465"/>
+ ${Array.from({length:10},(_,i)=>`<path d="M${-87+i*9} ${-24-i*1.8}l2 29" stroke="#9eb7ad" stroke-width="1.2"/>`).join('')}
+ <path d="M-4-26L62-40v12L-4-14Z" fill="#cdd5c6"/><text x="29" y="-25" text-anchor="middle" transform="rotate(-12 29 -25)" font-size="6.5" font-weight="700" fill="#4a6760">國立海洋科技博物館</text>
+ <path d="M-1-13L57-25v21L-1 8Z" fill="#5d8787"/>
+ <path d="M7-14V6m14-23V3m14-23V0m14-23v20" stroke="#d0d7c6" stroke-width="2"/>
+ <path d="M7 8L61-4 71 1 16 14Z" fill="#b3bdac"/><path d="M16 14L71 1v4L16 18Z" fill="#8c9e8d"/>
+ <path d="M16 18L71 5l8 4-55 14Z" fill="#d5dccc"/>
+ <path d="M-117 34L76-7 88 0-105 42Z" fill="#a8c9c1" fill-opacity=".8" stroke="#e1e9d8" stroke-width="1.5"/>
+ ${Array.from({length:12},(_,i)=>`<path d="M${-112+i*16} ${35-i*3.4}v17m0-17 11-2" stroke="#e0e7d4" stroke-width="1.5"/>`).join('')}
+ <path d="M-106 51L85 10" stroke="#aebda9" stroke-width="2"/>
+ <path d="M87 15l20-4 13 7-21 5Z" fill="#83a175"/><path d="M-120 17l18-4 7 5-18 5Z" fill="#8aa97b"/>
+ <path d="M94 12v-23" stroke="#7c8364" stroke-width="2.5"/><circle cx="94" cy="-15" r="10" fill="#64885e"/><circle cx="89" cy="-20" r="7" fill="#86a16c"/>
+ <path d="M-115 13v-25" stroke="#799587" stroke-width="2"/><path d="M-118-12h8" stroke="#e8e5bd" stroke-width="3"/>
+ <g><animateMotion path="M-39 17L11 6" dur="9s" begin="-3s" repeatCount="indefinite" keyPoints="0;1;0" keyTimes="0;.5;1" calcMode="linear"/><g transform="scale(.65)">${person('#d8b653',true,'walk')}</g></g>
+ </g>`;
  if(r.type==='lighthouse')return `<ellipse cx="${x}" cy="${y}" rx="50" ry="22" fill="#b1c7ac"/><path d="M${x-22} ${y-8}l8-116h28l9 116Z" fill="#ffefd1"/><path d="M${x-17} ${y-57}h35l3 23h-40Z" fill="#d58563"/><path d="M${x-17} ${y-123}v-23h35v23Z" fill="#9fbdad"/><path d="M${x-23} ${y-146}l23-15 23 15Z" fill="#bd745a"/><path d="M${x-24} ${y-122}h48" stroke="#647e70" stroke-width="4"/><circle cx="${x}" cy="${y-135}" r="7" fill="#fff5ae"/><path d="M${x-40} ${y+13}l18-12M${x+24} ${y+15}l16-7" stroke="#8eac95" stroke-width="6"/>`;
  if(r.type==='village')return `${box(x-33,y,75,43,42,'#e4c59b','#aa624c')}${box(x+35,y-27,75,43,51,'#eee0b7','#b97754')}<path d="M${x-46} ${y-26}v18m16-9v-18m55-17v-19m20 9v18" stroke="#789c94" stroke-width="9"/><path d="M${x-28} ${y+14}l68-30" stroke="#b8b198" stroke-width="8"/><path d="M${x-67} ${y-7}l-20 12M${x+60} ${y-20}l23 7" stroke="#769d75" stroke-width="10"/>`;
  if(r.type==='hub')return `${box(x-23,y-8,110,56,65,'#cfd6c4','#78998f')}${box(x+57,y-32,55,40,109,'#dce0c9','#88a99a')}<path d="M${x+42} ${y-129}v80m15-89v83m-94 7v31m22-39v33m23-42v30" stroke="#82a69e" stroke-width="7"/><path d="M${x-87} ${y+14}l110-48 48 25-110 48Z" fill="#e4d6ad"/><path d="M${x-64} ${y+14}l103-45" stroke="#9d9f8a" stroke-width="4"/><g class="floaty"><path d="M${x-60} ${y-2}l70-31 25 11-70 32Z" fill="#faf0ce"/><path d="M${x-53} ${y-5}l56-25 11 5-56 26Z" fill="#819e96"/><path d="M${x-63} ${y-2}v14l28 12v-14Z" fill="#cf8f63"/></g>`;
