@@ -70,7 +70,33 @@ function building(r){let x=r.x,y=r.y;
  <g transform="translate(-100 22)" fill="none" stroke="#c1c6ab" stroke-width="1.5"><circle cx="-5" cy="-3" r="4"/><circle cx="7" cy="-4" r="4"/><path d="M-12-8l2-10h12v9h11v6H-14v-5Z"/></g>
  <path d="M-19 8l35-3 8 5-35 3Z" fill="#aab29c"/>
  <text x="-3" y="62" text-anchor="middle" font-size="11" font-weight="700" fill="#455d4a">鐵道園區</text></g>`;
- if(r.type==='station')return `${box(x,y,150,65,35,'#eddeb4','#cf8262')}<path d="M${x-60} ${y-63}l60-28 60 28-60 27Z" fill="#995c48"/><path d="M${x-26} ${y-39}h46v19h-46Z" fill="#f7f3da"/><text x="${x-18}" y="${y-26}" font-size="12" fill="#455d4a">七 堵</text><path d="M${x-55} ${y-31}v20m27-6v-18m72-2v16" stroke="#6a9c92" stroke-width="11"/>`;
+ if(r.type==='station')return `<g transform="translate(${x} ${y})" class="qidu-modern-station">
+ <path d="M-103 4L69-25 112 9-60 42Z" fill="#c7c9ba"/>
+ <path d="M-95 39L100 3 119 18-78 56Z" fill="#8e9c94"/><path d="M-85 48L110 12" stroke="#e9d995" stroke-width="2" stroke-dasharray="13 8"/>
+ <path d="M-78-143L-10-156V-15L-78-2Z" fill="#d8dbce" stroke="#a4b2a5" stroke-width="1.5"/>
+ <path d="M-100-157L-78-143V-2L-100-18Z" fill="#a9b8ae"/>
+ <path d="M-100-157L-33-170-10-156-78-143Z" fill="#e6e7db"/>
+ <path d="M-11-139Q40-95 94-113V-21Q49-4-11-15Z" fill="#b6c6bb" stroke="#899e95" stroke-width="2"/>
+ <path d="M-9-127Q43-86 92-103V-80Q41-63-9-101Z" fill="#719a9d"/><path d="M-9-91Q43-51 92-68V-45Q41-29-9-65Z" fill="#7a9fa0"/>
+ ${Array.from({length:9},(_,i)=>{let xx=i*11,yy=-117+Math.sin(i/8*Math.PI/2)*20;return `<path d="M${xx} ${yy}v79" stroke="#d8dfcf" stroke-width="2"/>`;}).join('')}
+ <path d="M-10-137Q42-94 96-113" fill="none" stroke="#e4e5d7" stroke-width="5"/>
+ <path d="M-3-145v13m16-2v14m17-5v14m17-8v14m18-13v14m18-16v14" stroke="#92aaa0" stroke-width="2"/>
+ <path d="M-71-181L-20-191-20-156-71-146Z" fill="none" stroke="#a5b3aa" stroke-width="8"/><path d="M-71-181L-83-189-32-199-20-191" fill="none" stroke="#d5dcd0" stroke-width="8"/>
+ <path d="M-53-184v34m16-37v34" stroke="#d4dcd0" stroke-width="2"/>
+ <text x="-44" y="-131" text-anchor="middle" transform="rotate(-10 -44 -131)" font-size="10" font-weight="700" fill="#427b93">七堵車站</text>
+ ${[-112,-96,-80,-64,-48].map(yy=>`<path d="M-75 ${yy}l62-12" stroke="#b6c0b2" stroke-width="1"/>`).join('')}
+ <path d="M-12-152v135" stroke="#718d80" stroke-width="3"/><path d="M-17-132l11-2m-11 14 11-2m-11 14 11-2m-11 14 11-2m-11 14 11-2m-11 14 11-2" stroke="#a3b3a4" stroke-width="2"/>
+ <path d="M-77-32L-12-44V-14L-77-2Z" fill="#5d7971"/><path d="M-62-34v29m19-33v29m19-33v29" stroke="#d1d6c2" stroke-width="3"/>
+ <path d="M-7-30Q41-4 94-22l7 8Q45 5-7-19Z" fill="#a9b3a3"/>
+ ${[8,32,56,81].map(xx=>`<path d="M${xx} -16v29" stroke="#d1d7c7" stroke-width="5"/>`).join('')}
+ <path d="M4 13V-141" stroke="#c75d49" stroke-width="6"/><path d="M-1-141l10-2" stroke="#e57b5b" stroke-width="4"/>
+ <path d="M-6-71Q19-48 42-62M-7-61Q18-38 42-52M-7-51Q18-28 42-42" fill="none" stroke="#d3634a" stroke-width="4"/>
+ <path d="M-3-69Q17-51 36-60M-3-59Q17-41 36-50M-3-49Q17-31 36-40" fill="none" stroke="#efbf8c" stroke-width="1.5"/>
+ <path d="M-91 18v-27q0-7 8-7h9M94 5v-26q0-7 8-7h8" fill="none" stroke="#607e72" stroke-width="2"/><path d="M-81-16h9m32 0h9" stroke="#d9dfb4" stroke-width="3"/>
+ <path d="M-55 33l17-3m-12 7 17-3m-12 7 17-3m-12 7 17-3" stroke="#eff1dc" stroke-width="3"/>
+ <g transform="translate(73 30) rotate(-10)"><rect x="-15" y="-6" width="30" height="12" rx="4" fill="#dcb34f"/><path d="M-8-7l4-5h10l6 5Z" fill="#f2d57c"/><path d="M-3-10h8l4 4H-6Z" fill="#739695"/><circle cx="-9" cy="6" r="3" fill="#4f655b"/><circle cx="9" cy="6" r="3" fill="#4f655b"/></g>
+ <g transform="translate(46 13) scale(.65)">${person('#6d9b99',false,'talk')}</g><g transform="translate(-55 17) scale(.65)">${person('#d6b254',true,'walk')}</g>
+ </g>`;
  if(r.type==='museum')return `${box(x,y,150,70,21,'#dbe1cf','#c4d5c9')}<path d="M${x-60} ${y-53}C${x-55} ${y-136} ${x+46} ${y-143} ${x+65} ${y-73}L${x+65} ${y-48}Q${x} ${y-21} ${x-60} ${y-53}" fill="#8ab2b3"/><path d="M${x-60} ${y-53}Q${x+4} ${y-96} ${x+65} ${y-73}M${x-23} ${y-117}Q${x+6} ${y-76} ${x+3} ${y-37}M${x+15} ${y-119}Q${x+30} ${y-82} ${x+31} ${y-43}" fill="none" stroke="#e1eee0" stroke-width="3"/><path d="M${x-55} ${y-55}Q${x-45} ${y-118} ${x} ${y-121}" fill="none" stroke="#c3dedd" stroke-width="5"/>`;
  if(r.type==='lighthouse')return `<ellipse cx="${x}" cy="${y}" rx="50" ry="22" fill="#b1c7ac"/><path d="M${x-22} ${y-8}l8-116h28l9 116Z" fill="#ffefd1"/><path d="M${x-17} ${y-57}h35l3 23h-40Z" fill="#d58563"/><path d="M${x-17} ${y-123}v-23h35v23Z" fill="#9fbdad"/><path d="M${x-23} ${y-146}l23-15 23 15Z" fill="#bd745a"/><path d="M${x-24} ${y-122}h48" stroke="#647e70" stroke-width="4"/><circle cx="${x}" cy="${y-135}" r="7" fill="#fff5ae"/><path d="M${x-40} ${y+13}l18-12M${x+24} ${y+15}l16-7" stroke="#8eac95" stroke-width="6"/>`;
  if(r.type==='village')return `${box(x-33,y,75,43,42,'#e4c59b','#aa624c')}${box(x+35,y-27,75,43,51,'#eee0b7','#b97754')}<path d="M${x-46} ${y-26}v18m16-9v-18m55-17v-19m20 9v18" stroke="#789c94" stroke-width="9"/><path d="M${x-28} ${y+14}l68-30" stroke="#b8b198" stroke-width="8"/><path d="M${x-67} ${y-7}l-20 12M${x+60} ${y-20}l23 7" stroke="#769d75" stroke-width="10"/>`;
@@ -103,7 +129,7 @@ function railway(trainsOnly=false){
 function platform(r){return `<g class="station-platform" aria-hidden="true" transform="translate(${r.x-30} ${r.y+40})"><rect x="-22" y="-7" width="44" height="10" rx="3" fill="#f5e4be" stroke="#c1ac7d"/><path d="M-19-5h38" stroke="#d49557" stroke-width="2"/><path d="M-14-8v-13m28 13v-13" stroke="#6e8a79" stroke-width="2"/><path d="M-24-21h48l-5-6h-38Z" fill="#638e80"/><rect x="-9" y="-19" width="18" height="8" rx="2" fill="#fff4da"/><text y="-12" text-anchor="middle" font-size="6" fill="#496c5e">${r.no} 站</text></g>`;}
 function draw(){
  const waves=Array.from({length:30},(_,i)=>{let x=55+(i*113)%1090,y=290+(i*91)%520;return `<path class="water-line" d="M${x} ${y}q10 5 20 0m10 0q8 4 17 0" stroke="#eff9e8" fill="none" opacity=".5" stroke-width="2" style="animation-delay:${i/4}s"/>`;}).join('');
- const central=`${islandGround(635,479)}<g transform="translate(581 471) scale(.53) translate(-575 -453)">${school()}</g><g transform="translate(715 476) scale(.42) translate(-300 -620)">${building({x:300,y:620,type:'station'})}</g><path d="M619 474L650 486" stroke="#e6dbb6" stroke-width="8" stroke-dasharray="3 3"/><text x="715" y="493" text-anchor="middle" font-size="10" fill="#386052" font-weight="700">台鐵七堵站</text>${tree(524,476,.48)}<g class="school-tag"><rect x="542" y="536" width="186" height="25" rx="12" fill="#fffaf0"/><text x="635" y="553" text-anchor="middle" font-size="11" font-weight="700" fill="#386052">長興國小 × 七堵車站・出發點</text></g>`;
+ const central=`${islandGround(635,479)}<g transform="translate(581 471) scale(.53) translate(-575 -453)">${school()}</g><g transform="translate(714 476) scale(.49) translate(-300 -620)">${building({x:300,y:620,type:'station'})}</g><path d="M619 474L650 486" stroke="#e6dbb6" stroke-width="8" stroke-dasharray="3 3"/><text x="715" y="493" text-anchor="middle" font-size="10" fill="#386052" font-weight="700">台鐵七堵站</text>${tree(524,476,.48)}<g class="school-tag"><rect x="542" y="536" width="186" height="25" rx="12" fill="#fffaf0"/><text x="635" y="553" text-anchor="middle" font-size="11" font-weight="700" fill="#386052">長興國小 × 七堵車站・出發點</text></g>`;
  const nodes=routes.slice().sort((a,b)=>a.y-b.y).map((r,i)=>`<g class="node" data-node="${r.id}" tabindex="0" role="button" aria-label="探索${r.name}：${r.title}" aria-pressed="false">${islandGround(r.x,r.y,r.zone==='ocean'?'coast':r.zone==='city'?'culture':'green')}<g transform="translate(${r.x} ${r.y}) scale(.83) translate(${-r.x} ${-r.y})">${building(r)}</g>${tree(r.x-103,r.y-28,.65)}${tree(r.x+111,r.y-15,.55)}${people(r.x,r.y,i)}${platform(r)}${nameplate(r)}</g>`).join('');
  $('#island').innerHTML=`${waves}<g id="viewport">${railway()}<g data-school="true" role="button" tabindex="0" aria-label="放大長興國小與七堵車站" style="cursor:pointer">${central}</g>${nodes}${railway(true)}<g class="boat"><path d="M837 705l68 1-17 16-44-3Z" fill="#f5ecd3"/><path d="M851 692h32v16h-32Z" fill="#d9d9bc"/><path d="M861 684h6v9h-6Z" fill="#d28a61"/><path d="M835 730q18 6 38 0" stroke="#e7f4df" stroke-width="2" fill="none"/></g><g transform="translate(117 685)"><path d="M0 0l28 17L0 9l-28 8Z" fill="#5e8a7b"/><text x="0" y="-12" text-anchor="middle" fill="#65877a" font-size="12">N</text></g></g>`;
  const schoolNode=$('[data-school]');schoolNode.addEventListener('click',()=>focusSchool());schoolNode.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();focusSchool();}});
