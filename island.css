@@ -46,3 +46,5 @@ body[data-light=night] [data-node="risk-management"] [stroke="#81a9a0"]{stroke:#
 .detail-photo img[src*="marine-nmmst"]{height:auto;object-fit:contain}
 
 .detail-photo img[src*="home-qidu"],.activity-gallery img[src*="home-qidu"]{height:auto;max-height:none;object-fit:contain}
+
+.role-bar-actions{display:flex;gap:12px;align-items:center}.return-original{display:inline-block;background:#315b49;color:#fff8e7;padding:7px 10px;border-radius:5px;text-decoration:none;font-size:11px;white-space:nowrap}.entry-original{display:inline-block;margin-top:13px;font-size:12px;color:#426b56;text-underline-offset:5px}.role-bar{padding-left:20px;padding-right:20px}
