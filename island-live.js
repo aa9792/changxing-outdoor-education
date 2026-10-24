@@ -1,4 +1,4 @@
-/* Ephemeral PeerJS/WebRTC room. No visitor history, camera, microphone or chat log. */
+/* Ephemeral PeerJS/WebRTC room with bounded, in-memory room messages. */
 (() => {
   'use strict';
   const api=window.ChangxingTraveller,$=s=>document.querySelector(s),ns='http://www.w3.org/2000/svg';
@@ -8,10 +8,31 @@
   const phrases=['👋 向大家揮手','🚆 一起搭海風號','🔎 我有新發現'];
   const roomParam=new URL(location.href).searchParams.get('room');
   const roomValue=/^[a-zA-Z0-9-]{1,16}$/.test(roomParam||'')?roomParam:'public';
-  $('#overview').insertAdjacentHTML('beforebegin',`<section class="live-panel" aria-label="即時同遊"><div class="live-heading"><h3>即時同遊 <span id="live-count">未加入</span></h3><button id="live-toggle">開啟同遊</button></div><p id="live-status" role="status">與同時在線的人相遇，看見彼此走動與搭車。</p><label class="live-room">同遊房間<input id="live-room" maxlength="16" pattern="[a-zA-Z0-9-]{1,16}" value="${roomValue}" aria-label="同遊房間代碼"><button id="live-copy">複製邀請</button></label><div id="live-people"></div><div class="live-greetings">${phrases.map((p,i)=>`<button data-greeting="${i}" disabled>${p}</button>`).join('')}</div><p id="live-message" aria-live="polite"></p><small>先建立角色，再開啟同遊。共用房間 public，或輸入相同英文／數字代碼；每房最多 8 人。僅分享暱稱、造型與位置，離線即離場。請勿使用真實姓名。連線服務：PeerJS；部分校園網路可能阻擋。</small></section>`);
+  $('#overview').insertAdjacentHTML('beforebegin',`<section class="live-panel" aria-label="即時同遊"><div class="live-heading"><h3>即時同遊 <span id="live-count">未加入</span></h3><button id="live-toggle">開啟同遊</button></div><p id="live-status" role="status">與同時在線的人相遇，看見彼此走動與搭車。</p><label class="live-room">同遊房間<input id="live-room" maxlength="16" pattern="[a-zA-Z0-9-]{1,16}" value="${roomValue}" aria-label="同遊房間代碼"><button id="live-copy">複製邀請</button></label><div id="live-people"></div><div class="live-greetings">${phrases.map((p,i)=>`<button data-greeting="${i}" disabled>${p}</button>`).join('')}</div><p id="live-message" aria-live="polite"></p><small>先建立角色，再開啟同遊。共用房間 public，或輸入相同英文／數字代碼；每房最多 8 人。分享暱稱、造型、位置與自行送出的留言，離線後角色移除。請勿使用真實姓名。連線服務：PeerJS；部分校園網路可能阻擋。</small></section>`);
+  $('#live-message').insertAdjacentHTML('afterend',`<section class="live-chat" aria-labelledby="live-chat-title"><h4 id="live-chat-title">同遊留言</h4><p class="live-chat-note">房間在線期間暫存最近 50 則，不永久保存；新加入的人也能讀到。離開後清除本頁紀錄。請勿填寫個人聯絡資訊。</p><div id="live-chat-log" role="log" aria-label="同遊留言紀錄" aria-live="polite" aria-relevant="additions"></div><p id="live-chat-empty">加入同遊後，和旅人分享你的發現。</p><form id="live-chat-form"><label for="live-chat-input">想和大家說什麼？</label><textarea id="live-chat-input" maxlength="200" rows="2" placeholder="例如：我在七堵舊車站發現了木造窗框！" disabled></textarea><div class="live-chat-send"><span id="live-chat-length">0 / 200</span><button id="live-chat-submit" type="submit" disabled>送出留言</button></div><p id="live-chat-status" role="status"></p></form></section>`);
   const layer=document.createElementNS(ns,'g');layer.id='live-travellers';layer.setAttribute('aria-hidden','true');$('#viewport').append(layer);
   let active=false,peer=null,host=false,upstream=null,generation=0,retryTimer=null,poll=null,lastWave=0,room='';
   let ownId='',lastRoster=0,lastList='';const links=new Map(),states=new Map(),actors=new Map();
+  let chat=[],pending=null,pendingTimer=null,lastChat=0;
+  const seenChat=new Set();
+  function chatReady(){return active&&!!ownId&&(host||!!upstream?.open);}
+  function updateChat(){const ready=chatReady();$('#live-chat-input').disabled=!ready;$('#live-chat-submit').disabled=!ready||!!pending;}
+  function cleanText(value){return typeof value==='string'?value.replace(/[\u0000-\u0008\u000b-\u001f\u007f]/g,'').trim().slice(0,200):'';}
+  function addChat(raw){
+    if(!raw||typeof raw.id!=='string'||!/^[a-zA-Z0-9-]{1,100}$/.test(raw.id)||typeof raw.name!=='string'||!Number.isFinite(raw.time)||raw.time<0||raw.time>Date.now()+60000)return;
+    const text=cleanText(raw.text);if(!text)return;
+    if(pending?.id===raw.id){clearTimeout(pendingTimer);pending=null;$('#live-chat-input').value='';$('#live-chat-length').textContent='0 / 200';$('#live-chat-status').textContent='留言已送達房間。';updateChat();}
+    if(seenChat.has(raw.id))return;seenChat.add(raw.id);
+    const m={id:raw.id,name:raw.name.replace(/[\u0000-\u001f\u007f]/g,'').slice(0,12),text,time:raw.time};chat.push(m);
+    const log=$('#live-chat-log'),nearBottom=log.scrollHeight-log.scrollTop-log.clientHeight<60,row=document.createElement('article'),head=document.createElement('div'),name=document.createElement('strong'),time=document.createElement('time'),body=document.createElement('p');
+    name.textContent=m.name;time.dateTime=new Date(m.time).toISOString();time.textContent=new Date(m.time).toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});body.textContent=m.text;head.append(name,time);row.append(head,body);log.append(row);$('#live-chat-empty').hidden=true;
+    while(chat.length>50){seenChat.delete(chat.shift().id);log.firstElementChild?.remove();}if(nearBottom)log.scrollTop=log.scrollHeight;
+  }
+  function clearChat(){chat=[];seenChat.clear();pending=null;clearTimeout(pendingTimer);$('#live-chat-log').replaceChildren();$('#live-chat-empty').hidden=false;$('#live-chat-input').value='';$('#live-chat-length').textContent='0 / 200';$('#live-chat-status').textContent='';updateChat();}
+  function relayChat(id,text,messageId){
+    const person=states.get(id),body=cleanText(text);if(!person||!body||typeof messageId!=='string'||!/^[a-zA-Z0-9-]{1,60}$/.test(messageId))return;
+    const entry={id:messageId,name:person.state.look.name,text:body,time:Date.now()};addChat(entry);for(const c of links.values())send(c,{type:'chat',entry});
+  }
   function status(s){$('#live-status').textContent=s;}
   function clean(raw){
     if(!raw||typeof raw!=='object'||!raw.enabled||!islandIds.has(raw.island)||!Number.isFinite(raw.x)||!Number.isFinite(raw.y)||raw.x<0||raw.x>1200||raw.y<0||raw.y>1100)return null;
@@ -24,6 +45,7 @@
   function roster(){return [...states].map(([id,p])=>({id,state:p.state}));}
   function broadcast(){const data={type:'roster',people:roster()};for(const c of links.values())send(c,data);if(host)status(links.size?'房間 '+room+' 已連線。點旅人名稱可找到對方。':'房間 '+room+' 已連線，等待其他旅人加入。');render();}
   function render(){
+    updateChat();
     const remote=[...states].filter(([id])=>id!==ownId);
     for(const [id,e] of actors)if(!states.has(id)||id===ownId){e.actor.remove();e.train.remove();actors.delete(id);}
     for(const [id,{state:s}] of remote){
@@ -44,7 +66,7 @@
     }
   }
   function clearPeers(){for(const e of actors.values()){e.actor.remove();e.train.remove();}actors.clear();states.clear();links.clear();upstream=null;host=false;ownId='';}
-  function stop(){active=false;generation++;clearTimeout(retryTimer);clearInterval(poll);peer?.destroy();peer=null;clearPeers();$('#live-toggle').textContent='開啟同遊';$('#live-room').disabled=false;document.querySelectorAll('[data-greeting]').forEach(b=>b.disabled=true);status('已離開同遊；你可以繼續自己探索。');render();}
+  function stop(){active=false;generation++;clearTimeout(retryTimer);clearInterval(poll);peer?.destroy();peer=null;clearPeers();clearChat();$('#live-toggle').textContent='開啟同遊';$('#live-room').disabled=false;document.querySelectorAll('[data-greeting]').forEach(b=>b.disabled=true);status('已離開同遊；你可以繼續自己探索。');render();}
   function retry(g,text){if(!active||g!==generation)return;status(text);clearTimeout(retryTimer);retryTimer=setTimeout(()=>{if(active&&g===generation)connect();},2500+Math.random()*2000);}
   function receiveRoster(data){
     if(data.type!=='roster'||!Array.isArray(data.people))return;
@@ -52,11 +74,11 @@
   }
   function showWave(id,n){const p=states.get(id);if(!p||!Number.isInteger(n)||!phrases[n])return;$('#live-message').textContent=`${p.state.look.name}：${phrases[n]}`;const e=actors.get(id);if(e){e.actor.classList.add('is-waving');setTimeout(()=>e.actor.classList.remove('is-waving'),1600);}}
   function bind(c,g,isHost){
-    let seen=Date.now(),lastPacket=0,lastGreeting=0;
+    let seen=Date.now(),lastPacket=0,lastGreeting=0,lastIncomingChat=0;
     c.on('open',()=>{
       if(g!==generation||!active){c.close();return;}
-      if(isHost){if(links.size>=7){send(c,{type:'full'});setTimeout(()=>c.close(),300);return;}links.set(c.peer,c);broadcast();}
-      else {upstream=c;lastRoster=Date.now();status('已連上同遊房間 '+room+'。點旅人名稱可找到對方。');send(c,{type:'state',state:api.snapshot()});}
+      if(isHost){if(links.size>=7){send(c,{type:'full'});setTimeout(()=>c.close(),300);return;}links.set(c.peer,c);send(c,{type:'chat-history',entries:chat});broadcast();}
+      else {upstream=c;lastRoster=Date.now();status('已連上同遊房間 '+room+'。點旅人名稱可找到對方。');send(c,{type:'state',state:api.snapshot()});updateChat();}
     });
     c.on('data',data=>{
       if(g!==generation||!active||!data||typeof data!=='object')return;seen=Date.now();
@@ -64,7 +86,8 @@
         if(!links.has(c.peer))return;
         if(data.type==='state'&&Date.now()-lastPacket>65){lastPacket=Date.now();const s=clean(data.state);if(s){states.set(c.peer,{state:s,at:seen});broadcast();}}
         if(data.type==='wave'&&Date.now()-lastGreeting>2500&&Number.isInteger(data.n)&&phrases[data.n]){lastGreeting=Date.now();showWave(c.peer,data.n);for(const out of links.values())send(out,{type:'wave',id:c.peer,n:data.n});}
-      }else{if(data.type==='full'){stop();status('這個房間已滿（8 人），請換個房間代碼再加入。');}else if(data.type==='wave')showWave(data.id,data.n);else receiveRoster(data);}
+        if(data.type==='chat-send'&&Date.now()-lastIncomingChat>=2000){lastIncomingChat=Date.now();relayChat(c.peer,data.text,data.id);}
+      }else{if(data.type==='full'){stop();status('這個房間已滿（8 人），請換個房間代碼再加入。');}else if(data.type==='wave')showWave(data.id,data.n);else if(data.type==='chat')addChat(data.entry);else if(data.type==='chat-history'&&Array.isArray(data.entries))data.entries.slice(-50).forEach(addChat);else receiveRoster(data);}
     });
     c.on('close',()=>{if(g!==generation||!active)return;if(isHost){links.delete(c.peer);states.delete(c.peer);broadcast();}else{clearPeers();render();retry(g,'同遊連線中斷，正在重新集合…');}});
     c.on('error',()=>{if(g===generation)retry(g,'連線未完成，正在重試；若持續失敗，請換個網路。');});
@@ -92,7 +115,7 @@
   $('#live-toggle').addEventListener('click',()=>{
     if(active){stop();return;}if(!api.snapshot().enabled){status('請先按「建立我的角色」，完成造型後再開啟同遊。');$('#create-traveller').click();return;}
     room=$('#live-room').value.trim().toLowerCase();if(!/^[a-z0-9-]{1,16}$/.test(room)){status('房間代碼請填 1–16 個英文字母、數字或連字號。');return;}
-    active=true;$('#live-room').disabled=true;$('#live-toggle').textContent='離開同遊';document.querySelectorAll('[data-greeting]').forEach(b=>b.disabled=false);connect();
+    active=true;clearChat();$('#live-room').disabled=true;$('#live-toggle').textContent='離開同遊';document.querySelectorAll('[data-greeting]').forEach(b=>b.disabled=false);connect();
     poll=setInterval(()=>{
       if(!active)return;const s=clean(api.snapshot());if(!s){stop();return;}
       if(host&&ownId){states.set(ownId,{state:s,at:Date.now()});for(const [id,p] of states)if(id!==ownId&&Date.now()-p.at>15000){links.get(id)?.close();links.delete(id);states.delete(id);}broadcast();}
@@ -100,8 +123,19 @@
     },150);
   });
   document.querySelectorAll('[data-greeting]').forEach(b=>b.addEventListener('click',()=>{if(!active||Date.now()-lastWave<3000)return;lastWave=Date.now();const n=+b.dataset.greeting;if(host){showWave(ownId,n);for(const c of links.values())send(c,{type:'wave',id:ownId,n});}else send(upstream,{type:'wave',n});}));
+  $('#live-chat-input').addEventListener('input',()=>$('#live-chat-length').textContent=$('#live-chat-input').value.length+' / 200');
+  $('#live-chat-form').addEventListener('submit',e=>{
+    e.preventDefault();const text=cleanText($('#live-chat-input').value);if(!text||pending)return;
+    if(!chatReady()){ $('#live-chat-status').textContent='尚未連線，留言未送出。請等連線恢復後再試。';return;}
+    if(Date.now()-lastChat<2200){$('#live-chat-status').textContent='請稍等兩秒，再送下一則留言。';return;}
+    lastChat=Date.now();pending={id:crypto.randomUUID(),text};updateChat();$('#live-chat-status').textContent='正在送出…';
+    if(host)relayChat(ownId,text,pending.id);
+    else{send(upstream,{type:'chat-send',...pending});pendingTimer=setTimeout(()=>{if(pending){pending=null;updateChat();$('#live-chat-status').textContent='未收到送達確認，文字已保留，請確認連線後重試。';}},8000);}
+  });
   $('#live-copy').addEventListener('click',async()=>{const url=new URL(location.href);url.searchParams.set('room',$('#live-room').value.trim()||'public');try{await navigator.clipboard.writeText(url.href);$('#live-message').textContent='邀請網址已複製。朋友開啟後選角色，再按「開啟同遊」。';}catch{$('#live-message').textContent='邀請網址：'+url.href;}});
   window.addEventListener('pagehide',()=>{if(active)stop();});
 })();
+
+
 
 
